@@ -43,13 +43,15 @@ def get_settings_raw(sc, league_id):
 
 
 class League:
-    def __init__(self, sc):
+    def __init__(self, sc, code):
         """Class initializer
 
         Args:
             sc OAuth2 session context
+            code Sport code (mlb, nhl, etc)
         """
         self.sc = sc
+        self.code = code
 
     def ids(self, year=None, data_gen=get_teams_raw):
         """Return the Yahoo! league IDs that the current user played in
@@ -64,7 +66,25 @@ class League:
             List of league ids
         """
         json = data_gen(self.sc)
-        return _get_ids_for_users(json["fantasy_content"]["users"], year)
+        t = objectpath.Tree(json)
+        jfilter = t.execute('$..(team_key,season,code)')
+        league_applies = False
+        ids = []
+        for row in jfilter:
+            # We'll see two types of rows that come out of objectpath filter.
+            # A row that has the season/code, then all of the leagues that it
+            # applies too.  Check if the subsequent league applies each time we
+            # get the season/code pair.
+            if 'season' in row and 'code' in row:
+                league_applies = row['code'] == self.code
+                if league_applies is True and year is not None:
+                    league_applies = int(row['season']) == int(year)
+            elif league_applies:
+                assert('team_key' in row)
+                ids.append(_extract_id_from_team_key(row['team_key']))
+        # Return leagues in deterministic order
+        ids.sort()
+        return ids
 
     def standings(self, league_id, data_gen=get_standings_raw):
         """Return the standings of the given league id
@@ -95,50 +115,6 @@ class League:
         """
         return t.execute('$.fantasy_content.league.({})[0]'.format(
             settings_to_return))
-
-
-def _get_ids_for_users(json, year):
-    ids = []
-    num = json["count"]
-    for i in range(num):
-        ids = ids + _get_ids_for_user(json[str(i)], year)
-    return ids
-
-
-def _get_ids_for_user(json, year):
-    ids = []
-    jgames = json["user"][1]["games"]
-    num_games = jgames["count"]
-    for i in range(num_games):
-        league_id = _get_ids_for_game(jgames[str(i)], year)
-        if league_id is not None:
-            ids = ids + league_id
-    return ids
-
-
-def _get_ids_for_game(json, year):
-    jgame = json["game"][0]
-    if jgame["code"] == "mlb" and \
-            (year is None or jgame["season"] == str(year)):
-        jteams = json["game"][1]["teams"]
-        ids = []
-        count = jteams["count"]
-        for i in range(count):
-            ids.append(_get_ids_for_team_in_game(jteams[str(i)]))
-        return ids
-    else:
-        return None
-
-
-def _get_ids_for_team_in_game(json):
-    jteam = json["team"]
-    if "team_key" in jteam:
-        return _extract_id_from_team_key(jteam["team_key"])
-    else:
-        for e in jteam[0]:
-            if "team_key" in e:
-                return _extract_id_from_team_key(e["team_key"])
-        assert(False), jteam
 
 
 def _extract_id_from_team_key(t):

@@ -1,6 +1,7 @@
 env/
 dist/
 __pycache__
+.ropeproject
 .eggs
 yahoo_fantasy_api.egg-info/
 oauth2.json

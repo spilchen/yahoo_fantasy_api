@@ -16,11 +16,9 @@ if __name__ == '__main__':
     args = docopt(__doc__, version='1.0')
     print(args)
     sc = OAuth2(None, None, from_file=args['<json>'])
-    lg = league.League(sc)
+    lg = league.League(sc, 'mlb')
     ids = lg.ids()
     print(ids)
-    league_id = lg.ids(year=2019)
-    print(league_id)
     for lg_id in ids:
         if lg_id.find("auto") > 0:
             continue
@@ -28,5 +26,7 @@ if __name__ == '__main__':
         for i, t in zip(range(1, 100), standings):
             print("{} - {}".format(i, t))
 
+    league_id = lg.ids(year=2019)
+    print(league_id)
     settings = lg.settings(league_id[0])
     print(settings)
