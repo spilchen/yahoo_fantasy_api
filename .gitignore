@@ -1,0 +1,4 @@
+env/
+__pycache__
+.eggs
+yahoo_fantasy_api.egg-info/
