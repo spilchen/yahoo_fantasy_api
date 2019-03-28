@@ -1,6 +1,7 @@
 #!/bin/python
 
 from yahoo_fantasy_api import yahoo_api
+import objectpath
 
 
 def get_teams_raw(sc):
@@ -16,7 +17,7 @@ def get_teams_raw(sc):
 
 
 def get_standings_raw(sc, league_id):
-    """Return the raw JSON when requesting the logged in players teams.
+    """Return the raw JSON when requesting standings for a league.
 
     Args:
         sc OAuth2 session context.
@@ -26,6 +27,19 @@ def get_standings_raw(sc, league_id):
         JSON document of the request.
     """
     return yahoo_api.get(sc, "league/{}/standings".format(league_id))
+
+
+def get_settings_raw(sc, league_id):
+    """Return the raw JSON when requesting settings for a league.
+
+    Args:
+        sc OAuth2 session context.
+        league_id League ID to get the settings for
+
+    Returns:
+        JSON document of the request.
+    """
+    return yahoo_api.get(sc, "league/{}/settings".format(league_id))
 
 
 class League:
@@ -70,6 +84,17 @@ class League:
             team = team_json[str(i)]["team"][0]
             standings.append(team[2]['name'])
         return standings
+
+    def settings(self, league_id, data_gen=get_settings_raw):
+        json = data_gen(self.sc, league_id)
+        t = objectpath.Tree(json)
+        settings_to_return = """
+        name, scoring_type,
+        start_week, current_week, end_week,start_date, end_date,
+        game_code, season
+        """
+        return t.execute('$.fantasy_content.league.({})[0]'.format(
+            settings_to_return))
 
 
 def _get_ids_for_users(json, year):

@@ -1,3 +1,5 @@
 pytest
 docopt
 yahoo_oauth
+objectpath
+pytz

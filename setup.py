@@ -16,5 +16,6 @@ setup(name='yahoo_fantasy_api',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 3.7',
       ],
+      install_requires=['objectpath', 'pytz'],
       python_requires='>=3',
       zip_safe=False)
