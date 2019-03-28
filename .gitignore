@@ -1,4 +1,6 @@
 env/
+dist/
 __pycache__
 .eggs
 yahoo_fantasy_api.egg-info/
+oauth2.json
