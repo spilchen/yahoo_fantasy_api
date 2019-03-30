@@ -1,7 +1,7 @@
 #!/bin/python
 
 import json
-from yahoo_fantasy_api import game
+from yahoo_fantasy_api import game, league
 import os
 
 # For testing, we don't call out to Yahoo!  We just use a sample json file.
@@ -31,3 +31,10 @@ def test_ids_for_year():
     assert(len(ids) == 1)
     print(ids)
     assert(ids[0] == '370.l.56877')
+
+
+def test_team_key():
+    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+    k = lg.team_key(data_gen=league_teams_gen)
+    print(k)
+    assert(k == '370.l.56877.t.5')

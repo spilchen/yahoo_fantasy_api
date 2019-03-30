@@ -4,16 +4,6 @@ from yahoo_fantasy_api import yahoo_api
 import objectpath
 
 
-def _get_teams_raw(sc):
-    """Return the raw JSON when requesting the logged in players teams.
-
-    :param sc: OAuth2 session context from yahoo_oauth
-    :type sc: OAuth2
-    :return: JSON document of the request.
-    """
-    return yahoo_api.get(sc, "users;use_login=1/games/teams")
-
-
 class Game:
     def __init__(self, sc, code):
         """Class initializer
@@ -26,7 +16,7 @@ class Game:
         self.sc = sc
         self.code = code
 
-    def league_ids(self, year=None, data_gen=_get_teams_raw):
+    def league_ids(self, year=None, data_gen=yahoo_api.get_teams_raw):
         """Return the Yahoo! league IDs that the current user played in
 
         :param year: Optional year, used to filter league IDs returned.
@@ -36,8 +26,7 @@ class Game:
             value for this parameter is the Yahoo! API.
         :returns: List of league ids
         """
-        json = data_gen(self.sc)
-        t = objectpath.Tree(json)
+        t = objectpath.Tree(data_gen(self.sc))
         jfilter = t.execute('$..(team_key,season,code)')
         league_applies = False
         ids = []

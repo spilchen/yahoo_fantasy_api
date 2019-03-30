@@ -32,3 +32,4 @@ if __name__ == '__main__':
     lg = league.League(sc, league_id[0])
     settings = lg.settings()
     print(settings)
+    print(lg.team_key())
