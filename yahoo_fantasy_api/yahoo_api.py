@@ -55,3 +55,17 @@ def get_settings_raw(sc, league_id):
     :return: JSON document of the request.
     """
     return get(sc, "league/{}/settings".format(league_id))
+
+
+def get_matchup_raw(sc, team_key, week):
+    """Return the raw JSON when requesting match-ups for a team
+
+    :param sc: Session context for oauth
+    :type sc: OAuth2 from yahoo_oauth
+    :param team_key: Team key identifier to find the matchups for
+    :type team_key: str
+    :param week: What week number to request the matchup for?
+    :type week: int
+    :return: JSON of the request
+    """
+    return get(sc, "team/{}/matchups;weeks={}".format(team_key, week))

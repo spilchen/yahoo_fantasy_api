@@ -92,6 +92,7 @@ class League:
         :type data_gen: function
 
         >>> lg.team_key
+        388.l.27081.t.5
         """
         t = objectpath.Tree(data_gen(self.sc))
         json = t.execute('$..(team_key)')

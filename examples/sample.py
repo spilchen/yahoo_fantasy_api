@@ -3,9 +3,10 @@
 """Use the game and league API
 
 Usage:
-  init_oauth_env.py <json>
+  sample.py <json>
 
-  <json>  The name of the JSON that has bearer token
+  <json>  The name of the JSON that has bearer token.  This can be generated
+          from init_oauth_env.py.
 """
 from docopt import docopt
 from yahoo_oauth import OAuth2
