@@ -1,6 +1,6 @@
 #!/bin/python
 
-from yahoo_fantasy_api import yahoo_api
+from yahoo_fantasy_api import yahoo_api, team
 import objectpath
 
 
@@ -16,6 +16,15 @@ class League:
         """
         self.sc = sc
         self.league_id = league_id
+
+    def to_team(self, team_key):
+        """Construct a Team object from a League
+
+        :param team_key: Team key of the new Team object to construct
+        :type team_key: str
+        :return: Team object
+        """
+        return team.Team(self.sc, team_key)
 
     def standings(self, data_gen=yahoo_api.get_standings_raw):
         """Return the standings of the league id

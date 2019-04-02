@@ -1,7 +1,7 @@
 #!/bin/python
 
 import json
-from yahoo_fantasy_api import league
+from yahoo_fantasy_api import league, team
 import os
 
 # For testing, we don't call out to Yahoo!  We just use a sample json file.
@@ -51,3 +51,9 @@ def test_stat_categories():
     assert(s[0]['position_type'] == 'B')
     assert(s[11]['display_name'] == 'NSV')
     assert(s[11]['position_type'] == 'P')
+
+
+def test_to_team():
+    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+    tm = lg.to_team('370.l.56877.t.5')
+    assert(type(tm) is team.Team)

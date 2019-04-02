@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     league_id = gm.league_ids(year=2019)
     print(league_id)
-    lg = league.League(sc, league_id[0])
+    lg = gm.to_league(league_id[0])
     settings = lg.settings()
     print(settings)
     print(lg.team_key())

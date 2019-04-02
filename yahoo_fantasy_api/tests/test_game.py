@@ -38,3 +38,9 @@ def test_team_key():
     k = lg.team_key(data_gen=league_teams_gen)
     print(k)
     assert(k == '370.l.56877.t.5')
+
+
+def test_to_league():
+    gm = game.Game(TEST_SESSION_CONTEXT, 'mlb')
+    lg = gm.to_league('370.l.56877')
+    assert(type(lg) is league.League)
