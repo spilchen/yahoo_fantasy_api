@@ -23,3 +23,4 @@ if __name__ == '__main__':
     team_key = lg.team_key()
     tm = team.Team(sc, team_key)
     print(tm.matchup(3))
+    print(tm.roster(3))

@@ -69,3 +69,17 @@ def get_matchup_raw(sc, team_key, week):
     :return: JSON of the request
     """
     return get(sc, "team/{}/matchups;weeks={}".format(team_key, week))
+
+
+def get_roster_raw(sc, team_key, week):
+    """Return the raw JSON when requesting a team's roster
+
+    :param sc: Session context for oauth
+    :type sc: OAuth2 from yahoo_oauth
+    :param team_key: Team key identifier to find the matchups for
+    :type team_key: str
+    :param week: What week number to request the matchup for?
+    :type week: int
+    :return: JSON of the request
+    """
+    return get(sc, "team/{}/roster/players;week={}".format(team_key, week))
