@@ -15,17 +15,19 @@ Installation
 
 This package can be installed via pip:
 
-```
-pip install yahoo_fantasy_api
-```
+::
+
+  pip install yahoo_fantasy_api
+
 
 or from the repo:
 
-```
-git clone https://github.com/spilchen/yahoo_fantasy_api
-cd yahoo_fantasy_api
-python setup.py install
-```
+::
+
+  git clone https://github.com/spilchen/yahoo_fantasy_api
+  cd yahoo_fantasy_api
+  python setup.py install
+
 
 Sample API Usage
 ----------------
