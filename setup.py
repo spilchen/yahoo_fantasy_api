@@ -1,8 +1,13 @@
 from setuptools import setup
 
+def readme():
+    with open('README.rst') as f:
+        return f.read()
+
 setup(name='yahoo_fantasy_api',
-      version='0.0.1',
+      version='0.1.0',
       description='APIs to access the set of Yahoo! Fantasy APIs',
+      long_description=readme(),
       url='http://github.com/spilchen/yahoo_fantasy_api',
       author='Matt Spilchen',
       author_email='matt.spilchen@gmail.com',
