@@ -1,46 +1,17 @@
-yahoo\_fantasy\_api package
-===========================
+Documentation
+=============
 
-Submodules
-----------
-
-yahoo\_fantasy\_api.game module
--------------------------------
-
-.. automodule:: yahoo_fantasy_api.game
+The ``Game`` class
+******************
+.. autoclass:: yahoo_fantasy_api.game.Game
     :members:
-    :undoc-members:
-    :show-inheritance:
 
-yahoo\_fantasy\_api.league module
----------------------------------
-
-.. automodule:: yahoo_fantasy_api.league
+The ``League`` class
+********************
+.. autoclass:: yahoo_fantasy_api.league.League
     :members:
-    :undoc-members:
-    :show-inheritance:
 
-yahoo\_fantasy\_api.team module
--------------------------------
-
-.. automodule:: yahoo_fantasy_api.team
+The ``Team`` class
+********************
+.. autoclass:: yahoo_fantasy_api.team.Team
     :members:
-    :undoc-members:
-    :show-inheritance:
-
-yahoo\_fantasy\_api.yahoo\_api module
--------------------------------------
-
-.. automodule:: yahoo_fantasy_api.yahoo_api
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: yahoo_fantasy_api
-    :members:
-    :undoc-members:
-    :show-inheritance:
