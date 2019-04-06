@@ -1,6 +1,6 @@
-================
-yahoo_fantasy_ai
-================
+=================
+yahoo_fantasy_api
+=================
 
 Python bindings to the Yahoo! Fantasy API
 
@@ -9,6 +9,10 @@ Build status
 
 .. image:: https://travis-ci.com/spilchen/yahoo_fantasy_api.svg?branch=master
     :target: https://travis-ci.com/spilchen/yahoo_fantasy_api
+    
+.. image:: https://readthedocs.org/projects/yahoo-fantasy-api/badge/?version=latest
+   :target: https://yahoo-fantasy-api.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Installation
 ------------
@@ -28,6 +32,10 @@ or from the repo:
   cd yahoo_fantasy_api
   python setup.py install
 
+Documentation
+-------------
+
+The documentation are hosted at readthedocs.io: https://yahoo-fantasy-api.readthedocs.io/en/latest/
 
 Sample API Usage
 ----------------
@@ -97,83 +105,9 @@ Sample API Usage
     'position_type': 'B',
     'eligible_positions': ['2B', 'SS', 'Util'],
     'selected_position': 'SS'},
-   {'player_id': 10626,
-    'name': 'Juan Soto',
-    'position_type': 'B',
-    'eligible_positions': ['LF', 'Util'],
-    'selected_position': 'LF'},
-   {'player_id': 9320,
-    'name': 'Christian Yelich',
-    'position_type': 'B',
-    'eligible_positions': ['LF', 'CF', 'RF', 'Util'],
-    'selected_position': 'CF'},
-   {'player_id': 9002,
-    'name': 'J.D. Martinez',
-    'position_type': 'B',
-    'eligible_positions': ['LF', 'RF', 'Util'],
-    'selected_position': 'RF'},
-   {'player_id': 9561,
-    'name': 'Jesse Winker',
-    'position_type': 'B',
-    'eligible_positions': ['LF', 'RF', 'Util'],
-    'selected_position': 'Util'},
-   {'player_id': 9048,
-    'name': 'Corey Kluber',
-    'position_type': 'P',
-    'eligible_positions': ['SP'],
-    'selected_position': 'SP'},
-   {'player_id': 9317,
-    'name': 'Hyun-Jin Ryu',
-    'position_type': 'P',
-    'eligible_positions': ['SP'],
-    'selected_position': 'SP'},
-   {'player_id': 10941,
-    'name': 'Joey Lucchesi',
-    'position_type': 'P',
-    'eligible_positions': ['SP'],
-    'selected_position': 'SP'},
-   {'player_id': 10141,
-    'name': 'Zach Eflin',
-    'position_type': 'P',
-    'eligible_positions': ['SP'],
-    'selected_position': 'SP'},
-   {'player_id': 10185,
-    'name': 'Joe Musgrove',
-    'position_type': 'P',
-    'eligible_positions': ['SP'],
-    'selected_position': 'SP'},
+   ...
    {'player_id': 7847,
     'name': 'Andrew Miller',
     'position_type': 'P',
     'eligible_positions': ['RP'],
-    'selected_position': 'RP'},
-   {'player_id': 9358,
-    'name': 'Ryan Pressly',
-    'position_type': 'P',
-    'eligible_positions': ['RP'],
-    'selected_position': 'RP'},
-   {'player_id': 9039,
-    'name': 'Brad Peacock',
-    'position_type': 'P',
-    'eligible_positions': ['RP'],
-    'selected_position': 'RP'},
-   {'player_id': 9542,
-    'name': 'Archie Bradley',
-    'position_type': 'P',
-    'eligible_positions': ['RP'],
-    'selected_position': 'RP'},
-   {'player_id': 10105,
-    'name': 'Kenta Maeda',
-    'position_type': 'P',
-    'eligible_positions': ['SP', 'RP'],
-    'selected_position': 'RP'},
-   {'player_id': 10867,
-    'name': 'Shane Bieber',
-    'position_type': 'P',
-    'eligible_positions': ['SP'],
-    'selected_position': 'BN'},
-   {'player_id': 10730,
-    'name': 'Brandon Woodruff',
-    'position_type': 'P',
-    'eligible_positions': ['SP', 'RP'],
-    'selected_position': 'BN'}]
+    'selected_position': 'RP'}]
