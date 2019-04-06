@@ -49,8 +49,8 @@ class Team:
            3 parameters: sc (session context), team_key, week
         :type data_gen: function
         :return: Array of players.  Each entry is a dict with the following
-        fields: player_id, name, position_type, eligible_positions,
-        selected_position
+           fields: player_id, name, position_type, eligible_positions,
+           selected_position
 
         >>> tm.roster(3)
         [{'player_id': 8578, 'name': 'John Doe', 'position_type': 'B',
