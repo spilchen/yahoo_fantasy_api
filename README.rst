@@ -1,6 +1,6 @@
-================
-yahoo_fantasy_ai
-================
+=================
+yahoo_fantasy_api
+=================
 
 Python bindings to the Yahoo! Fantasy API
 
@@ -9,6 +9,10 @@ Build status
 
 .. image:: https://travis-ci.com/spilchen/yahoo_fantasy_api.svg?branch=master
     :target: https://travis-ci.com/spilchen/yahoo_fantasy_api
+    
+.. image:: https://readthedocs.org/projects/yahoo-fantasy-api/badge/?version=latest
+   :target: https://yahoo-fantasy-api.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Installation
 ------------
