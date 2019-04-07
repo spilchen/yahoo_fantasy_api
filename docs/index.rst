@@ -10,6 +10,8 @@ Welcome to yahoo_fantasy_api's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   introduction
+   authentication
    modules
 
 
