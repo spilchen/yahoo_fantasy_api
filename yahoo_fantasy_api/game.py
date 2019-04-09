@@ -5,14 +5,14 @@ import objectpath
 
 
 class Game:
-    def __init__(self, sc, code):
-        """Class initializer
+    """Abstraction for a Yahoo! fantasy game
 
-        :param sc: OAuth2 session context from yahoo_oauth
-        :type sc: OAuth2
-        :param code: Sport code (mlb, nhl, etc)
-        :type code: str.
-        """
+    :param sc: Fully constructed session context
+    :type sc: :class:`yahoo_oauth.OAuth2`
+    :param code: Sport code (mlb, nhl, etc)
+    :type code: str
+    """
+    def __init__(self, sc, code):
         self.sc = sc
         self.code = code
         self.yhandler = yhandler.YHandler(sc)
@@ -25,7 +25,8 @@ class Game:
 
         :param league_id: League ID of the new League to construct
         :type league_id: str
-        :return: League object
+        :return: Fully constructed object
+        :rtype: League
         """
         lg = league.League(self.sc, league_id)
         lg.inject_yhandler(self.yhandler)

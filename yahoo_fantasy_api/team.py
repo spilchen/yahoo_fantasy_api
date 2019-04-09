@@ -5,14 +5,15 @@ import objectpath
 
 
 class Team:
-    def __init__(self, sc, team_key):
-        """Class initializer
+    """An abstraction for all of the team-level APIs in Yahoo! fantasy
 
-        :param sc: Session context for oauth
-        :type sc: OAuth2 from yahoo_oauth
-        :param team_key: Team key identifier to find the matchups for
-        :type team_key: str
-        """
+    :param sc: Fully constructed session context
+    :type sc: :class:`yahoo_oauth.OAuth2`
+    :param team_key: Team key identifier for the team we are constructing this
+        object for.
+    :type team_key: str
+    """
+    def __init__(self, sc, team_key):
         self.sc = sc
         self.team_key = team_key
         self.yhandler = yhandler.YHandler(sc)

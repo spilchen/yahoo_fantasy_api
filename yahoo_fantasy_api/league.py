@@ -5,15 +5,15 @@ import objectpath
 
 
 class League:
-    def __init__(self, sc, league_id):
-        """Class initializer
+    """An abstraction for all of the league-level APIs in Yahoo! fantasy
 
-        :param sc: Session context for oauth
-        :type sc: OAuth2 from yahoo_oauth
-        :param league_id: League ID to setup this class for.  All API requests
-            will be for this league.
-        :type code: str.
-        """
+    :param sc: Fully constructed session context
+    :type sc: :class:`yahoo_oauth.OAuth2`
+    :param league_id: League ID to setup this class for.  All API requests
+        will be for this league.
+    :type league_id: str
+    """
+    def __init__(self, sc, league_id):
         self.sc = sc
         self.league_id = league_id
         self.yhandler = yhandler.YHandler(sc)
