@@ -3,21 +3,17 @@
 from yahoo_fantasy_api import league, team
 import mock_yhandler
 
-# For testing, we don't call out to Yahoo!  We just use a sample json file.
-# For that reason the OAuth2 session context can be None.
-TEST_SESSION_CONTEXT = None
 
-
-def test_standings():
-    lg = league.League(TEST_SESSION_CONTEXT, '370.l.36877')
+def test_standings(sc):
+    lg = league.League(sc, '370.l.36877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     s = lg.standings()
     assert(len(s) == 10)
     assert(s[0] == "Lumber Kings")
 
 
-def test_settings():
-    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+def test_settings(sc):
+    lg = league.League(sc, '370.l.56877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     s = lg.settings()
     print(s)
@@ -31,8 +27,8 @@ def test_settings():
     assert(s['season'] == '2019')
 
 
-def test_stat_categories():
-    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+def test_stat_categories(sc):
+    lg = league.League(sc, '370.l.56877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     s = lg.stat_categories()
     print(s)
@@ -43,15 +39,15 @@ def test_stat_categories():
     assert(s[11]['position_type'] == 'P')
 
 
-def test_to_team():
-    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+def test_to_team(sc):
+    lg = league.League(sc, '370.l.56877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     tm = lg.to_team('370.l.56877.t.5')
     assert(type(tm) is team.Team)
 
 
-def test_team_key():
-    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+def test_team_key(sc):
+    lg = league.League(sc, '370.l.56877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     k = lg.team_key()
     print(k)

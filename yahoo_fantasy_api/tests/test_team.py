@@ -3,20 +3,16 @@
 from yahoo_fantasy_api import team
 import mock_yhandler
 
-# For testing, we don't call out to Yahoo!  We just use a sample json file.
-# For that reason the OAuth2 session context can be None.
-TEST_SESSION_CONTEXT = None
 
-
-def test_matchup():
-    tm = team.Team(TEST_SESSION_CONTEXT, '268.l.46645')
+def test_matchup(sc):
+    tm = team.Team(sc, '268.l.46645')
     tm.inject_yhandler(mock_yhandler.YHandler())
     opponent = tm.matchup(3)
     assert(opponent == '388.l.27081.t.5')
 
 
-def test_roster():
-    tm = team.Team(TEST_SESSION_CONTEXT, '268.l.46645')
+def test_roster(sc):
+    tm = team.Team(sc, '268.l.46645')
     tm.inject_yhandler(mock_yhandler.YHandler())
     r = tm.roster(3)
     print(r)
