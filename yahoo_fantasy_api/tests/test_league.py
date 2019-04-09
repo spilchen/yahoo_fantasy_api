@@ -1,36 +1,25 @@
 #!/bin/python
 
-import json
 from yahoo_fantasy_api import league, team
-import os
+import mock_yhandler
 
 # For testing, we don't call out to Yahoo!  We just use a sample json file.
 # For that reason the OAuth2 session context can be None.
 TEST_SESSION_CONTEXT = None
 
 
-def standing_teams_gen(sc, league_id):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + "/sample.standings.json", "r") as f:
-        return json.load(f)
-
-
 def test_standings():
     lg = league.League(TEST_SESSION_CONTEXT, '370.l.36877')
-    s = lg.standings(data_gen=standing_teams_gen)
+    lg.inject_yhandler(mock_yhandler.YHandler())
+    s = lg.standings()
     assert(len(s) == 10)
     assert(s[0] == "Lumber Kings")
 
 
-def settings_gen(sc, league_id):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + "/sample.league_settings.json", "r") as f:
-        return json.load(f)
-
-
 def test_settings():
     lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
-    s = lg.settings(data_gen=settings_gen)
+    lg.inject_yhandler(mock_yhandler.YHandler())
+    s = lg.settings()
     print(s)
     assert(s['name'] == "Buck you're next!")
     assert(s['scoring_type'] == "head")
@@ -44,7 +33,8 @@ def test_settings():
 
 def test_stat_categories():
     lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
-    s = lg.stat_categories(data_gen=settings_gen)
+    lg.inject_yhandler(mock_yhandler.YHandler())
+    s = lg.stat_categories()
     print(s)
     assert(len(s) == 12)
     assert(s[0]['display_name'] == 'R')
@@ -55,5 +45,14 @@ def test_stat_categories():
 
 def test_to_team():
     lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+    lg.inject_yhandler(mock_yhandler.YHandler())
     tm = lg.to_team('370.l.56877.t.5')
     assert(type(tm) is team.Team)
+
+
+def test_team_key():
+    lg = league.League(TEST_SESSION_CONTEXT, '370.l.56877')
+    lg.inject_yhandler(mock_yhandler.YHandler())
+    k = lg.team_key()
+    print(k)
+    assert(k == '370.l.56877.t.5')

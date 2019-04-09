@@ -1,6 +1,6 @@
 #!/bin/python
 
-from yahoo_fantasy_api import yahoo_api, league
+from yahoo_fantasy_api import yhandler, league
 import objectpath
 
 
@@ -15,6 +15,10 @@ class Game:
         """
         self.sc = sc
         self.code = code
+        self.yhandler = yhandler.YHandler(sc)
+
+    def inject_yhandler(self, yhandler):
+        self.yhandler = yhandler
 
     def to_league(self, league_id):
         """Construct a League object from a Game
@@ -23,19 +27,18 @@ class Game:
         :type league_id: str
         :return: League object
         """
-        return league.League(self.sc, league_id)
+        lg = league.League(self.sc, league_id)
+        lg.inject_yhandler(self.yhandler)
+        return lg
 
-    def league_ids(self, year=None, data_gen=yahoo_api.get_teams_raw):
+    def league_ids(self, year=None):
         """Return the Yahoo! league IDs that the current user played in
 
         :param year: Optional year, used to filter league IDs returned.
         :type year: int
-        :param data_gen: Optional data generation function.  This exists for
-            test purposes to allow for test dependency injection.  The default
-            value for this parameter is the Yahoo! API.
         :returns: List of league ids
         """
-        t = objectpath.Tree(data_gen(self.sc))
+        t = objectpath.Tree(self.yhandler.get_teams_raw())
         jfilter = t.execute('$..(team_key,season,code)')
         league_applies = False
         ids = []

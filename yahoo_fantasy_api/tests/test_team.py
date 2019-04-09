@@ -1,35 +1,24 @@
 #!/bin/python
 
-import json
 from yahoo_fantasy_api import team
-import os
+import mock_yhandler
 
 # For testing, we don't call out to Yahoo!  We just use a sample json file.
 # For that reason the OAuth2 session context can be None.
 TEST_SESSION_CONTEXT = None
 
 
-def matchup_gen(sc, team_key, week):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + "/sample.matchup.json", "r") as f:
-        return json.load(f)
-
-
 def test_matchup():
     tm = team.Team(TEST_SESSION_CONTEXT, '268.l.46645')
-    opponent = tm.matchup(3, data_gen=matchup_gen)
+    tm.inject_yhandler(mock_yhandler.YHandler())
+    opponent = tm.matchup(3)
     assert(opponent == '388.l.27081.t.5')
-
-
-def roster_gen(sc, team_key, week):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(dir_path + "/sample.team_roster.json", "r") as f:
-        return json.load(f)
 
 
 def test_roster():
     tm = team.Team(TEST_SESSION_CONTEXT, '268.l.46645')
-    r = tm.roster(3, data_gen=roster_gen)
+    tm.inject_yhandler(mock_yhandler.YHandler())
+    r = tm.roster(3)
     print(r)
     assert(len(r) == 21)
     assert(r[20]['name'] == 'Brandon Woodruff')

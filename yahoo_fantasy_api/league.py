@@ -1,6 +1,6 @@
 #!/bin/python
 
-from yahoo_fantasy_api import yahoo_api, team
+from yahoo_fantasy_api import yhandler, team
 import objectpath
 
 
@@ -16,29 +16,34 @@ class League:
         """
         self.sc = sc
         self.league_id = league_id
+        self.yhandler = yhandler.YHandler(sc)
+
+    def inject_yhandler(self, yhandler):
+        self.yhandler = yhandler
 
     def to_team(self, team_key):
         """Construct a Team object from a League
 
         :param team_key: Team key of the new Team object to construct
         :type team_key: str
-        :return: Team object
+        :return: Fully constructed object
+        :rtype: Team
         """
-        return team.Team(self.sc, team_key)
+        tm = team.Team(self.sc, team_key)
+        tm.inject_yhandler(self.yhandler)
+        return tm
 
-    def standings(self, data_gen=yahoo_api.get_standings_raw):
+    def standings(self):
         """Return the standings of the league id
 
-        :param data_gen: Optional data generation function.  This exists for
-            test purposes so that we don't have to call-out to Yahoo!
-        :type data_type: Function
         :return: An ordered list of the teams in the standings.  First entry is
             the first place team.
+        :rtype: List
 
         >>> lg.standings()
         ['Liz & Peter's Twins', 'Lumber Kings', 'Proj. Matt Carpenter']
         """
-        json = data_gen(self.sc, self.league_id)
+        json = self.yhandler.get_standings_raw(self.league_id)
         team_json = \
             json['fantasy_content']["league"][1]["standings"][0]["teams"]
         standings = []
@@ -47,12 +52,11 @@ class League:
             standings.append(team[2]['name'])
         return standings
 
-    def settings(self, data_gen=yahoo_api.get_settings_raw):
+    def settings(self):
         """Return the league settings
 
-        :param data_gen: Optional data generation function.  This exists for
-            test purposes so that we don't have to call-out to Yahoo!
-        :type data_type: Function
+        :return: League settings as key/value pairs
+        :rtype: Dict
 
         >>> lg.setings()
         {'name': "Buck you're next!", 'scoring_type': 'head',
@@ -60,7 +64,7 @@ class League:
         'start_date': '2019-03-20', 'end_date': '2019-09-22',
         'game_code': 'mlb', 'season': '2019'}
         """
-        json = data_gen(self.sc, self.league_id)
+        json = self.yhandler.get_settings_raw(self.league_id)
         t = objectpath.Tree(json)
         settings_to_return = """
         name, scoring_type,
@@ -70,20 +74,18 @@ class League:
         return t.execute('$.fantasy_content.league.({})[0]'.format(
             settings_to_return))
 
-    def stat_categories(self, data_gen=yahoo_api.get_settings_raw):
+    def stat_categories(self):
         """Return the stat categories for a league
 
-        :param data_gen: Optional data generation function.  Only used for
-           testing purposes to avoid call-outs to Yahoo!
-        :type data_gen: function
-        :returns: An array of dicts.  Each dict will have the stat name along
+        :returns: Each dict entry will have the stat name along
             with the position type ('B' for batter or 'P' for pitcher).
+        :rtype: List(Dict)
 
         >>> lg.stat_categories('370.l.56877')
         [{'display_name': 'R', 'position_type': 'B'}, {'display_name': 'HR',
         'position_type': 'B'}, {'display_name': 'W', 'position_type': 'P'}]
         """
-        t = objectpath.Tree(data_gen(self.sc, self.league_id))
+        t = objectpath.Tree(self.yhandler.get_settings_raw(self.league_id))
         json = t.execute('$..stat_categories..stat')
         simple_stat = []
         for s in json:
@@ -93,17 +95,16 @@ class League:
                                     "position_type": s["position_type"]})
         return simple_stat
 
-    def team_key(self, data_gen=yahoo_api.get_teams_raw):
+    def team_key(self):
         """Return the team_key for logged in users team in this league
 
-        :param data_gen: Optional data generation function.  Only used for
-           testing purposes to avoid call-outs to Yahoo!
-        :type data_gen: function
+        :return: The team key
+        :rtype: str
 
         >>> lg.team_key
         388.l.27081.t.5
         """
-        t = objectpath.Tree(data_gen(self.sc))
+        t = objectpath.Tree(self.yhandler.get_teams_raw())
         json = t.execute('$..(team_key)')
         for t in json:
             if t['team_key'].startswith(self.league_id):

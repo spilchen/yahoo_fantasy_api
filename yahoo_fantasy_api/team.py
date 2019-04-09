@@ -1,6 +1,6 @@
 #!/bin/python
 
-from yahoo_fantasy_api import yahoo_api
+from yahoo_fantasy_api import yhandler
 import objectpath
 
 
@@ -15,22 +15,22 @@ class Team:
         """
         self.sc = sc
         self.team_key = team_key
+        self.yhandler = yhandler.YHandler(sc)
 
-    def matchup(self, week, data_gen=yahoo_api.get_matchup_raw):
+    def inject_yhandler(self, yhandler):
+        self.yhandler = yhandler
+
+    def matchup(self, week):
         """Return the team of the matchup my team is playing in a given week
 
         :param week: Week number to find the matchup for
         :type week: int
-        :param data_gen: Optional data generation function.  Only used for
-           testing purposes to avoid call-outs to Yahoo!  The function accepts
-           3 parameters: sc (session context), team_key, week
-        :type data_gen: function
         :return: Team key of the opponent
 
         >>> tm.matchup(3)
         388.l.27081.t.9
         """
-        t = objectpath.Tree(data_gen(self.sc, self.team_key, week))
+        t = objectpath.Tree(self.yhandler.get_matchup_raw(self.team_key, week))
         json = t.execute('$..matchups..(team_key)')
         for k in json:
             if 'team_key' in k:
@@ -39,15 +39,11 @@ class Team:
                     return this_team_key
         raise RuntimeError("Could not find opponent")
 
-    def roster(self, week, data_gen=yahoo_api.get_roster_raw):
+    def roster(self, week):
         """Return the team roster for a given week
 
         :param week: Week number of the roster to get
         :type week: int
-        :param data_gen: Optional data generation function.  Only used for
-           testing purposes to avoid call-outs to Yahoo!  The function accepts
-           3 parameters: sc (session context), team_key, week
-        :type data_gen: function
         :return: Array of players.  Each entry is a dict with the following
            fields: player_id, name, position_type, eligible_positions,
            selected_position
@@ -60,7 +56,7 @@ class Team:
          {'player_id': 9961, 'name': 'Ed Reliever', 'position_type': 'P',
          'eligible_positions': ['RP']}]
         """
-        t = objectpath.Tree(data_gen(self.sc, self.team_key, week))
+        t = objectpath.Tree(self.yhandler.get_roster_raw(self.team_key, week))
         it = t.execute('''
                         $..(player_id,full,position_type,eligible_positions,
                             selected_position)''')
