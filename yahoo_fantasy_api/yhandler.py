@@ -71,5 +71,4 @@ class YHandler:
         :type week: int
         :return: JSON of the request
         """
-        return self.get("team/{}/roster/players;week={}".format(team_key,
-                                                                week))
+        return self.get("team/{}/roster;week={}".format(team_key, week))
