@@ -75,11 +75,20 @@ Sample API Usage
   
   In [8]: lg.team_key()
   Out[8]: '388.l.27081.t.5' 
+
+  In [9]: lg.current_week()
+  Out[9]: 12
+
+  In [10]: lg.end_week()
+  Out[10]: 24
+
+  In [11]: lg.week_date_range(12)
+  Out[11]: (datetime.date(2019, 6, 17), datetime.date(2019, 6, 23))
   
-  In [9]: tm = lg.to_team('388.l.27081.t.5')
+  In [12]: tm = lg.to_team('388.l.27081.t.5')
   
-  In [9]: tm.roster(1)
-  Out[9]:
+  In [13]: tm.roster(1)
+  Out[13]:
   [{'player_id': 8578,
     'name': 'Buster Posey',
     'position_type': 'B',
