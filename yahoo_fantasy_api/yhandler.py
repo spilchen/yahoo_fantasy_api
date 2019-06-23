@@ -72,3 +72,17 @@ class YHandler:
         :return: JSON of the request
         """
         return self.get("team/{}/roster;week={}".format(team_key, week))
+
+    def get_scoreboard_raw(self, league_id, week=None):
+        """Return the raw JSON when requesting the scoreboard for a week
+
+        :param league_id: League ID to get the standings for
+        :type league_id: str
+        :param week: The week number to request the scoreboard for
+        :type week: int
+        :return: JSON document of the request.
+        """
+        week_uri = ""
+        if week is not None:
+            week_uri = ";week={}".format(week)
+        return self.get("league/{}/scoreboard{}".format(league_id, week_uri))

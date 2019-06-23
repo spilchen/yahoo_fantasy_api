@@ -1,21 +1,16 @@
 #!/bin/python
 
-from yahoo_fantasy_api import league, team
-import mock_yhandler
+from yahoo_fantasy_api import team
 
 
-def test_standings(sc):
-    lg = league.League(sc, '370.l.36877')
-    lg.inject_yhandler(mock_yhandler.YHandler())
-    s = lg.standings()
+def test_standings(mock_league):
+    s = mock_league.standings()
     assert(len(s) == 10)
     assert(s[0] == "Lumber Kings")
 
 
-def test_settings(sc):
-    lg = league.League(sc, '370.l.56877')
-    lg.inject_yhandler(mock_yhandler.YHandler())
-    s = lg.settings()
+def test_settings(mock_league):
+    s = mock_league.settings()
     print(s)
     assert(s['name'] == "Buck you're next!")
     assert(s['scoring_type'] == "head")
@@ -27,10 +22,8 @@ def test_settings(sc):
     assert(s['season'] == '2019')
 
 
-def test_stat_categories(sc):
-    lg = league.League(sc, '370.l.56877')
-    lg.inject_yhandler(mock_yhandler.YHandler())
-    s = lg.stat_categories()
+def test_stat_categories(mock_league):
+    s = mock_league.stat_categories()
     print(s)
     assert(len(s) == 12)
     assert(s[0]['display_name'] == 'R')
@@ -39,16 +32,18 @@ def test_stat_categories(sc):
     assert(s[11]['position_type'] == 'P')
 
 
-def test_to_team(sc):
-    lg = league.League(sc, '370.l.56877')
-    lg.inject_yhandler(mock_yhandler.YHandler())
-    tm = lg.to_team('370.l.56877.t.5')
+def test_to_team(mock_league):
+    tm = mock_league.to_team('370.l.56877.t.5')
     assert(type(tm) is team.Team)
 
 
-def test_team_key(sc):
-    lg = league.League(sc, '370.l.56877')
-    lg.inject_yhandler(mock_yhandler.YHandler())
-    k = lg.team_key()
+def test_team_key(mock_league):
+    k = mock_league.team_key()
     print(k)
     assert(k == '370.l.56877.t.5')
+
+
+def test_current_week(mock_league):
+    wk = mock_league.current_week()
+    print(wk)
+    assert(wk == 12)

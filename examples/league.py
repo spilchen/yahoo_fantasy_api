@@ -3,7 +3,7 @@
 """Use the game and league API
 
 Usage:
-  sample.py <json>
+  league.py <json>
 
   <json>  The name of the JSON that has bearer token.  This can be generated
           from init_oauth_env.py.
@@ -34,3 +34,4 @@ if __name__ == '__main__':
     settings = lg.settings()
     print(settings)
     print(lg.team_key())
+    print("Current Week = {}".format(lg.current_week()))

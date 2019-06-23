@@ -101,7 +101,7 @@ class League:
         :return: The team key
         :rtype: str
 
-        >>> lg.team_key
+        >>> lg.team_key()
         388.l.27081.t.5
         """
         t = objectpath.Tree(self.yhandler.get_teams_raw())
@@ -109,3 +109,15 @@ class League:
         for t in json:
             if t['team_key'].startswith(self.league_id):
                 return t['team_key']
+
+    def current_week(self):
+        """Return the current week number of the league
+
+        :return: Week number
+        :rtype: int
+
+        >>> lg.current_week()
+        12
+        """
+        t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id))
+        return t.execute('$..current_week[0]')
