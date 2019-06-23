@@ -35,3 +35,5 @@ if __name__ == '__main__':
     print(settings)
     print(lg.team_key())
     print("Current Week = {}".format(lg.current_week()))
+    print("Ending Week = {}".format(lg.end_week()))
+    print(lg.week_date_range(12))

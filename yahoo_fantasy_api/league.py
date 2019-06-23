@@ -2,6 +2,7 @@
 
 from yahoo_fantasy_api import yhandler, team
 import objectpath
+import datetime
 
 
 class League:
@@ -133,3 +134,18 @@ class League:
         """
         t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id))
         return int(t.execute('$..end_week[0]'))
+
+    def week_date_range(self, week):
+        """Return the start and end date of a given week.
+
+        :return: Start and end date of the given week
+        :rtype: Pair of datetime.date objects
+
+        >>> lg.week_date_range(12)
+        (datetime.date(2019, 6, 17), datetime.date(2019, 6, 23))
+        """
+        t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id,
+                                                             week))
+        j = t.execute('$..(week_start,week_end)[0]')
+        return (datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
+                datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())

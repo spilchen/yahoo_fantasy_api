@@ -10,14 +10,15 @@ class YHandler:
     This is used for testing purposes as we can avoid calling out to the Yahoo!
     service.
     """
+    def __init__(self):
+        self.dir_path = os.path.dirname(os.path.realpath(__file__))
 
     def get_teams_raw(self):
         """Return the raw JSON when requesting the logged in players teams.
 
         :return: JSON document of the request.
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/sample.league_teams.json", "r") as f:
+        with open(self.dir_path + "/sample.league_teams.json", "r") as f:
             return json.load(f)
 
     def get_standings_raw(self, league_id):
@@ -27,8 +28,7 @@ class YHandler:
         :type league_id: str
         :return: JSON document of the request.
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/sample.standings.json", "r") as f:
+        with open(self.dir_path + "/sample.standings.json", "r") as f:
             return json.load(f)
 
     def get_settings_raw(self, league_id):
@@ -38,8 +38,7 @@ class YHandler:
         :type league_id: str
         :return: JSON document of the request.
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/sample.league_settings.json", "r") as f:
+        with open(self.dir_path + "/sample.league_settings.json", "r") as f:
             return json.load(f)
 
     def get_matchup_raw(self, team_key, week):
@@ -51,8 +50,7 @@ class YHandler:
         :type week: int
         :return: JSON of the request
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/sample.matchup.json", "r") as f:
+        with open(self.dir_path + "/sample.matchup.json", "r") as f:
             return json.load(f)
 
     def get_roster_raw(self, team_key, week):
@@ -64,8 +62,7 @@ class YHandler:
         :type week: int
         :return: JSON of the request
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/sample.team_roster.json", "r") as f:
+        with open(self.dir_path + "/sample.team_roster.json", "r") as f:
             return json.load(f)
 
     def get_scoreboard_raw(self, league_id, week=None):
@@ -77,6 +74,9 @@ class YHandler:
         :type week: int
         :return: JSON document of the request.
         """
-        dir_path = os.path.dirname(os.path.realpath(__file__))
-        with open(dir_path + "/sample.scoreboard.noweek.json", "r") as f:
+        if week is None:
+            fn = self.dir_path + "/sample.scoreboard.noweek.json"
+        else:
+            fn = self.dir_path + "/sample.scoreboard.week12.json"
+        with open(fn, "r") as f:
             return json.load(f)

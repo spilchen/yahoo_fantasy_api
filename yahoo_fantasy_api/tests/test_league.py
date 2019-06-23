@@ -1,6 +1,7 @@
 #!/bin/python
 
 from yahoo_fantasy_api import team
+import datetime
 
 
 def test_standings(mock_league):
@@ -53,3 +54,10 @@ def test_end_week(mock_league):
     wk = mock_league.end_week()
     print(wk)
     assert(wk == 24)
+
+def test_week_date_range(mock_league):
+    (sdt, edt) = mock_league.week_date_range(12)
+    print(sdt)
+    assert(sdt == datetime.date(2019, 6, 17))
+    print(edt)
+    assert(edt == datetime.date(2019, 6, 23))
