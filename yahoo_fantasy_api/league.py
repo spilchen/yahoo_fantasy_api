@@ -121,3 +121,15 @@ class League:
         """
         t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id))
         return t.execute('$..current_week[0]')
+
+    def end_week(self):
+        """Return the ending week number of the league.
+
+        :return: Week number
+        :rtype: int
+
+        >>> lg.end_week()
+        24
+        """
+        t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id))
+        return int(t.execute('$..end_week[0]'))

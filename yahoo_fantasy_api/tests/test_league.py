@@ -47,3 +47,9 @@ def test_current_week(mock_league):
     wk = mock_league.current_week()
     print(wk)
     assert(wk == 12)
+
+
+def test_end_week(mock_league):
+    wk = mock_league.end_week()
+    print(wk)
+    assert(wk == 24)
