@@ -53,6 +53,27 @@ class League:
             standings.append(team[2]['name'])
         return standings
 
+    def teams(self):
+        """Return a name and key of each team in the league
+
+        :return: A list of teams, each team will have its name and key
+        :rtype: List
+
+        >>> lg.teams()
+        [{'name': 'Lumber Kings', 'team_key': '370.l.56877.t.5'},
+         {'name': 'Roster Sabotage', 'team_key': '370.l.56877.t.6'},
+         {'name': 'Springfield Isotopes', 'team_key': '370.l.56877.t.7'}]
+        """
+        json = self.yhandler.get_standings_raw(self.league_id)
+        t = objectpath.Tree(json)
+        elems = t.execute('$..teams..(name)')
+        teams = []
+        for ele in elems:
+            teams.append(ele)
+        for team, ele in zip(teams, t.execute('$..teams..(team_key)')):
+            team['team_key'] = ele['team_key']
+        return teams
+
     def settings(self):
         """Return the league settings
 

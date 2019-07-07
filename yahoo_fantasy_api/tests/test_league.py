@@ -55,9 +55,18 @@ def test_end_week(mock_league):
     print(wk)
     assert(wk == 24)
 
+
 def test_week_date_range(mock_league):
     (sdt, edt) = mock_league.week_date_range(12)
     print(sdt)
     assert(sdt == datetime.date(2019, 6, 17))
     print(edt)
     assert(edt == datetime.date(2019, 6, 23))
+
+
+def test_team_list(mock_league):
+    tms = mock_league.teams()
+    print(tms)
+    assert(len(tms) == 10)
+    assert(tms[8]['name'] == 'Bobble Addicts')
+    assert(tms[8]['team_key'] == '370.l.56877.t.9')
