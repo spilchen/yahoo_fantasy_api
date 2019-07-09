@@ -18,6 +18,9 @@ class League:
         self.sc = sc
         self.league_id = league_id
         self.yhandler = yhandler.YHandler(sc)
+        self.current_week_cache = None
+        self.end_week_cache = None
+        self.week_date_range_cache = {}
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -141,8 +144,11 @@ class League:
         >>> lg.current_week()
         12
         """
-        t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id))
-        return t.execute('$..current_week[0]')
+        if self.current_week_cache is None:
+            t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
+                self.league_id))
+            self.current_week_cache = t.execute('$..current_week[0]')
+        return self.current_week_cache
 
     def end_week(self):
         """Return the ending week number of the league.
@@ -153,8 +159,11 @@ class League:
         >>> lg.end_week()
         24
         """
-        t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id))
-        return int(t.execute('$..end_week[0]'))
+        if self.end_week_cache is None:
+            t = objectpath.Tree(
+                self.yhandler.get_scoreboard_raw(self.league_id))
+            self.end_week_cache = int(t.execute('$..end_week[0]'))
+        return self.end_week_cache
 
     def week_date_range(self, week):
         """Return the start and end date of a given week.
@@ -165,8 +174,11 @@ class League:
         >>> lg.week_date_range(12)
         (datetime.date(2019, 6, 17), datetime.date(2019, 6, 23))
         """
-        t = objectpath.Tree(self.yhandler.get_scoreboard_raw(self.league_id,
-                                                             week))
-        j = t.execute('$..(week_start,week_end)[0]')
-        return (datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
+        if week not in self.week_date_range_cache:
+            t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
+                self.league_id, week))
+            j = t.execute('$..(week_start,week_end)[0]')
+            self.week_date_range_cache[week] = (
+                datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
                 datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())
+        return self.week_date_range_cache[week]
