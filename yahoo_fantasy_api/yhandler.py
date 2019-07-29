@@ -86,3 +86,10 @@ class YHandler:
         if week is not None:
             week_uri = ";week={}".format(week)
         return self.get("league/{}/scoreboard{}".format(league_id, week_uri))
+
+
+    def get_player_raw(self, league_id, player_name):
+        player_stat_uri = ""
+        if player_name is not None:
+            player_stat_uri = "players;search={}/stats".format(player_name)
+        return self.get("league/{}/{}".format(league_id, player_stat_uri))

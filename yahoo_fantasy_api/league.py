@@ -182,3 +182,15 @@ class League:
                 datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
                 datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())
         return self.week_date_range_cache[week]
+
+    def player_details(self, player_name):
+        json_query = '$..players'
+        t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id, player_name))
+        json = t.execute(json_query)
+        player_data = {}
+        for player in json:
+                for category in player['0']['player'][0]:
+                    if isinstance(category, dict):
+                        for key, value in category.items():
+                            player_data[key] = value
+                return player_data
