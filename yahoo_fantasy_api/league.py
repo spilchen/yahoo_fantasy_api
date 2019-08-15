@@ -189,8 +189,11 @@ class League:
         json = t.execute(json_query)
         player_data = {}
         for player in json:
-                for category in player['0']['player'][0]:
-                    if isinstance(category, dict):
-                        for key, value in category.items():
+            for category in player['0']['player']:
+                for sub_category in category:
+                    if isinstance(sub_category, str):
+                        player_data[sub_category] = category[sub_category]
+                    if isinstance(sub_category, dict):
+                        for key, value in sub_category.items():
                             player_data[key] = value
-                return player_data
+            return player_data
