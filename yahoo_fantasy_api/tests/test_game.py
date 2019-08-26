@@ -1,11 +1,11 @@
 #!/bin/python
 
-from yahoo_fantasy_api import game, league
+import yahoo_fantasy_api as yfa
 import mock_yhandler
 
 
 def test_ids(sc):
-    gm = game.Game(sc, 'mlb')
+    gm = yfa.Game(sc, 'mlb')
     gm.inject_yhandler(mock_yhandler.YHandler())
     ids = gm.league_ids()
     for i in ids:
@@ -16,7 +16,7 @@ def test_ids(sc):
 
 
 def test_ids_for_year(sc):
-    gm = game.Game(sc, 'mlb')
+    gm = yfa.Game(sc, 'mlb')
     gm.inject_yhandler(mock_yhandler.YHandler())
     ids = gm.league_ids(year=2017)
     assert(len(ids) == 1)
@@ -25,7 +25,7 @@ def test_ids_for_year(sc):
 
 
 def test_to_league(sc):
-    gm = game.Game(sc, 'mlb')
+    gm = yfa.Game(sc, 'mlb')
     gm.inject_yhandler(mock_yhandler.YHandler())
     lg = gm.to_league('370.l.56877')
-    assert(type(lg) is league.League)
+    assert(type(lg) is yfa.League)

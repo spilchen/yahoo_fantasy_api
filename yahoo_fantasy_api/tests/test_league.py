@@ -1,6 +1,6 @@
 #!/bin/python
 
-from yahoo_fantasy_api import team
+import yahoo_fantasy_api as yfa
 import datetime
 
 
@@ -35,7 +35,7 @@ def test_stat_categories(mock_league):
 
 def test_to_team(mock_league):
     tm = mock_league.to_team('370.l.56877.t.5')
-    assert(type(tm) is team.Team)
+    assert(type(tm) is yfa.Team)
 
 
 def test_team_key(mock_league):
