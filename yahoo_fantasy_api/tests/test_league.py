@@ -70,3 +70,20 @@ def test_team_list(mock_league):
     assert(len(tms) == 10)
     assert(tms[8]['name'] == 'Bobble Addicts')
     assert(tms[8]['team_key'] == '370.l.56877.t.9')
+
+
+def test_free_agents(mock_league):
+    fa = mock_league.free_agents('2B')
+    print(fa)
+    assert(len(fa) == 31)
+    assert(fa[8]['name'] == 'Dee Gordon')
+    assert(fa[8]['position_type'] == 'B')
+    assert(fa[8]['player_id'] == 8863)
+    assert(len(fa[8]['eligible_positions']) == 4)
+    assert(fa[8]['eligible_positions'] == ['2B', 'SS', 'CF', 'Util'])
+    assert(fa[12]['name'] == 'Kolten Wong')
+    assert(fa[12]['position_type'] == 'B')
+    assert(fa[12]['status'] == 'DTD')
+    assert(fa[12]['player_id'] == 9103)
+    assert(len(fa[12]['eligible_positions']) == 2)
+    assert(fa[12]['eligible_positions'] == ['2B', 'Util'])

@@ -1,6 +1,7 @@
 #!/bin/python
 
-from yahoo_fantasy_api import yhandler, team
+import yahoo_fantasy_api as yfa
+from yahoo_fantasy_api import yhandler
 import objectpath
 import datetime
 
@@ -21,6 +22,7 @@ class League:
         self.current_week_cache = None
         self.end_week_cache = None
         self.week_date_range_cache = {}
+        self.free_agent_cache = {}
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -33,7 +35,7 @@ class League:
         :return: Fully constructed object
         :rtype: Team
         """
-        tm = team.Team(self.sc, team_key)
+        tm = yfa.Team(self.sc, team_key)
         tm.inject_yhandler(self.yhandler)
         return tm
 
@@ -182,3 +184,73 @@ class League:
                 datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
                 datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())
         return self.week_date_range_cache[week]
+
+    def free_agents(self, position):
+        """Return the free agents for the given position
+
+        :param position: All free agents must be able to play this position.
+             Use the short code of the position (e.g. 2B, C, etc.).  You can
+             also specify the position type (e.g. 'B' for all batters and 'P'
+             for all pitchers).
+        :type position: str
+        :return: Free agents found. Particulars about each free agent will be
+             returned.
+        :rtype: List(Dict)
+
+        >>> fa_CF = lg.free_agents('CF')
+        >>> len(fa_CF)
+        60
+        >>> fa_CF[0]
+        {'player_id': 8370,
+         'name': 'Dexter Fowler',
+         'position_type': 'B',
+         'eligible_positions': ['CF', 'RF', 'Util']}
+        """
+        if position not in self.free_agent_cache:
+            self._cache_free_agents(position)
+        return self.free_agent_cache[position]
+
+    def _cache_free_agents(self, position):
+        # The Yahoo! API we use doles out players 25 per page.  We need to make
+        # successive calls to gather all of the players.  We stop when we fetch
+        # less then 25.
+        PLAYERS_PER_PAGE = 25
+        self.free_agent_cache[position] = []
+        plyrIndex = 0
+        while plyrIndex % PLAYERS_PER_PAGE == 0:
+            j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'A',
+                                              position=position)
+            (num_plyrs_on_pg, fa_on_pg) = self._free_agents_from_page(j)
+            self.free_agent_cache[position] += fa_on_pg
+            plyrIndex += num_plyrs_on_pg
+
+    def _free_agents_from_page(self, page):
+        """Extract the free agents from a given JSON page
+
+        :param page: JSON page to extract free agents from
+        :type page: dict
+        :return: A tuple returning the number of players on the page, and the
+        list of free agents extracted from the page.
+        :rtype: (int, list(dict))
+        """
+        fa = []
+        t = objectpath.Tree(page)
+        for i in range(t.execute('$..players.count[0]')):
+            path = '$..players..player[{}].'.format(i) + \
+                "(name,player_id,position_type,status,eligible_positions)"
+            obj = list(t.execute(path))
+            plyr = {}
+            # Convert obj from a list of dicts to a single one-dimensional dict
+            for ele in obj:
+                for k in ele.keys():
+                    plyr[k] = ele[k]
+            plyr['player_id'] = int(plyr['player_id'])
+            plyr['name'] = plyr['name']['full']
+            # We want to return eligible positions in a concise format.
+            plyr['eligible_positions'] = [e['position'] for e in
+                                          plyr['eligible_positions']]
+
+            # Ignore players that are not active or on the disabled list
+            if "status" not in plyr or plyr['status'] == 'DTD':
+                fa.append(plyr)
+        return (i + 1, fa)
