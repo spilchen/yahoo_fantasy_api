@@ -120,3 +120,15 @@ Sample API Usage
     'position_type': 'P',
     'eligible_positions': ['RP'],
     'selected_position': 'RP'}]
+
+  In [14]: fa_CF = lg.free_agents('CF')
+
+  In [15]: len(fa_CF)
+  Out[15]: 60
+
+  In [11]: fa_CF[0]
+  Out[11]:
+  {'player_id': 8370,
+   'name': 'Dexter Fowler',
+   'position_type': 'B',
+   'eligible_positions': ['CF', 'RF', 'Util']}

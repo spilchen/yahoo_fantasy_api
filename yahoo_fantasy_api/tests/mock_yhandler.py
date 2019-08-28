@@ -80,3 +80,17 @@ class YHandler:
             fn = self.dir_path + "/sample.scoreboard.week12.json"
         with open(fn, "r") as f:
             return json.load(f)
+
+    def get_players_raw(self, league_id, start, status, position=None):
+        assert(position == "2B"), "Position must be 2B for mock"
+        assert(status == "A"), "FreeAgents only for mock"
+        if start == 0:
+            pg = "1"
+        elif start == 25:
+            pg = "2"
+        else:
+            pg = "3"
+        fn = self.dir_path + "/sample.players.freeagents.2B.pg.{}.json"\
+            .format(pg)
+        with open(fn, "r") as f:
+            return json.load(f)
