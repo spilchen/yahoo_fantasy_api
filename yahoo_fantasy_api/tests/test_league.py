@@ -2,6 +2,7 @@
 
 import yahoo_fantasy_api as yfa
 import datetime
+import pytest
 
 
 def test_standings(mock_league):
@@ -62,6 +63,20 @@ def test_week_date_range(mock_league):
     assert(sdt == datetime.date(2019, 6, 17))
     print(edt)
     assert(edt == datetime.date(2019, 6, 23))
+
+
+def test_week_date_range_past_current(mock_league):
+    assert(mock_league.current_week() == 12)
+    (sdt, edt) = mock_league.week_date_range(13)
+    print(sdt)
+    assert(sdt == datetime.date(2019, 6, 24))
+    print(edt)
+    assert(edt == datetime.date(2019, 6, 30))
+
+
+def test_week_date_range_of_last(mock_league):
+    with pytest.raises(RuntimeError):
+        (sdt, edt) = mock_league.week_date_range(23)
 
 
 def test_team_list(mock_league):
