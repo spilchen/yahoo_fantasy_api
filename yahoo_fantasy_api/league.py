@@ -170,20 +170,31 @@ class League:
     def week_date_range(self, week):
         """Return the start and end date of a given week.
 
+        Can only request the date range at most one week in the future.  This
+        restriction exists because Yahoo! only provides the week range when the
+        matchups are known.  And during the playoffs, the matchup is only known
+        for the current week.  A RuntimeError exception is returned if a
+        request is for a week too far in the future.
+
         :return: Start and end date of the given week
         :rtype: Pair of datetime.date objects
 
         >>> lg.week_date_range(12)
         (datetime.date(2019, 6, 17), datetime.date(2019, 6, 23))
         """
-        if week not in self.week_date_range_cache:
-            t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
-                self.league_id, week))
-            j = t.execute('$..(week_start,week_end)[0]')
-            self.week_date_range_cache[week] = (
-                datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
-                datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())
-        return self.week_date_range_cache[week]
+        if week <= self.current_week() or week == 1:
+            return self._date_range_of_played_or_current_week(week)
+        elif week == self.current_week() + 1:
+            (cur_st, cur_end) = self._date_range_of_played_or_current_week(
+                week - 1)
+            req_st = cur_end + datetime.timedelta(days=1)
+            req_end = cur_end + datetime.timedelta(days=7)
+            return (req_st, req_end)
+        else:
+            raise RuntimeError("Cannot request date range more than one week "
+                               "past the current week.  The requested week is "
+                               "{}, but current week is {}.".format(
+                                   week, self.current_week()))
 
     def free_agents(self, position):
         """Return the free agents for the given position
@@ -254,3 +265,22 @@ class League:
             if "status" not in plyr or plyr['status'] == 'DTD':
                 fa.append(plyr)
         return (i + 1, fa)
+
+    def _date_range_of_played_or_current_week(self, week):
+        """Get the date range of a week that was already played or the current
+
+        Assumes caller has already verified the week is no greater then
+        current.
+
+        :param week: Week to request
+        :return: Start and end date of the given week
+        :rtype: Pair of datetime.date objects
+        """
+        if week not in self.week_date_range_cache:
+            t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
+                self.league_id, week))
+            j = t.execute('$..(week_start,week_end)[0]')
+            self.week_date_range_cache[week] = (
+                datetime.datetime.strptime(j['week_start'], "%Y-%m-%d").date(),
+                datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())
+        return self.week_date_range_cache[week]
