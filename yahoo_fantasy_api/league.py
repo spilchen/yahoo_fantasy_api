@@ -3,6 +3,7 @@
 from yahoo_fantasy_api import yhandler, team
 import objectpath
 import datetime
+import pdb
 
 
 class League:
@@ -76,6 +77,11 @@ class League:
         for team, ele in zip(teams, t.execute('$..teams..(team_key)')):
             team['team_key'] = ele['team_key']
         return teams
+
+    def matchups(self):
+        "Returns weekly matchups"
+        json = self.yhandler.get_scoreboard_raw(self.league_id)
+        return json
 
     def settings(self):
         """Return the league settings
