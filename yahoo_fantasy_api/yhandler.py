@@ -93,3 +93,31 @@ class YHandler:
         if player_name is not None:
             player_stat_uri = "players;search={}/stats".format(player_name)
         return self.get("league/{}/{}".format(league_id, player_stat_uri))
+
+    def get_players_raw(self, league_id, start, status, position=None):
+        """Return the raw JSON when requesting players in the league
+
+        The result is limited to 25 players.  the first 1000 players.
+
+        :param league_id: League ID to get the players for
+        :type league_id: str
+        :param start: The output is paged at 25 players each time.  Use this
+        parameter for subsequent calls to get the players at the next page.
+        For example, you specify 0 for the first call, 25 for the second call,
+        etc.
+        :type start: int
+        :param status: A filter to limit the player status.  Available values
+        are: 'A' - all available; 'FA' - free agents; 'W' - waivers, 'T' -
+        taken players, 'K' - keepers
+        :type status: str
+        :param position: A filter to return players only for a specific
+        position.  If None is passed, then no position filtering occurs.
+        :type position: str
+        :return: JSON document of the request.
+        """
+        if position is None:
+            pos_parm = ""
+        else:
+            pos_parm = ";position={}".format(position)
+        return self.get("league/{}/players;start={};count=25;status={}{}".
+                        format(league_id, start, status, pos_parm))
