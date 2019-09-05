@@ -200,6 +200,13 @@ class League:
         :type player_name: str
         :return: Player details
         :rtype: dict
+        """
+        """Retrieve details about a specific player
+        
+        :parm player_name: Name of the player to get details for
+        :type player_name: str
+        :return: Player details
+        :rtype: dict
         >>> lg.player_details("Antonio Brown")
         {
             'bye_weeks': {'week': '6'},
