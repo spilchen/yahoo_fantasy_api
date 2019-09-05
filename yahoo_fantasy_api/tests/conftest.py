@@ -1,7 +1,7 @@
 #!/bin/python
 
 import pytest
-from yahoo_fantasy_api import league
+import yahoo_fantasy_api as yfa
 import mock_yhandler
 
 
@@ -14,6 +14,6 @@ def sc():
 
 @pytest.fixture()
 def mock_league(sc):
-    lg = league.League(sc, '370.l.56877')
+    lg = yfa.League(sc, '370.l.56877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     yield lg

@@ -1,7 +1,8 @@
 #!/bin/python
 
-from yahoo_fantasy_api import team
+import yahoo_fantasy_api as yfa
 import datetime
+import pytest
 
 
 def test_standings(mock_league):
@@ -35,7 +36,7 @@ def test_stat_categories(mock_league):
 
 def test_to_team(mock_league):
     tm = mock_league.to_team('370.l.56877.t.5')
-    assert(type(tm) is team.Team)
+    assert(type(tm) is yfa.Team)
 
 
 def test_team_key(mock_league):
@@ -64,9 +65,40 @@ def test_week_date_range(mock_league):
     assert(edt == datetime.date(2019, 6, 23))
 
 
+def test_week_date_range_past_current(mock_league):
+    assert(mock_league.current_week() == 12)
+    (sdt, edt) = mock_league.week_date_range(13)
+    print(sdt)
+    assert(sdt == datetime.date(2019, 6, 24))
+    print(edt)
+    assert(edt == datetime.date(2019, 6, 30))
+
+
+def test_week_date_range_of_last(mock_league):
+    with pytest.raises(RuntimeError):
+        (sdt, edt) = mock_league.week_date_range(23)
+
+
 def test_team_list(mock_league):
     tms = mock_league.teams()
     print(tms)
     assert(len(tms) == 10)
     assert(tms[8]['name'] == 'Bobble Addicts')
     assert(tms[8]['team_key'] == '370.l.56877.t.9')
+
+
+def test_free_agents(mock_league):
+    fa = mock_league.free_agents('2B')
+    print(fa)
+    assert(len(fa) == 31)
+    assert(fa[8]['name'] == 'Dee Gordon')
+    assert(fa[8]['position_type'] == 'B')
+    assert(fa[8]['player_id'] == 8863)
+    assert(len(fa[8]['eligible_positions']) == 4)
+    assert(fa[8]['eligible_positions'] == ['2B', 'SS', 'CF', 'Util'])
+    assert(fa[12]['name'] == 'Kolten Wong')
+    assert(fa[12]['position_type'] == 'B')
+    assert(fa[12]['status'] == 'DTD')
+    assert(fa[12]['player_id'] == 9103)
+    assert(len(fa[12]['eligible_positions']) == 2)
+    assert(fa[12]['eligible_positions'] == ['2B', 'Util'])

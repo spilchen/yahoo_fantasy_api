@@ -44,14 +44,14 @@ Sample API Usage
 
   In [1]: from yahoo_oauth import OAuth2
   
-  In [2]: from yahoo_fantasy_api import league, game, team
+  In [2]: import yahoo_fantasy_api as yfa
   
   In [3]: sc = OAuth2(None, None, from_file='examples/oauth2.json')
   [2019-04-04 20:55:46,745 DEBUG] [yahoo_oauth.yahoo_oauth.__init__] Checking
   [2019-04-04 20:55:46,746 DEBUG] [yahoo_oauth.yahoo_oauth.token_is_valid] ELAPSED TIME : 416.15308594703674
   [2019-04-04 20:55:46,746 DEBUG] [yahoo_oauth.yahoo_oauth.token_is_valid] TOKEN IS STILL VALID
   
-  In [4]: gm = game.Game(sc, 'mlb')
+  In [4]: gm = yfa.Game(sc, 'mlb')
   
   In [5]: gm.league_ids(year=2019)
   Out[5]: ['388.l.27081']
@@ -120,3 +120,15 @@ Sample API Usage
     'position_type': 'P',
     'eligible_positions': ['RP'],
     'selected_position': 'RP'}]
+
+  In [14]: fa_CF = lg.free_agents('CF')
+
+  In [15]: len(fa_CF)
+  Out[15]: 60
+
+  In [11]: fa_CF[0]
+  Out[11]:
+  {'player_id': 8370,
+   'name': 'Dexter Fowler',
+   'position_type': 'B',
+   'eligible_positions': ['CF', 'RF', 'Util']}
