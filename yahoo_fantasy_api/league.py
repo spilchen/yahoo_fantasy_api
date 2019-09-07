@@ -4,7 +4,6 @@ import yahoo_fantasy_api as yfa
 from yahoo_fantasy_api import yhandler
 import objectpath
 import datetime
-import pdb
 
 
 class League:
