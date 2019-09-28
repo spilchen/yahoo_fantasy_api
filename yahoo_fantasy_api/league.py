@@ -81,8 +81,8 @@ class League:
 
     def matchups(self):
         """Retrieve matchups data for current week
-        
-        :return: Matchup details as key/value pairs 
+
+        :return: Matchup details as key/value pairs
         :rtype: dict
         """
         json = self.yhandler.get_scoreboard_raw(self.league_id)
@@ -158,7 +158,7 @@ class League:
         if self.current_week_cache is None:
             t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
                 self.league_id))
-            self.current_week_cache = t.execute('$..current_week[0]')
+            self.current_week_cache = int(t.execute('$..current_week[0]'))
         return self.current_week_cache
 
     def end_week(self):
@@ -296,7 +296,7 @@ class League:
 
     def player_details(self, player_name):
         """Retrieve details about a specific player
-        
+
         :parm player_name: Name of the player to get details for
         :type player_name: str
         :return: Player details
@@ -305,29 +305,29 @@ class League:
         {
             'bye_weeks': {'week': '6'},
             'display_position': 'WR',
-            'editorial_player_key': 'nfl.p.24171', 
-            'editorial_team_abbr': 'Oak', 
-            'editorial_team_full_name': 'Oakland Raiders', 
-            'editorial_team_key': 'nfl.t.13', 
-            'eligible_positions': [{...}, {...}], 
-            'has_player_notes': 1, 
-            'has_recent_player_notes': 1, 
+            'editorial_player_key': 'nfl.p.24171',
+            'editorial_team_abbr': 'Oak',
+            'editorial_team_full_name': 'Oakland Raiders',
+            'editorial_team_key': 'nfl.t.13',
+            'eligible_positions': [{...}, {...}],
+            'has_player_notes': 1,
+            'has_recent_player_notes': 1,
             'headshot': {
-                'size': 'small', 
-                'url': 'https://s.yimg.com/...24171.png'}, 
+                'size': 'small',
+                'url': 'https://s.yimg.com/...24171.png'},
             'image_url': 'https://s.yimg.com/...24171.png',
             'is_undroppable': '1',
             'name': {
                 'ascii_first': 'Antonio',
                 'ascii_last': 'Brown',
-                'first': 'Antonio', 
-                'full': 'Antonio Brown', 
+                'first': 'Antonio',
+                'full': 'Antonio Brown',
                 'last': 'Brown'},
             'player_id': '24171', ...}
         """
         json_query = '$..players'
-        t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id, 
-                                                        player_name))
+        t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
+                                                         player_name))
         json = t.execute(json_query)
         player_data = {}
         for player in json:
