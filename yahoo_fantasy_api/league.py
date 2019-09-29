@@ -23,6 +23,7 @@ class League:
         self.end_week_cache = None
         self.week_date_range_cache = {}
         self.free_agent_cache = {}
+        self.stat_categories_cache = None
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -121,15 +122,17 @@ class League:
         [{'display_name': 'R', 'position_type': 'B'}, {'display_name': 'HR',
         'position_type': 'B'}, {'display_name': 'W', 'position_type': 'P'}]
         """
-        t = objectpath.Tree(self.yhandler.get_settings_raw(self.league_id))
-        json = t.execute('$..stat_categories..stat')
-        simple_stat = []
-        for s in json:
-            # Omit stats that are only for display purposes
-            if 'is_only_display_stat' not in s:
-                simple_stat.append({"display_name": s["display_name"],
-                                    "position_type": s["position_type"]})
-        return simple_stat
+        if self.stat_categories_cache is None:
+            t = objectpath.Tree(self.yhandler.get_settings_raw(self.league_id))
+            json = t.execute('$..stat_categories..stat')
+            simple_stat = []
+            for s in json:
+                # Omit stats that are only for display purposes
+                if 'is_only_display_stat' not in s:
+                    simple_stat.append({"display_name": s["display_name"],
+                                        "position_type": s["position_type"]})
+            self.stat_categories_cache = simple_stat
+        return self.stat_categories_cache
 
     def team_key(self):
         """Return the team_key for logged in users team in this league
