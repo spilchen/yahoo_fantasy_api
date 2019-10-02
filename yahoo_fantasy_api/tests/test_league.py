@@ -118,7 +118,7 @@ def test_pct_own_in_free_agents(mock_league):
 
 
 def test_percent_owned(mock_league):
-    po = mock_league.percent_owned(1, [3737, 6381, 4003, 3705])
+    po = mock_league.percent_owned([3737, 6381, 4003, 3705])
     assert(len(po) == 4)
     assert(po[0]['player_id'] == 3737)
     assert(po[0]['name'] == 'Sidney Crosby')

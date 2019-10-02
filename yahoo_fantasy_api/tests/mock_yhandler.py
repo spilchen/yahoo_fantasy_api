@@ -96,7 +96,7 @@ class YHandler:
         with open(fn, "r") as f:
             return json.load(f)
 
-    def get_percent_owned_raw(self, league_id, week, player_ids):
+    def get_percent_owned_raw(self, league_id, player_ids):
         fn = self.dir_path + "/sample.percent_owned.json"
         with open(fn, "r") as f:
             return json.load(f)

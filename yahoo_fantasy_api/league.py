@@ -380,11 +380,9 @@ class League:
                             player_data[key] = value
             return player_data
 
-    def percent_owned(self, week, player_ids):
-        """Retrieve ownership percentage of a list of players in a given week
+    def percent_owned(self, player_ids):
+        """Retrieve ownership percentage of a list of players
 
-        :param week: The week to get % owned data for
-        :type week: int
         :param player_ids: Yahoo! Player IDs to retrieve % owned for
         :type player_ids: list(int)
         :return: Ownership percentage of players requested
@@ -397,7 +395,7 @@ class League:
          {'player_id': 3705, 'name': 'Dustin Byfuglien', 'percent_owned': 82}]
         """
         t = objectpath.Tree(self.yhandler.get_percent_owned_raw(
-            self.league_id, week, player_ids))
+            self.league_id, player_ids))
         player_ids = t.execute("$..player_id")
         it = t.execute("$..(player_id,full,value)")
         po = []
