@@ -261,7 +261,12 @@ class League:
         """
         fa = []
         t = objectpath.Tree(page)
-        for i in range(t.execute('$..players.count[0]')):
+        pct_owns = self._pct_owned_from_fa(iter(list(t.execute(
+            '$..percent_owned.(coverage_type,value)'))))
+        # When iterating over the players we step by 2 to account for the
+        # percent_owned data that is stored adjacent to each player.
+        for i, pct_own in zip(range(0, t.execute('$..players.count[0]')*2, 2),
+                              pct_owns):
             path = '$..players..player[{}].'.format(i) + \
                 "(name,player_id,position_type,status,eligible_positions)"
             obj = list(t.execute(path))
@@ -275,11 +280,40 @@ class League:
             # We want to return eligible positions in a concise format.
             plyr['eligible_positions'] = [e['position'] for e in
                                           plyr['eligible_positions']]
+            plyr['percent_owned'] = pct_own
 
             # Ignore players that are not active or on the disabled list
             if "status" not in plyr or plyr['status'] == 'DTD':
                 fa.append(plyr)
-        return (i + 1, fa)
+        return (i/2 + 1, fa)
+
+    def _pct_owned_from_fa(self, po_it):
+        """Extract the ownership % of players taken from a free agent JSON
+
+        Why does this function even need to exist?  When requesting ownership
+        percentage when getting free agents, the ownership percentage is
+        included adjacent to the rest of the player data.  So it cannot be
+        retrieved easily along side the player data and must be extracted
+        separately.
+
+        :param po_it: Extracted ownership % from objectpath
+        :type eles: iterator over a list
+        :return: Ownership percentages of each player on the JSON page
+        :rtype: list(int)
+        """
+        po = []
+        i = 0
+        try:
+            while True:
+                ele = next(po_it)
+                if "coverage_type" in ele:
+                    po.append(0)
+                    i += 1
+                if "value" in ele:
+                    po[i-1] = ele['value']
+        except StopIteration:
+            pass
+        return po
 
     def _date_range_of_played_or_current_week(self, week):
         """Get the date range of a week that was already played or the current

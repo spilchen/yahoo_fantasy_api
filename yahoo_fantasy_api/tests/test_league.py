@@ -88,20 +88,33 @@ def test_team_list(mock_league):
 
 
 def test_free_agents(mock_league):
-    fa = mock_league.free_agents('2B')
+    fa = mock_league.free_agents('C')
     print(fa)
-    assert(len(fa) == 31)
-    assert(fa[8]['name'] == 'Dee Gordon')
-    assert(fa[8]['position_type'] == 'B')
-    assert(fa[8]['player_id'] == 8863)
-    assert(len(fa[8]['eligible_positions']) == 4)
-    assert(fa[8]['eligible_positions'] == ['2B', 'SS', 'CF', 'Util'])
-    assert(fa[12]['name'] == 'Kolten Wong')
-    assert(fa[12]['position_type'] == 'B')
+    assert(len(fa) == 36)
+    assert(fa[8]['name'] == 'Brad Richardson')
+    assert(fa[8]['position_type'] == 'P')
+    assert(fa[8]['player_id'] == 3704)
+    assert(len(fa[8]['eligible_positions']) == 1)
+    assert(fa[8]['eligible_positions'] == ['C'])
+    assert(fa[12]['name'] == 'David Krejci')
     assert(fa[12]['status'] == 'DTD')
-    assert(fa[12]['player_id'] == 9103)
-    assert(len(fa[12]['eligible_positions']) == 2)
-    assert(fa[12]['eligible_positions'] == ['2B', 'Util'])
+    assert(fa[17]['name'] == 'Derick Brassard')
+    assert(fa[17]['position_type'] == 'P')
+    assert(fa[17]['player_id'] == 3987)
+    assert(len(fa[17]['eligible_positions']) == 2)
+    assert(fa[17]['eligible_positions'] == ['C', 'LW'])
+
+
+def test_pct_own_in_free_agents(mock_league):
+    fa = mock_league.free_agents('C')
+    print(fa)
+    assert(len(fa) == 36)
+    assert(fa[0]['name'] == 'Joe Thornton')
+    assert(fa[0]['percent_owned'] == 7)
+    assert(fa[7]['name'] == 'Nate Thompson')
+    assert(fa[7]['percent_owned'] == 0)
+    assert(fa[35]['name'] == 'Ryan O\'Reilly')
+    assert(fa[35]['percent_owned'] == 92)
 
 
 def test_percent_owned(mock_league):

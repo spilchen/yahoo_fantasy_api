@@ -112,8 +112,9 @@ class YHandler:
             pos_parm = ""
         else:
             pos_parm = ";position={}".format(position)
-        return self.get("league/{}/players;start={};count=25;status={}{}".
-                        format(league_id, start, status, pos_parm))
+        return self.get(
+            "league/{}/players;start={};count=25;status={}{}/percent_owned".
+            format(league_id, start, status, pos_parm))
 
     def get_player_raw(self, league_id, player_name):
         """Return the raw JSON when requesting player details
