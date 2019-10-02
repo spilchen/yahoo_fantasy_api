@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='yahoo_fantasy_api',
-      version='1.2.4',
+      version='1.3.0',
       description='Python bindings to access the Yahoo! Fantasy APIs',
       long_description=readme(),
       url='http://github.com/spilchen/yahoo_fantasy_api',

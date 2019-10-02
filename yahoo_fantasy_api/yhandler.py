@@ -128,3 +128,20 @@ class YHandler:
         if player_name is not None:
             player_stat_uri = "players;search={}/stats".format(player_name)
         return self.get("league/{}/{}".format(league_id, player_stat_uri))
+
+    def get_percent_owned_raw(self, league_id, week, player_ids):
+        """Return the raw JSON when requesting the percentage owned of players
+
+        :param league_id: League ID we are requesting data from
+        :type league_id: str
+        :param week: The week to get % owned data for
+        :type week: int
+        :param player_ids: Yahoo! Player IDs to retrieve % owned for
+        :type player_ids: list(str)
+        :return: JSON document of the request
+        """
+        lg_pref = league_id[0:league_id.find(".")]
+        joined_ids = ",".join([lg_pref + ".p." + str(i) for i in player_ids])
+        return self.get(
+            "league/{}/players;player_keys={}/percent_owned;type=week;week={}".
+            format(league_id, joined_ids, week))

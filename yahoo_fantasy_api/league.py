@@ -345,3 +345,34 @@ class League:
                         for key, value in sub_category.items():
                             player_data[key] = value
             return player_data
+
+    def percent_owned(self, week, player_ids):
+        """Retrieve ownership percentage of a list of players in a given week
+
+        :param week: The week to get % owned data for
+        :type week: int
+        :param player_ids: Yahoo! Player IDs to retrieve % owned for
+        :type player_ids: list(int)
+        :return: Ownership percentage of players requested
+        :rtype: dict
+
+        >>> lg.percent_owned(1, [3737, 6381, 4003, 3705])
+        [{'player_id': 3737, 'name': 'Sidney Crosby', 'percent_owned': 100},
+         {'player_id': 6381, 'name': 'Dylan Larkin', 'percent_owned': 89},
+         {'player_id': 4003, 'name': 'Semyon Varlamov', 'percent_owned': 79},
+         {'player_id': 3705, 'name': 'Dustin Byfuglien', 'percent_owned': 82}]
+        """
+        t = objectpath.Tree(self.yhandler.get_percent_owned_raw(
+            self.league_id, week, player_ids))
+        player_ids = t.execute("$..player_id")
+        it = t.execute("$..(player_id,full,value)")
+        po = []
+        try:
+            while True:
+                plyr = {"player_id": int(next(it)["player_id"]),
+                        "name": next(it)["full"],
+                        "percent_owned": next(it)["value"]}
+                po.append(plyr)
+        except StopIteration:
+            pass
+        return po
