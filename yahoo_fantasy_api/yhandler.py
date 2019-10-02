@@ -90,7 +90,7 @@ class YHandler:
     def get_players_raw(self, league_id, start, status, position=None):
         """Return the raw JSON when requesting players in the league
 
-        The result is limited to 25 players.  the first 1000 players.
+        The result is limited to 25 players.
 
         :param league_id: League ID to get the players for
         :type league_id: str
@@ -114,11 +114,10 @@ class YHandler:
             pos_parm = ";position={}".format(position)
         return self.get("league/{}/players;start={};count=25;status={}{}".
                         format(league_id, start, status, pos_parm))
-    
+
     def get_player_raw(self, league_id, player_name):
         """Return the raw JSON when requesting player details
 
-        
         :param league_id: League ID to get the player for
         :type league_id: str
         :param player_name: Name of player to get the details for

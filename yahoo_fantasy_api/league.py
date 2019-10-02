@@ -24,6 +24,7 @@ class League:
         self.week_date_range_cache = {}
         self.free_agent_cache = {}
         self.stat_categories_cache = None
+        self.settings_cache = None
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -101,15 +102,17 @@ class League:
         'start_date': '2019-03-20', 'end_date': '2019-09-22',
         'game_code': 'mlb', 'season': '2019'}
         """
-        json = self.yhandler.get_settings_raw(self.league_id)
-        t = objectpath.Tree(json)
-        settings_to_return = """
-        name, scoring_type,
-        start_week, current_week, end_week,start_date, end_date,
-        game_code, season
-        """
-        return t.execute('$.fantasy_content.league.({})[0]'.format(
-            settings_to_return))
+        if self.settings_cache is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            settings_to_return = """
+            name, scoring_type,
+            start_week, current_week, end_week,start_date, end_date,
+            game_code, season
+            """
+            self.settings_cache = t.execute(
+                '$.fantasy_content.league.({})[0]'.format(settings_to_return))
+        return self.settings_cache
 
     def stat_categories(self):
         """Return the stat categories for a league

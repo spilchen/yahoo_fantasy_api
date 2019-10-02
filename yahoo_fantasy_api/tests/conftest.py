@@ -17,3 +17,10 @@ def mock_league(sc):
     lg = yfa.League(sc, '370.l.56877')
     lg.inject_yhandler(mock_yhandler.YHandler())
     yield lg
+
+
+@pytest.fixture()
+def mock_team(sc):
+    tm = yfa.Team(sc, '268.l.46645')
+    tm.inject_yhandler(mock_yhandler.YHandler())
+    yield tm

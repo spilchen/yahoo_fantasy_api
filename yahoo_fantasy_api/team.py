@@ -51,16 +51,18 @@ class Team:
 
         >>> tm.roster(3)
         [{'player_id': 8578, 'name': 'John Doe', 'position_type': 'B',
-         'eligible_positions': ['C','1B'], 'selected_position': 'C'},
+         'eligible_positions': ['C','1B'], 'selected_position': 'C',
+         'status': ''},
          {'player_id': 8967, 'name': 'Joe Baseball', 'position_type': 'B',
-         'eligible_positions': ['SS'], 'selected_position': 'SS'},
+         'eligible_positions': ['SS'], 'selected_position': 'SS',
+         'status': 'DTD'},
          {'player_id': 9961, 'name': 'Ed Reliever', 'position_type': 'P',
-         'eligible_positions': ['RP']}]
+         'eligible_positions': ['RP'], 'status': ''}]
         """
         t = objectpath.Tree(self.yhandler.get_roster_raw(self.team_key, week))
         it = t.execute('''
                         $..(player_id,full,position_type,eligible_positions,
-                            selected_position)''')
+                            selected_position,status)''')
 
         def _compact_selected_pos(j):
             return j["selected_position"][1]["position"]
@@ -74,13 +76,19 @@ class Team:
         roster = []
         try:
             while True:
-                roster.append({"player_id": int(next(it)["player_id"]),
-                               "name": next(it)["full"],
-                               "position_type": next(it)["position_type"],
-                               "eligible_positions":
-                               _compact_eligible_pos(next(it)),
-                               "selected_position":
-                               _compact_selected_pos(next(it))})
+                plyr = {"player_id": int(next(it)["player_id"]),
+                        "name": next(it)["full"]}
+                next_item = next(it)
+                plyr["status"] = next_item["status"] \
+                    if "status" in next_item else ""
+                if plyr["status"] is "":
+                    plyr["position_type"] = next_item["position_type"]
+                else:
+                    plyr["position_type"] = next(it)["position_type"]
+                plyr["eligible_positions"] = _compact_eligible_pos(next(it))
+                plyr["selected_position"] = _compact_selected_pos(next(it))
+
+                roster.append(plyr)
         except StopIteration:
             pass
         return roster
