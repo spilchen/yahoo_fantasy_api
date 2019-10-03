@@ -281,9 +281,11 @@ class League:
             plyr['eligible_positions'] = [e['position'] for e in
                                           plyr['eligible_positions']]
             plyr['percent_owned'] = pct_own
+            if "status" not in plyr:
+                plyr["status"] = ""
 
-            # Ignore players that are not active or on the disabled list
-            if "status" not in plyr or plyr['status'] == 'DTD':
+            # Ignore players that are not active
+            if plyr["status"] != "NA":
                 fa.append(plyr)
         return (i/2 + 1, fa)
 
