@@ -16,7 +16,7 @@ class YHandler:
 
         :param uri: URI of the API to call
         :type uri: str
-        :return: JSON document of the reponse
+        :return: JSON document of the response
         :raises: RuntimeError if any response comes back with an error
         """
         response = self.sc.session.get("{}/{}".format(YAHOO_ENDPOINT, uri),
@@ -25,6 +25,22 @@ class YHandler:
         if "error" in jresp:
             raise RuntimeError(json.dumps(jresp))
         return jresp
+
+    def put(self, uri, data):
+        """Calls the put method to the uri with a payload
+
+        :param uri: URI of the API to call
+        :type uri: str
+        :param data: Bytes to pass as the payload
+        :return: JSON document of the response
+        :raises: RuntimeError if any response comes back with an error
+        """
+        headers = {'Content-Type': 'application/xml'}
+        response = self.sc.session.put("{}/{}".format(YAHOO_ENDPOINT, uri),
+                                       data=data, headers=headers)
+        if response.status_code != 200:
+            raise RuntimeError(response.content)
+        return response
 
     def get_teams_raw(self):
         """Return the raw JSON when requesting the logged in players teams.
@@ -144,3 +160,11 @@ class YHandler:
         return self.get(
             "league/{}/players;player_keys={}/percent_owned".
             format(league_id, joined_ids))
+
+    def put_roster(self, team_key, xml_doc):
+        """Calls put against the roster API passing it an xml document
+
+        :param xml_doc: The XML document to send
+        :type xml_doc: xml.etree.ElementTree
+        """
+        return self.put("team/{}/roster".format(team_key), xml_doc)

@@ -2,6 +2,7 @@
 
 from yahoo_fantasy_api import yhandler
 import objectpath
+from xml.dom.minidom import Document
 
 
 class Team:
@@ -92,3 +93,52 @@ class Team:
         except StopIteration:
             pass
         return roster
+
+    def modify_positions(self, day, modified_lineup):
+        """Modify the starting positions of a subset of players in your lineup
+
+        This raises a RuntimeError if any error occurs when communicating with
+        Yahoo!
+
+        :param day: The day that the new positions take affect.  This should be
+        the starting day of the week.
+        :type day: datetime.date
+        :param modified_lineup: List of players to modify.  Each entry should
+        have a dict with the following keys: player_id - player ID of the
+        player to change; selected_position - new position of the player.
+        :type modified_lineup: list(dict)
+
+        >>>
+        import datetime
+        cd = datetime.date(2019, 10, 7)
+        plyrs = [{'player_id': 5981, 'selected_position': 'BN'},
+                 {'player_id': 4558, 'selected_position': 'BN'}]
+        tm.modify_positions(cd, plyrs)
+        """
+        xml = self._construct_mod_roster_xml(day, modified_lineup)
+        self.yhandler.put_roster(self.team_key, xml)
+
+    def _construct_mod_roster_xml(self, day, modified_lineup):
+        """Construct XML to pass to Yahoo! that will modified the positions"""
+        doc = Document()
+        roster = doc.appendChild(doc.createElement('fantasy_content')) \
+            .appendChild(doc.createElement('roster'))
+
+        roster.appendChild(doc.createElement('coverage_type')) \
+            .appendChild(doc.createTextNode('date'))
+        roster.appendChild(doc.createElement('date')) \
+            .appendChild(doc.createTextNode(day.strftime("%Y-%m-%d")))
+
+        plyrs = roster.appendChild(doc.createElement('players'))
+        for plyr in modified_lineup:
+            p = plyrs.appendChild(doc.createElement('player'))
+            p.appendChild(doc.createElement('player_key')) \
+                .appendChild(doc.createTextNode('{}.p.{}'.format(
+                    self._league_prefix(), plyr['player_id'])))
+            p.appendChild(doc.createElement('position')) \
+                .appendChild(doc.createTextNode(plyr['selected_position']))
+
+        return doc.toprettyxml()
+
+    def _league_prefix(self):
+        return self.team_key[0:self.team_key.find('.')]
