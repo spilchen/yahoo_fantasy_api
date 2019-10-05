@@ -17,6 +17,8 @@ class Team:
     def __init__(self, sc, team_key):
         self.sc = sc
         self.team_key = team_key
+        self.league_id = team_key[0:team_key.find(".t")]
+        self.league_prefix = team_key[0:team_key.find('.')]
         self.yhandler = yhandler.YHandler(sc)
 
     def inject_yhandler(self, yhandler):
@@ -94,15 +96,15 @@ class Team:
             pass
         return roster
 
-    def modify_positions(self, day, modified_lineup):
-        """Modify the starting positions of a subset of players in your lineup
+    def change_positions(self, day, modified_lineup):
+        """Change the starting position of a subset of players in your lineup
 
         This raises a RuntimeError if any error occurs when communicating with
         Yahoo!
 
         :param day: The day that the new positions take affect.  This should be
         the starting day of the week.
-        :type day: datetime.date
+        :type day: :class: datetime.date
         :param modified_lineup: List of players to modify.  Each entry should
         have a dict with the following keys: player_id - player ID of the
         player to change; selected_position - new position of the player.
@@ -113,12 +115,48 @@ class Team:
         cd = datetime.date(2019, 10, 7)
         plyrs = [{'player_id': 5981, 'selected_position': 'BN'},
                  {'player_id': 4558, 'selected_position': 'BN'}]
-        tm.modify_positions(cd, plyrs)
+        tm.change_positions(cd, plyrs)
         """
-        xml = self._construct_mod_roster_xml(day, modified_lineup)
+        xml = self._construct_change_roster_xml(day, modified_lineup)
         self.yhandler.put_roster(self.team_key, xml)
 
-    def _construct_mod_roster_xml(self, day, modified_lineup):
+    def add_player(self, player_id):
+        """Add a single player by their player ID
+
+        :param player_id: Yahoo! player ID of the player to add
+        :type player_id: int
+
+        >>> tm.add_player(6767)
+        """
+        xml = self._construct_transaction_xml("add", player_id)
+        self.yhandler.post_transactions(self.league_id, xml)
+
+    def drop_player(self, player_id):
+        """Drop a single player by their player ID
+
+        :param player_id: Yahoo! player ID of the player to drop
+        :type player_id: int
+
+        >>> tm.drop_player(6770)
+        """
+        xml = self._construct_transaction_xml("drop", player_id)
+        self.yhandler.post_transactions(self.league_id, xml)
+
+    def add_and_drop_players(self, add_player_id, drop_player_id):
+        """Add one player and drop another in the same transaction
+
+        :param add_player_id: Yahoo! player ID of the player to add
+        :type add_player_id: int
+        :param drop_player_id: Yahoo! player ID of the player to drop
+        :type drop_player_id: int
+
+        >>> tm.add_and_drop_players(6770, 6767)
+        """
+        xml = self._construct_transaction_xml("add/drop", add_player_id,
+                                              drop_player_id)
+        self.yhandler.post_transactions(self.league_id, xml)
+
+    def _construct_change_roster_xml(self, day, modified_lineup):
         """Construct XML to pass to Yahoo! that will modified the positions"""
         doc = Document()
         roster = doc.appendChild(doc.createElement('fantasy_content')) \
@@ -134,11 +172,44 @@ class Team:
             p = plyrs.appendChild(doc.createElement('player'))
             p.appendChild(doc.createElement('player_key')) \
                 .appendChild(doc.createTextNode('{}.p.{}'.format(
-                    self._league_prefix(), plyr['player_id'])))
+                    self.league_prefix, plyr['player_id'])))
             p.appendChild(doc.createElement('position')) \
                 .appendChild(doc.createTextNode(plyr['selected_position']))
 
         return doc.toprettyxml()
 
-    def _league_prefix(self):
-        return self.team_key[0:self.team_key.find('.')]
+    def _construct_transaction_xml(self, action, *player_ids):
+        doc = Document()
+        transaction = doc.appendChild(doc.createElement('fantasy_content')) \
+            .appendChild(doc.createElement('transaction'))
+
+        transaction.appendChild(doc.createElement('type')) \
+            .appendChild(doc.createTextNode(action))
+        if action == 'add/drop':
+            players = transaction.appendChild(doc.createElement('players'))
+            self._construct_transaction_player_xml(doc, players, player_ids[0],
+                                                   "add")
+            self._construct_transaction_player_xml(doc, players, player_ids[1],
+                                                   "drop")
+        else:
+            self._construct_transaction_player_xml(doc, transaction,
+                                                   player_ids[0], action)
+        return doc.toprettyxml()
+
+    def _construct_transaction_player_xml(self, doc, root, player_id, action):
+        if action == 'add':
+            team_elem = 'destination_team_key'
+        elif action == 'drop':
+            team_elem = 'source_team_key'
+        else:
+            assert(False), 'Unknown action: ' + action
+
+        player = root.appendChild(doc.createElement('player'))
+        player.appendChild(doc.createElement('player_key')) \
+            .appendChild(doc.createTextNode('{}.p.{}'.format(
+                self.league_prefix, player_id)))
+        tdata = player.appendChild(doc.createElement('transaction_data'))
+        tdata.appendChild(doc.createElement('type')) \
+            .appendChild(doc.createTextNode(action))
+        tdata.appendChild(doc.createElement(team_elem)) \
+            .appendChild(doc.createTextNode(self.team_key))

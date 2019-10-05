@@ -27,18 +27,36 @@ class YHandler:
         return jresp
 
     def put(self, uri, data):
-        """Calls the put method to the uri with a payload
+        """Calls the PUT method to the uri with a payload
 
         :param uri: URI of the API to call
         :type uri: str
-        :param data: Bytes to pass as the payload
-        :return: JSON document of the response
+        :param data: What to pass as the payload
+        :type data: str
+        :return: XML document of the response
         :raises: RuntimeError if any response comes back with an error
         """
         headers = {'Content-Type': 'application/xml'}
         response = self.sc.session.put("{}/{}".format(YAHOO_ENDPOINT, uri),
                                        data=data, headers=headers)
         if response.status_code != 200:
+            raise RuntimeError(response.content)
+        return response
+
+    def post(self, uri, data):
+        """Calls the POST method to the URI with a payload
+
+        :param uri: URI of the API to call
+        :type uri: str
+        :param data: What to pass as the payload
+        :type data: str
+        :return: XML document of the response
+        :raises: RuntimeError if any response comes back with an error
+        """
+        headers = {'Content-Type': 'application/xml'}
+        response = self.sc.session.post("{}/{}".format(YAHOO_ENDPOINT, uri),
+                                        data=data, headers=headers)
+        if response.status_code != 201:
             raise RuntimeError(response.content)
         return response
 
@@ -161,10 +179,24 @@ class YHandler:
             "league/{}/players;player_keys={}/percent_owned".
             format(league_id, joined_ids))
 
-    def put_roster(self, team_key, xml_doc):
-        """Calls put against the roster API passing it an xml document
+    def put_roster(self, team_key, xml):
+        """Calls PUT against the roster API passing it an xml document
 
-        :param xml_doc: The XML document to send
-        :type xml_doc: xml.etree.ElementTree
+        :param team_key: The key of the team the roster move applies too
+        :type team_key: str
+        :param xml: The XML document to send
+        :type xml: str
+        :return: Response from the PUT
         """
-        return self.put("team/{}/roster".format(team_key), xml_doc)
+        return self.put("team/{}/roster".format(team_key), xml)
+
+    def post_transactions(self, league_id, xml):
+        """Calls POST against the transaction API passing it an xml document
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :param xml: The XML document to send as the payload
+        :type xml: str
+        :return: Response from the POST
+        """
+        return self.post("league/{}/transactions".format(league_id), xml)
