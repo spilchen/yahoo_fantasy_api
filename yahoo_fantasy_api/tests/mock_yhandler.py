@@ -53,13 +53,15 @@ class YHandler:
         with open(self.dir_path + "/sample.matchup.json", "r") as f:
             return json.load(f)
 
-    def get_roster_raw(self, team_key, week):
+    def get_roster_raw(self, team_key, week=None, day=None):
         """Return the raw JSON when requesting a team's roster
 
         :param team_key: Team key identifier to find the matchups for
         :type team_key: str
-        :param week: What week number to request the matchup for?
+        :param week: What week number to request the roster for?
         :type week: int
+        :param day: What day number to request the roster
+        :type day: datetime.date
         :return: JSON of the request
         """
         with open(self.dir_path + "/sample.team_roster.json", "r") as f:

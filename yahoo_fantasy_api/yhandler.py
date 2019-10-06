@@ -96,16 +96,27 @@ class YHandler:
         """
         return self.get("team/{}/matchups;weeks={}".format(team_key, week))
 
-    def get_roster_raw(self, team_key, week):
+    def get_roster_raw(self, team_key, week=None, day=None):
         """Return the raw JSON when requesting a team's roster
+
+        Can request a roster for a given week or a given day.  If neither is
+        given the current day's roster is returned.
 
         :param team_key: Team key identifier to find the matchups for
         :type team_key: str
-        :param week: What week number to request the matchup for?
+        :param week: What week number to request the roster for?
         :type week: int
+        :param day: What day number to request the roster
+        :type day: datetime.date
         :return: JSON of the request
         """
-        return self.get("team/{}/roster;week={}".format(team_key, week))
+        if week is not None:
+            param = ";week={}".format(week)
+        elif day is not None:
+            param = ";date={}".format(day.strftime("%Y-%m-%d"))
+        else:
+            param = ""
+        return self.get("team/{}/roster{}".format(team_key, param))
 
     def get_scoreboard_raw(self, league_id, week=None):
         """Return the raw JSON when requesting the scoreboard for a week

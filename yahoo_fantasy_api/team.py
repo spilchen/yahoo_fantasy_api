@@ -43,11 +43,15 @@ class Team:
                     return this_team_key
         raise RuntimeError("Could not find opponent")
 
-    def roster(self, week):
-        """Return the team roster for a given week
+    def roster(self, week=None, day=None):
+        """Return the team roster for a given week or date
+
+        If neither week or day is specified it will return today's roster.
 
         :param week: Week number of the roster to get
         :type week: int
+        :param day: Day to get the roster
+        :type day: :class: datetime.date
         :return: Array of players.  Each entry is a dict with the following
            fields: player_id, name, position_type, eligible_positions,
            selected_position
@@ -62,7 +66,8 @@ class Team:
          {'player_id': 9961, 'name': 'Ed Reliever', 'position_type': 'P',
          'eligible_positions': ['RP'], 'status': ''}]
         """
-        t = objectpath.Tree(self.yhandler.get_roster_raw(self.team_key, week))
+        t = objectpath.Tree(self.yhandler.get_roster_raw(self.team_key,
+                                                         week=week, day=day))
         it = t.execute('''
                         $..(player_id,full,position_type,eligible_positions,
                             selected_position,status)''')
