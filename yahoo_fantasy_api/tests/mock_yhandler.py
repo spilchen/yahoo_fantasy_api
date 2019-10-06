@@ -85,7 +85,7 @@ class YHandler:
 
     def get_players_raw(self, league_id, start, status, position=None):
         assert(position == "C"), "Position must be 2B for mock"
-        assert(status == "A"), "FreeAgents only for mock"
+        assert(status == "FA"), "FreeAgents only for mock"
         if start == 0:
             pg = "1"
         elif start == 25:

@@ -246,7 +246,7 @@ class League:
         self.free_agent_cache[position] = []
         plyrIndex = 0
         while plyrIndex % PLAYERS_PER_PAGE == 0:
-            j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'A',
+            j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'FA',
                                               position=position)
             (num_plyrs_on_pg, fa_on_pg) = self._free_agents_from_page(j)
             self.free_agent_cache[position] += fa_on_pg
