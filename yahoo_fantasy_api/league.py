@@ -25,6 +25,8 @@ class League:
         self.free_agent_cache = {}
         self.stat_categories_cache = None
         self.settings_cache = None
+        self.edit_date_cache = None
+        self.positions_cache = None
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -410,3 +412,48 @@ class League:
         except StopIteration:
             pass
         return po
+
+    def edit_date(self):
+        """Return the next day that you can edit the lineups.
+
+        :return: edit date
+        :rtype: :class: datetime.date
+        """
+        if self.edit_date_cache is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            edit_key = t.execute('$..edit_key[0]')
+            self.edit_date_cache = \
+                datetime.datetime.strptime(edit_key, '%Y-%m-%d').date()
+        return self.edit_date_cache
+
+    def positions(self):
+        """Return the positions that are used in the league.
+
+        :return: Dictionary of positions.  Each key is a position, with a count
+        and position type as the values.
+        :rtype: dict(dict(position_type, count))
+
+        >>> lg.positions()
+        {'C': {'position_type': 'P', 'count': 2},
+         'LW': {'position_type': 'P', 'count': 2},
+         'RW': {'position_type': 'P', 'count': 2},
+         'D': {'position_type': 'P', 'count': 4},
+         'G': {'position_type': 'G', 'count': 2},
+         'BN': {'count': 2},
+         'IR': {'count': '3'}}
+        """
+        if self.positions_cache is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            pmap = {}
+            for p in t.execute('$..roster_position'):
+                pmap[p['position']] = {}
+                for k, v in p.items():
+                    if k == 'position':
+                        continue
+                    if k == 'count':
+                        v = int(v)
+                    pmap[p['position']][k] = v
+            self.positions_cache = pmap
+        return self.positions_cache

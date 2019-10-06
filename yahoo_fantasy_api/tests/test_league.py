@@ -126,3 +126,20 @@ def test_percent_owned(mock_league):
     assert(po[1]['player_id'] == 6381)
     assert(po[1]['name'] == 'Dylan Larkin')
     assert(po[1]['percent_owned'] == 89)
+
+
+def test_edit_date(mock_league):
+    dt = mock_league.edit_date()
+    assert(type(dt) == datetime.date)
+    assert(dt == datetime.date(2019, 4, 1))
+
+
+def test_positions(mock_league):
+    ps = mock_league.positions()
+    assert('DL' in ps)
+    assert(ps['DL']['count'] == 3)
+    assert('BN' in ps)
+    assert(ps['BN']['count'] == 2)
+    assert('2B' in ps)
+    assert(ps['2B']['count'] == 1)
+    assert(ps['2B']['position_type'] == 'B')
