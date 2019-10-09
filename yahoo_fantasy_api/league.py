@@ -249,6 +249,8 @@ class League:
             j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'FA',
                                               position=position)
             (num_plyrs_on_pg, fa_on_pg) = self._free_agents_from_page(j)
+            if len(fa_on_pg) == 0:
+                break
             self.free_agent_cache[position] += fa_on_pg
             plyrIndex += num_plyrs_on_pg
 
@@ -262,6 +264,10 @@ class League:
         :rtype: (int, list(dict))
         """
         fa = []
+
+        if len(page['fantasy_content']['league'][1]['players']) == 0:
+            return (0, fa)
+
         t = objectpath.Tree(page)
         pct_owns = self._pct_owned_from_fa(iter(list(t.execute(
             '$..percent_owned.(coverage_type,value)'))))
