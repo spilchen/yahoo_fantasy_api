@@ -177,7 +177,7 @@ class Team:
             p = plyrs.appendChild(doc.createElement('player'))
             p.appendChild(doc.createElement('player_key')) \
                 .appendChild(doc.createTextNode('{}.p.{}'.format(
-                    self.league_prefix, plyr['player_id'])))
+                    self.league_prefix, int(plyr['player_id']))))
             p.appendChild(doc.createElement('position')) \
                 .appendChild(doc.createTextNode(plyr['selected_position']))
 
@@ -212,7 +212,7 @@ class Team:
         player = root.appendChild(doc.createElement('player'))
         player.appendChild(doc.createElement('player_key')) \
             .appendChild(doc.createTextNode('{}.p.{}'.format(
-                self.league_prefix, player_id)))
+                self.league_prefix, int(player_id))))
         tdata = player.appendChild(doc.createElement('transaction_data'))
         tdata.appendChild(doc.createElement('type')) \
             .appendChild(doc.createTextNode(action))
