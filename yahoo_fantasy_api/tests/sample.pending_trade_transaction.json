@@ -1,0 +1,456 @@
+{
+    "fantasy_content": {
+        "xml:lang": "en-US",
+        "yahoo:uri": "/fantasy/v2/league/396.l.49770/transactions;team_key=396.l.49770.t.4;type=pending_trade",
+        "league": [
+            {
+                "league_key": "396.l.49770",
+                "league_id": "49770",
+                "name": "Bot maker",
+                "url": "https://hockey.fantasysports.yahoo.com/hockey/49770",
+                "logo_url": false,
+                "draft_status": "postdraft",
+                "num_teams": 6,
+                "edit_key": "2019-11-04",
+                "weekly_deadline": "1",
+                "league_update_timestamp": "1572767599",
+                "scoring_type": "head",
+                "league_type": "private",
+                "renew": "",
+                "renewed": "",
+                "iris_group_chat_id": "",
+                "allow_add_to_dl_extra_pos": 1,
+                "is_pro_league": "0",
+                "is_cash_league": "0",
+                "current_week": 4,
+                "start_week": "1",
+                "start_date": "2019-10-02",
+                "end_week": "18",
+                "end_date": "2020-02-16",
+                "game_code": "nhl",
+                "season": "2019"
+            },
+            {
+                "transactions": {
+                    "0": {
+                        "transaction": [
+                            {
+                                "transaction_key": "396.l.49770.pt.1",
+                                "type": "pending_trade",
+                                "status": "proposed",
+                                "trader_team_key": "396.l.49770.t.4",
+                                "trader_team_name": "Sharks",
+                                "tradee_team_key": "396.l.49770.t.5",
+                                "tradee_team_name": "Eagles",
+                                "trade_proposed_time": "1572812431",
+                                "tradee_unused_roster_spots": 0,
+                                "current_login_can_respond": 0,
+                                "trade_roster_reflect_key": "2019-11-04",
+                                "trade_note": ""
+                            },
+                            {
+                                "players": {
+                                    "0": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.4472"
+                                                },
+                                                {
+                                                    "player_id": "4472"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Drew Doughty",
+                                                        "first": "Drew",
+                                                        "last": "Doughty",
+                                                        "ascii_first": "Drew",
+                                                        "ascii_last": "Doughty"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "LA"
+                                                },
+                                                {
+                                                    "display_position": "D"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.4",
+                                                        "source_team_name": "Sharks",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.5",
+                                                        "destination_team_name": "Eagles"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.5689"
+                                                },
+                                                {
+                                                    "player_id": "5689"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Jacob Trouba",
+                                                        "first": "Jacob",
+                                                        "last": "Trouba",
+                                                        "ascii_first": "Jacob",
+                                                        "ascii_last": "Trouba"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "NYR"
+                                                },
+                                                {
+                                                    "display_position": "D"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.5",
+                                                        "source_team_name": "Eagles",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.4",
+                                                        "destination_team_name": "Sharks"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "count": 2
+                                }
+                            }
+                        ]
+                    },
+                    "1": {
+                        "transaction": [
+                            {
+                                "transaction_key": "396.l.49770.pt.2",
+                                "type": "pending_trade",
+                                "status": "proposed",
+                                "trader_team_key": "396.l.49770.t.4",
+                                "trader_team_name": "Sharks",
+                                "tradee_team_key": "396.l.49770.t.3",
+                                "tradee_team_name": "Ducks",
+                                "trade_proposed_time": "1572830425",
+                                "tradee_unused_roster_spots": 0,
+                                "current_login_can_respond": 0,
+                                "trade_roster_reflect_key": "2019-11-04",
+                                "trade_note": ""
+                            },
+                            {
+                                "players": {
+                                    "0": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.4002"
+                                                },
+                                                {
+                                                    "player_id": "4002"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Claude Giroux",
+                                                        "first": "Claude",
+                                                        "last": "Giroux",
+                                                        "ascii_first": "Claude",
+                                                        "ascii_last": "Giroux"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Phi"
+                                                },
+                                                {
+                                                    "display_position": "C,LW,RW"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.4",
+                                                        "source_team_name": "Sharks",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.3",
+                                                        "destination_team_name": "Ducks"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.3798"
+                                                },
+                                                {
+                                                    "player_id": "3798"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Tuukka Rask",
+                                                        "first": "Tuukka",
+                                                        "last": "Rask",
+                                                        "ascii_first": "Tuukka",
+                                                        "ascii_last": "Rask"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Bos"
+                                                },
+                                                {
+                                                    "display_position": "G"
+                                                },
+                                                {
+                                                    "position_type": "G"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.4",
+                                                        "source_team_name": "Sharks",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.3",
+                                                        "destination_team_name": "Ducks"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "2": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.5981"
+                                                },
+                                                {
+                                                    "player_id": "5981"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Aleksander Barkov",
+                                                        "first": "Aleksander",
+                                                        "last": "Barkov",
+                                                        "ascii_first": "Aleksander",
+                                                        "ascii_last": "Barkov"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Fla"
+                                                },
+                                                {
+                                                    "display_position": "C"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.3",
+                                                        "source_team_name": "Ducks",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.4",
+                                                        "destination_team_name": "Sharks"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "3": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.4685"
+                                                },
+                                                {
+                                                    "player_id": "4685"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Brayden Schenn",
+                                                        "first": "Brayden",
+                                                        "last": "Schenn",
+                                                        "ascii_first": "Brayden",
+                                                        "ascii_last": "Schenn"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "StL"
+                                                },
+                                                {
+                                                    "display_position": "C,LW"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.3",
+                                                        "source_team_name": "Ducks",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.4",
+                                                        "destination_team_name": "Sharks"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "count": 4
+                                }
+                            }
+                        ]
+                    },
+                    "2": {
+                        "transaction": [
+                            {
+                                "transaction_key": "396.l.49770.pt.3",
+                                "type": "pending_trade",
+                                "status": "proposed",
+                                "trader_team_key": "396.l.49770.t.2",
+                                "trader_team_name": "Seals",
+                                "tradee_team_key": "396.l.49770.t.4",
+                                "tradee_team_name": "Sharks",
+                                "trade_proposed_time": "1572832911",
+                                "tradee_unused_roster_spots": 0,
+                                "current_login_can_respond": 1,
+                                "trade_roster_reflect_key": "2019-11-04",
+                                "trade_note": ""
+                            },
+                            {
+                                "players": {
+                                    "0": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.5987"
+                                                },
+                                                {
+                                                    "player_id": "5987"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Rasmus Ristolainen",
+                                                        "first": "Rasmus",
+                                                        "last": "Ristolainen",
+                                                        "ascii_first": "Rasmus",
+                                                        "ascii_last": "Ristolainen"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Buf"
+                                                },
+                                                {
+                                                    "display_position": "D"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.2",
+                                                        "source_team_name": "Seals",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.4",
+                                                        "destination_team_name": "Sharks"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "player": [
+                                            [
+                                                {
+                                                    "player_key": "396.p.4064"
+                                                },
+                                                {
+                                                    "player_id": "4064"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Kris Letang",
+                                                        "first": "Kris",
+                                                        "last": "Letang",
+                                                        "ascii_first": "Kris",
+                                                        "ascii_last": "Letang"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Pit"
+                                                },
+                                                {
+                                                    "display_position": "D"
+                                                },
+                                                {
+                                                    "position_type": "P"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [
+                                                    {
+                                                        "type": "pending_trade",
+                                                        "source_type": "team",
+                                                        "source_team_key": "396.l.49770.t.4",
+                                                        "source_team_name": "Sharks",
+                                                        "destination_type": "team",
+                                                        "destination_team_key": "396.l.49770.t.2",
+                                                        "destination_team_name": "Seals"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "count": 2
+                                }
+                            }
+                        ]
+                    },
+                    "count": 3
+                }
+            }
+        ],
+        "time": "25.577068328857ms",
+        "copyright": "Data provided by Yahoo! and STATS, LLC",
+        "refresh_rate": "60"
+    }
+}

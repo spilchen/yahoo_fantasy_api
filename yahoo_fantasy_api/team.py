@@ -161,6 +161,122 @@ class Team:
                                               drop_player_id)
         self.yhandler.post_transactions(self.league_id, xml)
 
+    def proposed_trades(self):
+        """
+        Retrieve information for any proposed trades that include your team
+
+        :return: List of proposed trade transactions that you have offered and
+        have been offered to you.
+
+        >>> tm.proposed_trades()
+        [{'transaction_key': '396.l.49770.pt.1',
+          'status': 'proposed',
+          'trader_team_key': '396.l.49770.t.4',
+          'tradee_team_key': '396.l.49770.t.5',
+          'trader_players': [{'player_id': '4472',
+            'name': 'Drew Doughty',
+            'position_type': 'P'}],
+          'tradee_players': [{'player_id': '5689',
+            'name': 'Jacob Trouba',
+            'position_type': 'P'}]},
+         {'transaction_key': '396.l.49770.pt.2',
+          'status': 'proposed',
+          'trader_team_key': '396.l.49770.t.4',
+          'tradee_team_key': '396.l.49770.t.3',
+          'trader_players': [{'player_id': '4002',
+            'name': 'Claude Giroux',
+            'position_type': 'P'},
+         {'player_id': '3798', 'name': 'Tuukka Rask', 'position_type': 'G'}],
+          'tradee_players': [{'player_id': '5981',
+          'name': 'Aleksander Barkov',
+          'position_type': 'P'},
+         {'player_id': '4685', 'name': 'Brayden Schenn',
+           'position_type': 'P'}]}],
+         {'transaction_key': '396.l.49770.pt.3',
+          'status': 'proposed',
+          'trader_team_key': '396.l.49770.t.2',
+          'tradee_team_key': '396.l.49770.t.4',
+          'trader_players': [{'player_id': '5987',
+            'name': 'Rasmus Ristolainen', 'position_type': 'P'}],
+          'tradee_players': [{'player_id': '4064',
+            'name': 'Kris Letang', 'position_type': 'P'}]}]
+        """
+        j = self.yhandler.get_team_transactions(self.league_id, self.team_key,
+                                                "pending_trade")
+        t = objectpath.Tree(j)
+        trans = []
+        trans_it = t.execute('''$..transaction.(transaction_key,
+                                                status,
+                                                trader_team_key,
+                                                tradee_team_key)''')
+        for i, tran in enumerate(trans_it):
+            tran["trader_players"] = []
+            tran["tradee_players"] = []
+
+            def append_player(plyr):
+                """Helper to append a player to proper team list"""
+                trader_tm = plyr["source_team_key"] == tran["trader_team_key"]
+                del plyr["source_team_key"]
+                if trader_tm:
+                    tran["trader_players"].append(plyr)
+                else:
+                    tran["tradee_players"].append(plyr)
+
+            plyr_it = t.execute('''
+                $..transactions.'{}'..(player_id,full,position_type,
+                                      source_team_key)'''.format(i))
+            key_mapper = {"full": "name"}
+            plyr = {}
+            for elem in plyr_it:
+                for key, value in elem.items():
+                    if key in plyr:
+                        append_player(plyr)
+                        plyr = {}
+                    if key in key_mapper:
+                        plyr[key_mapper[key]] = value
+                    else:
+                        plyr[key] = value
+            append_player(plyr)
+            trans.append(tran)
+        return trans
+
+    def reject_trade(self, transaction_key, trade_note=""):
+        """
+        Reject a proposed trade
+
+        :param transaction_key: Transction to reject.  This key is taken from
+        the output of the proposed_trades() API.
+        :type transaction_key: str
+        """
+        xml = self._construct_trade_xml(transaction_key, "reject", trade_note)
+        self.yhandler.put_transaction(transaction_key, xml)
+
+    def accept_trade(self, transaction_key, trade_note=""):
+        """
+        Accept a proposed trade
+
+        :param transaction_key: Transction to accept.  This key is taken from
+        the output of the proposed_trades() API.
+        :type transaction_key: str
+        """
+        xml = self._construct_trade_xml(transaction_key, "accept", trade_note)
+        self.yhandler.put_transaction(transaction_key, xml)
+
+    def _construct_trade_xml(self, transaction_key, action, trade_note):
+        doc = Document()
+        tran = doc.appendChild(doc.createElement('fantasy_content')) \
+            .appendChild(doc.createElement('transaction'))
+
+        tran.appendChild(doc.createElement('transaction_key')) \
+            .appendChild(doc.createTextNode(transaction_key))
+        tran.appendChild(doc.createElement('type')) \
+            .appendChild(doc.createTextNode('pending_trade'))
+        tran.appendChild(doc.createElement('action')) \
+            .appendChild(doc.createTextNode(action))
+        tran.appendChild(doc.createElement('trade_note')) \
+            .appendChild(doc.createTextNode(trade_note))
+        return doc.toprettyxml()
+
     def _construct_change_roster_xml(self, day, modified_lineup):
         """Construct XML to pass to Yahoo! that will modified the positions"""
         doc = Document()

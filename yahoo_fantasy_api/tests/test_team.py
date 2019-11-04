@@ -33,3 +33,21 @@ def test_roster_status(mock_team):
     assert(r[1]['name'] == 'Paul Goldschmidt')
     assert(r[1]['status'] == '')
     assert(r[1]['eligible_positions'] == ['1B', 'Util'])
+
+
+def test_proposed_trades(mock_team):
+    trs = mock_team.proposed_trades()
+    print(trs)
+    assert(len(trs) == 3)
+    assert(trs[0]['transaction_key'] == '396.l.49770.pt.1')
+    assert(len(trs[0]['trader_players']) == 1)
+    assert(trs[0]['trader_players'][0]['name'] == 'Drew Doughty')
+    assert(len(trs[0]['tradee_players']) == 1)
+    assert(trs[0]['tradee_players'][0]['name'] == 'Jacob Trouba')
+    assert(trs[1]['transaction_key'] == '396.l.49770.pt.2')
+    assert(len(trs[1]['trader_players']) == 2)
+    assert(trs[1]['trader_players'][0]['name'] == 'Claude Giroux')
+    assert(trs[1]['trader_players'][1]['name'] == 'Tuukka Rask')
+    assert(len(trs[1]['tradee_players']) == 2)
+    assert(trs[1]['tradee_players'][0]['name'] == 'Aleksander Barkov')
+    assert(trs[1]['tradee_players'][1]['name'] == 'Brayden Schenn')

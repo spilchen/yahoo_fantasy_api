@@ -102,3 +102,8 @@ class YHandler:
         fn = self.dir_path + "/sample.percent_owned.json"
         with open(fn, "r") as f:
             return json.load(f)
+
+    def get_team_transactions(self, league_id, team_key, tran_type):
+        fn = self.dir_path + "/sample.pending_trade_transaction.json"
+        with open(fn, "r") as f:
+            return json.load(f)

@@ -211,3 +211,32 @@ class YHandler:
         :return: Response from the POST
         """
         return self.post("league/{}/transactions".format(league_id), xml)
+
+    def get_team_transactions(self, league_id, team_key, tran_type):
+        """
+        Calls GET to retrieve transactions for a team of a given type.
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :param team_key: The key of the team the roster move applies too
+        :type team_key: str
+        :param tran_type: The type of transaction retrieve.  Valid values
+        are: waiver or pending_trade
+        :return: Response from the GET
+        """
+        return self.get(
+            "league/{}/transactions;team_key={};type={}".format(
+                league_id, team_key, tran_type))
+
+    def put_transaction(self, transaction_key, xml):
+        """
+        PUT to the transaction API
+
+        This can be used to accept/reject trades, voting for/against a trade,
+        and editing a waiver claim.
+
+        :param xml: The XML document to send
+        :type xml: str
+        :return: Response from the PUT
+        """
+        return self.put("transaction/" + str(transaction_key), xml)
