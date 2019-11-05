@@ -190,11 +190,11 @@ class League:
         Can only request the date range at most one week in the future.  This
         restriction exists because Yahoo! only provides the week range when the
         matchups are known.  And during the playoffs, the matchup is only known
-        for the current week.  A RuntimeError exception is returned if a
-        request is for a week too far in the future.
+        for the current week.  A :class:`RuntimeError` exception is returned if
+        a request is for a week too far in the future.
 
         :return: Start and end date of the given week
-        :rtype: Pair of datetime.date objects
+        :rtype: Tuple of two :class:`datetime.date` objects
 
         >>> lg.week_date_range(12)
         (datetime.date(2019, 6, 17), datetime.date(2019, 6, 23))
@@ -333,7 +333,7 @@ class League:
 
         :param week: Week to request
         :return: Start and end date of the given week
-        :rtype: Pair of datetime.date objects
+        :rtype: Tuple of two :class: datetime.date objects
         """
         if week not in self.week_date_range_cache:
             t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
@@ -351,6 +351,7 @@ class League:
         :type player_name: str
         :return: Player details
         :rtype: dict
+
         >>> lg.player_details("Antonio Brown")
         {
             'bye_weeks': {'week': '6'},
@@ -437,7 +438,7 @@ class League:
         """Return the positions that are used in the league.
 
         :return: Dictionary of positions.  Each key is a position, with a count
-        and position type as the values.
+            and position type as the values.
         :rtype: dict(dict(position_type, count))
 
         >>> lg.positions()

@@ -108,11 +108,11 @@ class Team:
         Yahoo!
 
         :param day: The day that the new positions take affect.  This should be
-        the starting day of the week.
-        :type day: :class: datetime.date
+            the starting day of the week.
+        :type day: :class:`datetime.date`
         :param modified_lineup: List of players to modify.  Each entry should
-        have a dict with the following keys: player_id - player ID of the
-        player to change; selected_position - new position of the player.
+            have a dict with the following keys: player_id - player ID of the
+            player to change; selected_position - new position of the player.
         :type modified_lineup: list(dict)
 
         >>>
@@ -166,7 +166,7 @@ class Team:
         Retrieve information for any proposed trades that include your team
 
         :return: List of proposed trade transactions that you have offered and
-        have been offered to you.
+            have been offered to you.
 
         >>> tm.proposed_trades()
         [{'transaction_key': '396.l.49770.pt.1',
@@ -245,7 +245,7 @@ class Team:
         Reject a proposed trade
 
         :param transaction_key: Transction to reject.  This key is taken from
-        the output of the proposed_trades() API.
+            the output of the proposed_trades() API.
         :type transaction_key: str
         """
         xml = self._construct_trade_xml(transaction_key, "reject", trade_note)
@@ -256,7 +256,7 @@ class Team:
         Accept a proposed trade
 
         :param transaction_key: Transction to accept.  This key is taken from
-        the output of the proposed_trades() API.
+            the output of the proposed_trades() API.
         :type transaction_key: str
         """
         xml = self._construct_trade_xml(transaction_key, "accept", trade_note)

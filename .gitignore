@@ -6,3 +6,5 @@ __pycache__
 yahoo_fantasy_api.egg-info/
 oauth2.json
 docs/_build
+*.pyc
+.pytest_cache/
