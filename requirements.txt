@@ -3,3 +3,6 @@ docopt
 yahoo_oauth
 objectpath
 pytz
+sphinx
+sphinx_rtd_theme
+mock

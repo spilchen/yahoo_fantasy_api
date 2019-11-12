@@ -1,20 +1,13 @@
 #!/bin/python
 
-import yahoo_fantasy_api as yfa
-import mock_yhandler
 
-
-def test_matchup(sc):
-    tm = yfa.Team(sc, '268.l.46645')
-    tm.inject_yhandler(mock_yhandler.YHandler())
-    opponent = tm.matchup(3)
+def test_matchup(mock_team):
+    opponent = mock_team.matchup(3)
     assert(opponent == '388.l.27081.t.5')
 
 
-def test_roster(sc):
-    tm = yfa.Team(sc, '268.l.46645')
-    tm.inject_yhandler(mock_yhandler.YHandler())
-    r = tm.roster(3)
+def test_roster(mock_team):
+    r = mock_team.roster(3)
     print(r)
     assert(len(r) == 25)
     print(r[21])
@@ -29,3 +22,32 @@ def test_roster(sc):
     assert(r[5]['eligible_positions'][0] == 'LF')
     assert(r[5]['eligible_positions'][1] == 'Util')
     assert(r[5]['selected_position'] == 'LF')
+
+
+def test_roster_status(mock_team):
+    r = mock_team.roster(3)
+    print(r)
+    assert(r[0]['name'] == 'Buster Posey')
+    assert(r[0]['status'] == 'DTD')
+    assert(r[0]['eligible_positions'] == ['C', '1B', 'Util'])
+    assert(r[1]['name'] == 'Paul Goldschmidt')
+    assert(r[1]['status'] == '')
+    assert(r[1]['eligible_positions'] == ['1B', 'Util'])
+
+
+def test_proposed_trades(mock_team):
+    trs = mock_team.proposed_trades()
+    print(trs)
+    assert(len(trs) == 3)
+    assert(trs[0]['transaction_key'] == '396.l.49770.pt.1')
+    assert(len(trs[0]['trader_players']) == 1)
+    assert(trs[0]['trader_players'][0]['name'] == 'Drew Doughty')
+    assert(len(trs[0]['tradee_players']) == 1)
+    assert(trs[0]['tradee_players'][0]['name'] == 'Jacob Trouba')
+    assert(trs[1]['transaction_key'] == '396.l.49770.pt.2')
+    assert(len(trs[1]['trader_players']) == 2)
+    assert(trs[1]['trader_players'][0]['name'] == 'Claude Giroux')
+    assert(trs[1]['trader_players'][1]['name'] == 'Tuukka Rask')
+    assert(len(trs[1]['tradee_players']) == 2)
+    assert(trs[1]['tradee_players'][0]['name'] == 'Aleksander Barkov')
+    assert(trs[1]['tradee_players'][1]['name'] == 'Brayden Schenn')

@@ -23,6 +23,10 @@ class League:
         self.end_week_cache = None
         self.week_date_range_cache = {}
         self.free_agent_cache = {}
+        self.stat_categories_cache = None
+        self.settings_cache = None
+        self.edit_date_cache = None
+        self.positions_cache = None
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -81,8 +85,8 @@ class League:
 
     def matchups(self):
         """Retrieve matchups data for current week
-        
-        :return: Matchup details as key/value pairs 
+
+        :return: Matchup details as key/value pairs
         :rtype: dict
         """
         json = self.yhandler.get_scoreboard_raw(self.league_id)
@@ -100,15 +104,17 @@ class League:
         'start_date': '2019-03-20', 'end_date': '2019-09-22',
         'game_code': 'mlb', 'season': '2019'}
         """
-        json = self.yhandler.get_settings_raw(self.league_id)
-        t = objectpath.Tree(json)
-        settings_to_return = """
-        name, scoring_type,
-        start_week, current_week, end_week,start_date, end_date,
-        game_code, season
-        """
-        return t.execute('$.fantasy_content.league.({})[0]'.format(
-            settings_to_return))
+        if self.settings_cache is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            settings_to_return = """
+            name, scoring_type,
+            start_week, current_week, end_week,start_date, end_date,
+            game_code, season
+            """
+            self.settings_cache = t.execute(
+                '$.fantasy_content.league.({})[0]'.format(settings_to_return))
+        return self.settings_cache
 
     def stat_categories(self):
         """Return the stat categories for a league
@@ -121,15 +127,17 @@ class League:
         [{'display_name': 'R', 'position_type': 'B'}, {'display_name': 'HR',
         'position_type': 'B'}, {'display_name': 'W', 'position_type': 'P'}]
         """
-        t = objectpath.Tree(self.yhandler.get_settings_raw(self.league_id))
-        json = t.execute('$..stat_categories..stat')
-        simple_stat = []
-        for s in json:
-            # Omit stats that are only for display purposes
-            if 'is_only_display_stat' not in s:
-                simple_stat.append({"display_name": s["display_name"],
-                                    "position_type": s["position_type"]})
-        return simple_stat
+        if self.stat_categories_cache is None:
+            t = objectpath.Tree(self.yhandler.get_settings_raw(self.league_id))
+            json = t.execute('$..stat_categories..stat')
+            simple_stat = []
+            for s in json:
+                # Omit stats that are only for display purposes
+                if 'is_only_display_stat' not in s:
+                    simple_stat.append({"display_name": s["display_name"],
+                                        "position_type": s["position_type"]})
+            self.stat_categories_cache = simple_stat
+        return self.stat_categories_cache
 
     def team_key(self):
         """Return the team_key for logged in users team in this league
@@ -158,7 +166,7 @@ class League:
         if self.current_week_cache is None:
             t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
                 self.league_id))
-            self.current_week_cache = t.execute('$..current_week[0]')
+            self.current_week_cache = int(t.execute('$..current_week[0]'))
         return self.current_week_cache
 
     def end_week(self):
@@ -182,11 +190,11 @@ class League:
         Can only request the date range at most one week in the future.  This
         restriction exists because Yahoo! only provides the week range when the
         matchups are known.  And during the playoffs, the matchup is only known
-        for the current week.  A RuntimeError exception is returned if a
-        request is for a week too far in the future.
+        for the current week.  A :class:`RuntimeError` exception is returned if
+        a request is for a week too far in the future.
 
         :return: Start and end date of the given week
-        :rtype: Pair of datetime.date objects
+        :rtype: Tuple of two :class:`datetime.date` objects
 
         >>> lg.week_date_range(12)
         (datetime.date(2019, 6, 17), datetime.date(2019, 6, 23))
@@ -238,9 +246,11 @@ class League:
         self.free_agent_cache[position] = []
         plyrIndex = 0
         while plyrIndex % PLAYERS_PER_PAGE == 0:
-            j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'A',
+            j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'FA',
                                               position=position)
             (num_plyrs_on_pg, fa_on_pg) = self._free_agents_from_page(j)
+            if len(fa_on_pg) == 0:
+                break
             self.free_agent_cache[position] += fa_on_pg
             plyrIndex += num_plyrs_on_pg
 
@@ -254,8 +264,17 @@ class League:
         :rtype: (int, list(dict))
         """
         fa = []
+
+        if len(page['fantasy_content']['league'][1]['players']) == 0:
+            return (0, fa)
+
         t = objectpath.Tree(page)
-        for i in range(t.execute('$..players.count[0]')):
+        pct_owns = self._pct_owned_from_fa(iter(list(t.execute(
+            '$..percent_owned.(coverage_type,value)'))))
+        # When iterating over the players we step by 2 to account for the
+        # percent_owned data that is stored adjacent to each player.
+        for i, pct_own in zip(range(0, t.execute('$..players.count[0]')*2, 2),
+                              pct_owns):
             path = '$..players..player[{}].'.format(i) + \
                 "(name,player_id,position_type,status,eligible_positions)"
             obj = list(t.execute(path))
@@ -269,11 +288,42 @@ class League:
             # We want to return eligible positions in a concise format.
             plyr['eligible_positions'] = [e['position'] for e in
                                           plyr['eligible_positions']]
+            plyr['percent_owned'] = pct_own
+            if "status" not in plyr:
+                plyr["status"] = ""
 
-            # Ignore players that are not active or on the disabled list
-            if "status" not in plyr or plyr['status'] == 'DTD':
+            # Ignore players that are not active
+            if plyr["status"] != "NA":
                 fa.append(plyr)
-        return (i + 1, fa)
+        return (i/2 + 1, fa)
+
+    def _pct_owned_from_fa(self, po_it):
+        """Extract the ownership % of players taken from a free agent JSON
+
+        Why does this function even need to exist?  When requesting ownership
+        percentage when getting free agents, the ownership percentage is
+        included adjacent to the rest of the player data.  So it cannot be
+        retrieved easily along side the player data and must be extracted
+        separately.
+
+        :param po_it: Extracted ownership % from objectpath
+        :type eles: iterator over a list
+        :return: Ownership percentages of each player on the JSON page
+        :rtype: list(int)
+        """
+        po = []
+        i = 0
+        try:
+            while True:
+                ele = next(po_it)
+                if "coverage_type" in ele:
+                    po.append(0)
+                    i += 1
+                if "value" in ele:
+                    po[i-1] = ele['value']
+        except StopIteration:
+            pass
+        return po
 
     def _date_range_of_played_or_current_week(self, week):
         """Get the date range of a week that was already played or the current
@@ -283,7 +333,7 @@ class League:
 
         :param week: Week to request
         :return: Start and end date of the given week
-        :rtype: Pair of datetime.date objects
+        :rtype: Tuple of two :class: datetime.date objects
         """
         if week not in self.week_date_range_cache:
             t = objectpath.Tree(self.yhandler.get_scoreboard_raw(
@@ -296,7 +346,6 @@ class League:
 
     def player_details(self, player_name):
         """Retrieve details about a specific player
-        
         :parm player_name: Name of the player to get details for
         :type player_name: str
         :return: Player details
@@ -305,29 +354,29 @@ class League:
         {
             'bye_weeks': {'week': '6'},
             'display_position': 'WR',
-            'editorial_player_key': 'nfl.p.24171', 
-            'editorial_team_abbr': 'Oak', 
-            'editorial_team_full_name': 'Oakland Raiders', 
-            'editorial_team_key': 'nfl.t.13', 
-            'eligible_positions': [{...}, {...}], 
-            'has_player_notes': 1, 
-            'has_recent_player_notes': 1, 
+            'editorial_player_key': 'nfl.p.24171',
+            'editorial_team_abbr': 'Oak',
+            'editorial_team_full_name': 'Oakland Raiders',
+            'editorial_team_key': 'nfl.t.13',
+            'eligible_positions': [{...}, {...}],
+            'has_player_notes': 1,
+            'has_recent_player_notes': 1,
             'headshot': {
-                'size': 'small', 
-                'url': 'https://s.yimg.com/...24171.png'}, 
+                'size': 'small',
+                'url': 'https://s.yimg.com/...24171.png'},
             'image_url': 'https://s.yimg.com/...24171.png',
             'is_undroppable': '1',
             'name': {
                 'ascii_first': 'Antonio',
                 'ascii_last': 'Brown',
-                'first': 'Antonio', 
-                'full': 'Antonio Brown', 
+                'first': 'Antonio',
+                'full': 'Antonio Brown',
                 'last': 'Brown'},
             'player_id': '24171', ...}
         """
         json_query = '$..players'
-        t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id, 
-                                                        player_name))
+        t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
+                                                         player_name))
         json = t.execute(json_query)
         player_data = {}
         for player in json:
@@ -339,3 +388,77 @@ class League:
                         for key, value in sub_category.items():
                             player_data[key] = value
             return player_data
+
+    def percent_owned(self, player_ids):
+        """Retrieve ownership percentage of a list of players
+
+        :param player_ids: Yahoo! Player IDs to retrieve % owned for
+        :type player_ids: list(int)
+        :return: Ownership percentage of players requested
+        :rtype: dict
+
+        >>> lg.percent_owned(1, [3737, 6381, 4003, 3705])
+        [{'player_id': 3737, 'name': 'Sidney Crosby', 'percent_owned': 100},
+         {'player_id': 6381, 'name': 'Dylan Larkin', 'percent_owned': 89},
+         {'player_id': 4003, 'name': 'Semyon Varlamov', 'percent_owned': 79},
+         {'player_id': 3705, 'name': 'Dustin Byfuglien', 'percent_owned': 82}]
+        """
+        t = objectpath.Tree(self.yhandler.get_percent_owned_raw(
+            self.league_id, player_ids))
+        player_ids = t.execute("$..player_id")
+        it = t.execute("$..(player_id,full,value)")
+        po = []
+        try:
+            while True:
+                plyr = {"player_id": int(next(it)["player_id"]),
+                        "name": next(it)["full"],
+                        "percent_owned": next(it)["value"]}
+                po.append(plyr)
+        except StopIteration:
+            pass
+        return po
+
+    def edit_date(self):
+        """Return the next day that you can edit the lineups.
+
+        :return: edit date
+        :rtype: :class: datetime.date
+        """
+        if self.edit_date_cache is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            edit_key = t.execute('$..edit_key[0]')
+            self.edit_date_cache = \
+                datetime.datetime.strptime(edit_key, '%Y-%m-%d').date()
+        return self.edit_date_cache
+
+    def positions(self):
+        """Return the positions that are used in the league.
+
+        :return: Dictionary of positions.  Each key is a position, with a count
+            and position type as the values.
+        :rtype: dict(dict(position_type, count))
+
+        >>> lg.positions()
+        {'C': {'position_type': 'P', 'count': 2},
+         'LW': {'position_type': 'P', 'count': 2},
+         'RW': {'position_type': 'P', 'count': 2},
+         'D': {'position_type': 'P', 'count': 4},
+         'G': {'position_type': 'G', 'count': 2},
+         'BN': {'count': 2},
+         'IR': {'count': '3'}}
+        """
+        if self.positions_cache is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            pmap = {}
+            for p in t.execute('$..roster_position'):
+                pmap[p['position']] = {}
+                for k, v in p.items():
+                    if k == 'position':
+                        continue
+                    if k == 'count':
+                        v = int(v)
+                    pmap[p['position']][k] = v
+            self.positions_cache = pmap
+        return self.positions_cache

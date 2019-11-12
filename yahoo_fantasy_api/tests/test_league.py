@@ -88,17 +88,58 @@ def test_team_list(mock_league):
 
 
 def test_free_agents(mock_league):
-    fa = mock_league.free_agents('2B')
+    fa = mock_league.free_agents('C')
     print(fa)
-    assert(len(fa) == 31)
-    assert(fa[8]['name'] == 'Dee Gordon')
-    assert(fa[8]['position_type'] == 'B')
-    assert(fa[8]['player_id'] == 8863)
-    assert(len(fa[8]['eligible_positions']) == 4)
-    assert(fa[8]['eligible_positions'] == ['2B', 'SS', 'CF', 'Util'])
-    assert(fa[12]['name'] == 'Kolten Wong')
-    assert(fa[12]['position_type'] == 'B')
-    assert(fa[12]['status'] == 'DTD')
-    assert(fa[12]['player_id'] == 9103)
-    assert(len(fa[12]['eligible_positions']) == 2)
-    assert(fa[12]['eligible_positions'] == ['2B', 'Util'])
+    assert(len(fa) == 42)
+    assert(fa[9]['name'] == 'Brad Richardson')
+    assert(fa[9]['position_type'] == 'P')
+    assert(fa[9]['player_id'] == 3704)
+    assert(len(fa[9]['eligible_positions']) == 1)
+    assert(fa[9]['eligible_positions'] == ['C'])
+    assert(fa[15]['name'] == 'David Krejci')
+    assert(fa[15]['status'] == 'DTD')
+    assert(fa[21]['name'] == 'Derick Brassard')
+    assert(fa[21]['position_type'] == 'P')
+    assert(fa[21]['player_id'] == 3987)
+    assert(len(fa[21]['eligible_positions']) == 2)
+    assert(fa[21]['eligible_positions'] == ['C', 'LW'])
+
+
+def test_pct_own_in_free_agents(mock_league):
+    fa = mock_league.free_agents('C')
+    print(fa)
+    assert(len(fa) == 42)
+    assert(fa[0]['name'] == 'Joe Thornton')
+    assert(fa[0]['percent_owned'] == 7)
+    assert(fa[8]['name'] == 'Nate Thompson')
+    assert(fa[8]['percent_owned'] == 0)
+    assert(fa[41]['name'] == 'Ryan O\'Reilly')
+    assert(fa[41]['percent_owned'] == 92)
+
+
+def test_percent_owned(mock_league):
+    po = mock_league.percent_owned([3737, 6381, 4003, 3705])
+    assert(len(po) == 4)
+    assert(po[0]['player_id'] == 3737)
+    assert(po[0]['name'] == 'Sidney Crosby')
+    assert(po[0]['percent_owned'] == 100)
+    assert(po[1]['player_id'] == 6381)
+    assert(po[1]['name'] == 'Dylan Larkin')
+    assert(po[1]['percent_owned'] == 89)
+
+
+def test_edit_date(mock_league):
+    dt = mock_league.edit_date()
+    assert(type(dt) == datetime.date)
+    assert(dt == datetime.date(2019, 4, 1))
+
+
+def test_positions(mock_league):
+    ps = mock_league.positions()
+    assert('DL' in ps)
+    assert(ps['DL']['count'] == 3)
+    assert('BN' in ps)
+    assert(ps['BN']['count'] == 2)
+    assert('2B' in ps)
+    assert(ps['2B']['count'] == 1)
+    assert(ps['2B']['position_type'] == 'B')
