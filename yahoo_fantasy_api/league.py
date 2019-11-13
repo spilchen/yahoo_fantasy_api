@@ -59,7 +59,13 @@ class League:
         standings = []
         for i in range(team_json["count"]):
             team = team_json[str(i)]["team"][0]
-            standings.append(team[2]['name'])
+            team_record = team_json[str(i)]["team"][2]['team_standings']['outcome_totals']
+            standings.append({
+                'name' : team[2]['name'], 
+                'wins' : team_record['wins'], 
+                'losses' : team_record['losses'], 
+                'ties' : team_record['ties']
+            })
         return standings
 
     def teams(self):
