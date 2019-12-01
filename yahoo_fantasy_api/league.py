@@ -23,6 +23,7 @@ class League:
         self.end_week_cache = None
         self.week_date_range_cache = {}
         self.free_agent_cache = {}
+        self.waivers_cache = None
         self.stat_categories_cache = None
         self.settings_cache = None
         self.edit_date_cache = None
@@ -235,32 +236,78 @@ class League:
          'eligible_positions': ['CF', 'RF', 'Util']}
         """
         if position not in self.free_agent_cache:
-            self._cache_free_agents(position)
+            self.free_agent_cache[position] = self._fetch_players(
+                'FA', position=position)
         return self.free_agent_cache[position]
 
-    def _cache_free_agents(self, position):
+    def waivers(self):
+        """Return the players currently on waivers.
+
+        :return: Players on waiver.
+        :rtype: List(dict)
+
+        >>> lg.waivers()
+        [{'player_id': 5986,
+          'name': 'Darnell Nurse',
+          'position_type': 'P',
+          'eligible_positions': ['D'],
+          'percent_owned': 65,
+          'status': ''},
+         {'player_id': 5999,
+          'name': 'Anthony Mantha',
+          'status': 'IR',
+          'position_type': 'P',
+          'eligible_positions': ['LW', 'RW', 'IR'],
+          'percent_owned': 84},
+         {'player_id': 7899,
+          'name': 'Rasmus Dahlin',
+          'status': 'IR',
+          'position_type': 'P',
+          'eligible_positions': ['D', 'IR'],
+          'percent_owned': 87}]
+        """
+        if not self.waivers_cache:
+            self.waivers_cache = self._fetch_players('W')
+        return self.waivers_cache
+
+    def _fetch_players(self, status, position=None):
+        """Fetch players from Yahoo!
+
+        :param status: Indicates what type of players to get.  Available
+            options are: 'FA' for free agents, 'W' waivers only, 'T' all taken
+            players, 'K' keepers, 'A' all available players (FA + WA).
+        :type status: str
+        :param position: An optional parameter that allows you to filter on a
+            position to type of player.  If None, this option is ignored.
+        :type postition: str
+        :return: Players found.
+        :rtype: List(Dict)
+        """
         # The Yahoo! API we use doles out players 25 per page.  We need to make
         # successive calls to gather all of the players.  We stop when we fetch
         # less then 25.
         PLAYERS_PER_PAGE = 25
-        self.free_agent_cache[position] = []
+        plyrs = []
         plyrIndex = 0
         while plyrIndex % PLAYERS_PER_PAGE == 0:
-            j = self.yhandler.get_players_raw(self.league_id, plyrIndex, 'FA',
-                                              position=position)
-            (num_plyrs_on_pg, fa_on_pg) = self._free_agents_from_page(j)
+            j = self.yhandler.get_players_raw(self.league_id, plyrIndex,
+                                              status, position=position)
+            (num_plyrs_on_pg, fa_on_pg) = self._players_from_page(j)
             if len(fa_on_pg) == 0:
                 break
-            self.free_agent_cache[position] += fa_on_pg
+            plyrs += fa_on_pg
             plyrIndex += num_plyrs_on_pg
+        return plyrs
 
-    def _free_agents_from_page(self, page):
-        """Extract the free agents from a given JSON page
+    def _players_from_page(self, page):
+        """Extract the players from a given JSON page
 
-        :param page: JSON page to extract free agents from
+        This is to used with _fetch_players.
+
+        :param page: JSON page to extract players from
         :type page: dict
         :return: A tuple returning the number of players on the page, and the
-        list of free agents extracted from the page.
+        list of players extracted from the page.
         :rtype: (int, list(dict))
         """
         fa = []
@@ -269,7 +316,7 @@ class League:
             return (0, fa)
 
         t = objectpath.Tree(page)
-        pct_owns = self._pct_owned_from_fa(iter(list(t.execute(
+        pct_owns = self._pct_owned_from_page(iter(list(t.execute(
             '$..percent_owned.(coverage_type,value)'))))
         # When iterating over the players we step by 2 to account for the
         # percent_owned data that is stored adjacent to each player.
@@ -297,11 +344,11 @@ class League:
                 fa.append(plyr)
         return (i/2 + 1, fa)
 
-    def _pct_owned_from_fa(self, po_it):
-        """Extract the ownership % of players taken from a free agent JSON
+    def _pct_owned_from_page(self, po_it):
+        """Extract the ownership % of players taken from a player JSON dump
 
         Why does this function even need to exist?  When requesting ownership
-        percentage when getting free agents, the ownership percentage is
+        percentage when getting players, the ownership percentage is
         included adjacent to the rest of the player data.  So it cannot be
         retrieved easily along side the player data and must be extracted
         separately.
