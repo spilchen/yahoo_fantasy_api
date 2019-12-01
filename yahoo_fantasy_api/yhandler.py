@@ -1,7 +1,5 @@
 #!/bin/python
 
-import json
-
 YAHOO_ENDPOINT = 'https://fantasysports.yahooapis.com/fantasy/v2'
 
 
@@ -21,9 +19,9 @@ class YHandler:
         """
         response = self.sc.session.get("{}/{}".format(YAHOO_ENDPOINT, uri),
                                        params={'format': 'json'})
+        if response.status_code != 200:
+            raise RuntimeError(response.content)
         jresp = response.json()
-        if "error" in jresp:
-            raise RuntimeError(json.dumps(jresp))
         return jresp
 
     def put(self, uri, data):
