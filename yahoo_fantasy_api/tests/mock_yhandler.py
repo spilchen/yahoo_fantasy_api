@@ -107,3 +107,9 @@ class YHandler:
         fn = self.dir_path + "/sample.pending_trade_transaction.json"
         with open(fn, "r") as f:
             return json.load(f)
+
+    def get_player_stats_raw(self, game_code, player_ids, req_type, day,
+                             season):
+        fn = self.dir_path + "/sample.player_stats.json"
+        with open(fn, "r") as f:
+            return json.load(f)

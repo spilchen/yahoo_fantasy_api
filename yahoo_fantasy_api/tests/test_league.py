@@ -143,3 +143,12 @@ def test_positions(mock_league):
     assert('2B' in ps)
     assert(ps['2B']['count'] == 1)
     assert(ps['2B']['position_type'] == 'B')
+
+
+def test_player_stats(mock_league):
+    stats = mock_league.player_stats([7345], 'season')
+    assert(len(stats) == 24)
+    assert(stats[0]['name'] == 'Yadier Molina')
+    assert(type(stats[0]['player_id']) is int)
+    assert(stats[0]['player_id'] == 7345)
+    assert(stats[0]['HR'] == 10)

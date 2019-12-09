@@ -1,5 +1,7 @@
 #!/bin/python
 
+import datetime
+
 YAHOO_ENDPOINT = 'https://fantasysports.yahooapis.com/fantasy/v2'
 
 
@@ -238,3 +240,55 @@ class YHandler:
         :return: Response from the PUT
         """
         return self.put("transaction/" + str(transaction_key), xml)
+
+    def get_player_stats_raw(self, game_code, player_ids, req_type, date,
+                             season):
+        """
+        GET stats for a list of player IDs
+
+        :param game_code: The game code the players belong too.  mlb, nhl, etc.
+        :type game_code: str
+        :param player_ids: Yahoo! player IDs we are requesting stats for
+        :type player_ids: list(int)
+        :param req_type: The request type.  This defines the range of dates to
+            return the stats for.
+        :param date: When req_type == 'date', this is the date we want the
+            stats for.  If None, we'll get the stats for the current date.
+        :type date: datetime.date
+        :param season: When req_type == 'season', this is the season we want
+            the stats for.  If None, we'll get the stats for the current season
+        :type season: int
+        :return: Response from the GET call
+        """
+        uri = self._build_player_stats_uri(game_code, player_ids, req_type,
+                                           date, season)
+        return self.get(uri)
+
+    def _build_player_stats_uri(self, game_code, player_ids, req_type, date,
+                                season):
+        uri = 'players;player_keys='
+        if type(player_ids) is list:
+            for i, p in enumerate(player_ids):
+                if i != 0:
+                    uri += ","
+                uri += "{}.p.{}".format(game_code, p)
+        uri += "/stats;{}".format(self._get_stats_type(req_type, date, season))
+        return uri
+
+    def _get_stats_type(self, req_type, date, season):
+        if req_type == 'season':
+            if season is None:
+                return "type=season"
+            else:
+                return "type=season;season={}".format(season)
+        elif req_type == 'date':
+            if date is None:
+                date = datetime.date.today()
+            if type(date) is datetime.date or type(date) is datetime.datetime:
+                return "type=date;date={}".format(date.strftime("%Y-%m-%d"))
+            else:
+                return "type=date;date={}".format(date)
+        elif req_type in ['lastweek', 'lastmonth']:
+            return "type={}".format(req_type)
+        else:
+            assert(False), "Unknown req_type type: {}".format(req_type)

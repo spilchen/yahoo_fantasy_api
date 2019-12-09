@@ -28,6 +28,7 @@ class League:
         self.settings_cache = None
         self.edit_date_cache = None
         self.positions_cache = None
+        self.stats_id_map = None
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -511,3 +512,162 @@ class League:
                     pmap[p['position']][k] = v
             self.positions_cache = pmap
         return self.positions_cache
+
+    def player_stats(self, player_ids, req_type, date=None, season=None):
+        """Return stats for a list of players
+
+        :param player_ids: Yahoo! player IDs of the players to get stats for
+        :type player_ids: List(int)
+        :param req_type: Defines the date range for the stats.  Valid values
+            are: 'season', 'lastweek', 'lastmonth', 'date'.  'season' returns
+            stats for a given season, specified by the season paramter.  'date'
+            returns stats for a single date, specified by the date parameter.
+            The 'last*' types return stats for a given time frame relative to
+            the current.
+        :type req_type: str
+        :param date: When requesting stats for a single date, this identifies
+            what date to request the stats for.  If left as None, and range
+            is for a date this returns stats for the current date.
+        :type date: datetime.date
+        :param season: When requesting stats for a season, this identifies the
+            season.  If None and requesting stats for a season, this will
+            return stats for the current season.
+        :type season: int
+        :return: Return the stats requested.  Each entry in the list are stats
+            for a single player.  The list will one entry for each player ID
+            requested.
+        :rtype: List(namedtuple)
+
+        >>> lg.player_stats([6743], 'season')
+         [{'player_id': 6743,
+           'name': 'Connor McDavid',
+           'position_type': 'P',
+           'GP': 32.0,
+           'G': 19.0,
+           'A': 33.0,
+           'PTS': 52.0,
+           '+/-': 1.0,
+           'PIM': 18.0,
+           'PPG': 8.0,
+           'PPA': 15.0,
+           'PPP': 23.0,
+           'GWG': 2.0,
+           'SOG': 106.0,
+           'S%': 0.179,
+           'PPT': 7429.0,
+           'Avg-PPT': 232.0,
+           'SHT': 277.0,
+           'Avg-SHT': 9.0,
+           'COR': -64.0,
+           'FEN': -51.0,
+           'Off-ZS': 310.0,
+           'Def-ZS': 167.0,
+           'ZS-Pct': 64.99,
+           'GStr': 7.0,
+           'Shifts': 684.0}]
+        """
+        if type(player_ids) is list and len(player_ids) == 0:
+            return []
+
+        lg_settings = self.settings()
+        game_code = lg_settings['game_code']
+        self._cache_stats_id_map(game_code)
+        json = self.yhandler.get_player_stats_raw(game_code, player_ids,
+                                                  req_type, date, season)
+        t = objectpath.Tree(json)
+        stats = []
+        row = None
+        for e in t.execute('$..(full,player_id,position_type,stat)'):
+            if 'player_id' in e:
+                if row is not None:
+                    stats.append(row)
+                row = {}
+                row['player_id'] = int(e['player_id'])
+            elif 'full' in e:
+                row['name'] = e['full']
+            elif 'position_type' in e:
+                row['position_type'] = e['position_type']
+            elif 'stat' in e:
+                stat_id = int(e['stat']['stat_id'])
+                try:
+                    val = float(e['stat']['value'])
+                except ValueError:
+                    val = e['stat']['value']
+                if stat_id in self.stats_id_map:
+                    row[self.stats_id_map[stat_id]] = val
+                # SPILLY - try to map val to an int or float?
+        if row is not None:
+            stats.append(row)
+        return stats
+
+    def _cache_stats_id_map(self, game_code):
+        '''Ensure the self.stats_id_map is setup
+
+        The self.stats_id_map will map the stat ID to a display name.
+        '''
+        if self.stats_id_map is None:
+            json = self.yhandler.get_settings_raw(self.league_id)
+            t = objectpath.Tree(json)
+            # Start with the static map of category ID map.  The stats API
+            # generates a lot of stats, where as the ones we are getting the
+            # settings are only the categories that scoring is based on.
+            stats_id_map = self._get_static_id_map(game_code)
+            for s in t.execute('$..stat.(stat_id,display_name)'):
+                stats_id_map[int(s['stat_id'])] = s['display_name']
+            self.stats_id_map = stats_id_map
+
+    def _get_static_id_map(self, game_code):
+        '''
+        Get a static map of ID to stat names for specific sport
+
+        If we lookup in league settings for a list of category names, it will
+        just include the scoring categories for the fantasy league.  These
+        static maps allow us to access additional stats.
+        '''
+        if game_code == 'mlb':
+            return self._get_static_mlb_id_map()
+        elif game_code == 'nhl':
+            return self._get_static_nhl_id_map()
+        else:
+            return {}
+
+    def _get_static_mlb_id_map(self):
+        '''
+        Return a map that returns a statement given ID.
+
+        This is tailored for major league baseball.
+        '''
+        return {0: 'G', 2: 'GS', 3: 'AVG', 4: 'OBP', 5: 'SLG', 6: 'AB', 7: 'R',
+                8: 'H', 9: '1B', 10: '2B', 11: '3B', 12: 'HR', 13: 'RBI',
+                14: 'SH', 15: 'SF', 16: 'SB', 17: 'CS', 18: 'BB', 19: 'IBB',
+                20: 'HBP', 21: 'SO', 22: 'GDP', 23: 'TB', 25: 'GS', 26: 'ERA',
+                27: 'WHIP', 28: 'W', 29: 'L', 32: 'SV', 34: 'H', 35: 'BF',
+                36: 'R', 37: 'ER', 38: 'HR', 39: 'BB', 40: 'IBB', 41: 'HBP',
+                42: 'K', 43: 'BK', 44: 'WP', 48: 'HLD', 50: 'IP', 51: 'PO',
+                52: 'A', 53: 'E', 54: 'FLD%', 55: 'OPS', 56: 'SO/W', 57: 'SO9',
+                65: 'PA', 84: 'BS', 85: 'NSV', 87: 'DP',
+                1032: 'FIP', 1021: 'GB%', 1022: 'FB%', 1031: 'BABIP',
+                1036: 'HR/FB%', 1037: 'GB', 1038: 'FB', 1020: 'GB/FB',
+                1018: 'P/IP', 1034: 'ERA-', 1019: 'P/S', 1024: 'STR',
+                1025: 'IRS%', 1026: 'RS', 1027: 'RS/9', 1028: 'AVG',
+                1029: 'OBP', 1030: 'SLG', 1033: 'WAR',
+                1035: 'HR/FB%', 1008: 'GB/FB', 1013: 'BABIP', 1002: 'ISO',
+                1001: 'CT%', 1014: 'wOBA', 1015: 'wRAA', 1011: 'RC',
+                1005: 'TOB', 1006: 'GB', 1009: 'GB%', 1007: 'FB', 1010: 'FB%',
+                1016: 'OPS+', 1004: 'P/PA', 1039: 'SB%', 1012: 'GDPR',
+                1003: 'SL', 1017: 'FR', 1040: 'bWAR', 1041: 'brWAR',
+                1042: 'WAR'}
+
+    def _get_static_nhl_id_map(self):
+        '''
+        Return a map that returns a statement given ID.
+
+        This is tailored for NHL.
+        '''
+        return {0: 'GP', 1: 'G', 2: 'A', 3: 'PTS', 4: '+/-', 5: 'PIM',
+                6: 'PPG', 7: 'PPA', 8: 'PPP', 12: 'GWG', 14: 'SOG', 15: 'S%',
+                18: 'GS', 19: 'W', 20: 'L', 22: 'GA', 23: 'GAA',
+                24: 'SA', 25: 'SV', 26: 'SV%', 27: 'SHO', 28: 'MIN',
+                1001: 'PPT', 1002: 'Avg-PPT', 1003: 'SHT', 1004: 'Avg-SHT',
+                1005: 'COR', 1006: 'FEN', 1007: 'Off-ZS', 1008: 'Def-ZS',
+                1009: 'ZS-Pct', 1010: 'GStr', 1011: 'Shifts'}
