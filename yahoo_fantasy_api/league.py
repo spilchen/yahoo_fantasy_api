@@ -24,6 +24,7 @@ class League:
         self.week_date_range_cache = {}
         self.free_agent_cache = {}
         self.waivers_cache = None
+        self.taken_players_cache = None
         self.stat_categories_cache = None
         self.settings_cache = None
         self.edit_date_cache = None
@@ -123,7 +124,7 @@ class League:
 
         :returns: Each dict entry will have the stat name along
             with the position type ('B' for batter or 'P' for pitcher).
-        :rtype: List(Dict)
+        :rtype: list(dict)
 
         >>> lg.stat_categories('370.l.56877')
         [{'display_name': 'R', 'position_type': 'B'}, {'display_name': 'HR',
@@ -270,6 +271,27 @@ class League:
         if not self.waivers_cache:
             self.waivers_cache = self._fetch_players('W')
         return self.waivers_cache
+
+    def taken_players(self):
+        """Return the players taken by teams.
+
+        :return: Players taken by teams.
+        :rtype: List(dict)
+
+        >> tp = lg.taken_players()
+        >> len(tp)
+        88
+        >> tp[0]
+        {'player_id': 3341,
+         'name': 'Marc-Andre Fleury',
+         'position_type': 'G',
+         'eligible_positions': ['G'],
+         'percent_owned': 99,
+         'status': ''}
+        """
+        if not self.taken_players_cache:
+            self.taken_players_cache = self._fetch_players('T')
+        return self.taken_players_cache
 
     def _fetch_players(self, status, position=None):
         """Fetch players from Yahoo!
@@ -517,7 +539,7 @@ class League:
         """Return stats for a list of players
 
         :param player_ids: Yahoo! player IDs of the players to get stats for
-        :type player_ids: List(int)
+        :type player_ids: list(int)
         :param req_type: Defines the date range for the stats.  Valid values
             are: 'season', 'lastweek', 'lastmonth', 'date'.  'season' returns
             stats for a given season, specified by the season paramter.  'date'
@@ -536,7 +558,7 @@ class League:
         :return: Return the stats requested.  Each entry in the list are stats
             for a single player.  The list will one entry for each player ID
             requested.
-        :rtype: List(namedtuple)
+        :rtype: list(dict)
 
         >>> lg.player_stats([6743], 'season')
          [{'player_id': 6743,
