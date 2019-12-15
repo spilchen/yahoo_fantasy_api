@@ -588,12 +588,33 @@ class League:
            'GStr': 7.0,
            'Shifts': 684.0}]
         """
-        if type(player_ids) is list and len(player_ids) == 0:
-            return []
+        if type(player_ids) is not list:
+            player_ids = [player_ids]
 
         lg_settings = self.settings()
         game_code = lg_settings['game_code']
         self._cache_stats_id_map(game_code)
+        stats = []
+        while len(player_ids) > 0:
+            next_player_ids = player_ids[0:25]
+            player_ids = player_ids[25:]
+            stats += self._fetch_plyr_stats(game_code, next_player_ids,
+                                            req_type, date, season)
+        return stats
+
+    def _fetch_plyr_stats(self, game_code, player_ids, req_type, date, season):
+        '''
+        Fetch player stats for at most 25 player IDs.
+
+        :param game_code: Game code of the players we are fetching
+        :param player_ids: List of up to 25 player IDs
+        :param req_type: Request type
+        :param date: Date if request type is 'date'
+        :param season: Season if request type is 'season'
+        :return: The stats requested
+        :rtype: list(dict)
+        '''
+        assert(len(player_ids) > 0 and len(player_ids) <= 25)
         json = self.yhandler.get_player_stats_raw(game_code, player_ids,
                                                   req_type, date, season)
         t = objectpath.Tree(json)
@@ -617,7 +638,6 @@ class League:
                     val = e['stat']['value']
                 if stat_id in self.stats_id_map:
                     row[self.stats_id_map[stat_id]] = val
-                # SPILLY - try to map val to an int or float?
         if row is not None:
             stats.append(row)
         return stats
