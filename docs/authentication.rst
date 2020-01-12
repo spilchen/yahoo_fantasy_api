@@ -1,7 +1,7 @@
 Authentication
 ==============
 
-Before you can do any sort of authentication, you you will first need to request an `API key <https://developer.yahoo.com/apps/create/>`_ from Yahoo!  The process is quick, and you will be given a consumer key and a consumer secret, which you use as part of the authentication.
+Before you can do any sort of authentication, you will first need to request an `API key <https://developer.yahoo.com/apps/create/>`_ from Yahoo!  The process is quick, and you will be given a consumer key and a consumer secret, which you use as part of the authentication.
 
 There is a lengthy overview of the authentication requirement to access the Yahoo! fantasy APIs in its developer `guide <https://developer.yahoo.com/fantasysports/guide/>`_.   However, to save you some time in understanding that, this package makes use of the work done in the `yahoo_oauth <https://pypi.org/project/yahoo_oauth/>`__ to implement the oauth protocol.  In fact, all of the classes in this package expect the `yahoo_oauth.OAuth2` object to be passed in.  
 
