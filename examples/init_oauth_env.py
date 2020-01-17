@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python
 
 """Initialize OAuth environment for Yahoo! API access.
 

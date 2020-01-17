@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python
 
 """Use the game and league API
 

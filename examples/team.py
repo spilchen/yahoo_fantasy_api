@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python
 
 """Use the team API
 
