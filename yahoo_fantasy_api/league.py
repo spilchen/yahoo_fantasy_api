@@ -654,7 +654,7 @@ class League:
             # generates a lot of stats, where as the ones we are getting the
             # settings are only the categories that scoring is based on.
             stats_id_map = self._get_static_id_map(game_code)
-            for s in t.execute('$..stat.(stat_id,display_name)'):
+            for s in t.execute('$..stat_categories..(stat_id,display_name)'):
                 stats_id_map[int(s['stat_id'])] = s['display_name']
             self.stats_id_map = stats_id_map
 

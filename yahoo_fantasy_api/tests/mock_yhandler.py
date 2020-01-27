@@ -38,7 +38,12 @@ class YHandler:
         :type league_id: str
         :return: JSON document of the request.
         """
-        with open(self.dir_path + "/sample.league_settings.json", "r") as f:
+        if league_id == '396.l.21484':
+            id = '396.l.21484'
+        else:
+            id = "388.l.27081"
+        fn = "{}/sample.league_settings.{}.json".format(self.dir_path, id)
+        with open(fn, "r") as f:
             return json.load(f)
 
     def get_matchup_raw(self, team_key, week):
@@ -110,6 +115,10 @@ class YHandler:
 
     def get_player_stats_raw(self, game_code, player_ids, req_type, day,
                              season):
-        fn = self.dir_path + "/sample.player_stats.json"
+        if game_code == 'nhl':
+            id = "396.l.21484"
+        else:
+            id = "388.l.27081"
+        fn = "{}/sample.player_stats.{}.json".format(self.dir_path, id)
         with open(fn, "r") as f:
             return json.load(f)
