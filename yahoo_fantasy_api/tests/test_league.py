@@ -161,3 +161,41 @@ def test_nhl_player_stats(mock_nhl_league):
     assert(stats[0]['name'] == 'Claude Giroux')
     assert(stats[0]['SOG'] == 147)
     assert(stats[0]['PTS'] == 35)
+
+
+def test_draft_results(mock_nhl_league):
+    dres = mock_nhl_league.draft_results()
+    print(dres)
+    assert(len(dres) == 84)
+    assert(dres[83]['round'] == 14)
+    assert(dres[83]['team_key'] == '396.l.49770.t.6')
+    assert("player_key" not in dres[83])
+    assert("player_id" in dres[83])
+    assert(dres[83]['player_id'] == 5085)
+
+
+def test_phil_player_details(mock_nhl_league):
+    r = mock_nhl_league.player_details("Phil")
+    print(r)
+    assert(len(r) == 14)
+    print(r[0])
+    assert(r[0]['name']['full'] == 'Phil Kessel')
+    print(r[8])
+    assert(r[8]['name']['full'] == 'Matthew Phillips')
+
+
+def test_ids_player_details(mock_nhl_league):
+    r = mock_nhl_league.player_details([3983, 5085, 5387])
+    print(r)
+    assert(len(r) == 3)
+    assert(r[0]['name']['full'] == 'Phil Kessel')
+    assert(r[1]['name']['full'] == 'Philipp Grubauer')
+    assert(r[2]['name']['full'] == 'Phillip Danault')
+
+
+def test_player_details_cache(mock_nhl_league):
+    mock_nhl_league.player_details("Phil")
+    mock_nhl_league.player_details([3983, 5085])
+    mock_nhl_league.player_details(5387)
+    exp_keys = ['Phil', 3983, 5085, 5387]
+    assert(list(mock_nhl_league.player_details_cache.keys()) == exp_keys)

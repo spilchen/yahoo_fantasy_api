@@ -1,0 +1,543 @@
+{
+    "fantasy_content": {
+        "xml:lang": "en-US",
+        "yahoo:uri": "/fantasy/v2/league/396.l.128634/players;player_keys=396.p.3983,396.p.5085,396.p.5387/stats",
+        "league": [
+            {
+                "league_key": "396.l.128634",
+                "league_id": "128634",
+                "name": "Bot Maker 2",
+                "url": "https://hockey.fantasysports.yahoo.com/hockey/128634",
+                "logo_url": false,
+                "password": "",
+                "draft_status": "predraft",
+                "num_teams": 2,
+                "edit_key": "2020-01-28",
+                "weekly_deadline": "intraday",
+                "league_update_timestamp": null,
+                "scoring_type": "headpoint",
+                "league_type": "private",
+                "renew": "",
+                "renewed": "",
+                "iris_group_chat_id": "",
+                "short_invitation_url": "https://hockey.fantasysports.yahoo.com/hockey/128634/invitation?key=fb552b1b5cb034e4&ikey=f9705ce81d8bb174",
+                "allow_add_to_dl_extra_pos": 1,
+                "is_pro_league": "0",
+                "is_cash_league": "0",
+                "current_week": 16,
+                "start_week": "16",
+                "start_date": "2020-01-20",
+                "end_week": "24",
+                "end_date": "2020-04-04",
+                "game_code": "nhl",
+                "season": "2019"
+            },
+            {
+                "players": {
+                    "0": {
+                        "player": [
+                            [
+                                {
+                                    "player_key": "396.p.3983"
+                                },
+                                {
+                                    "player_id": "3983"
+                                },
+                                {
+                                    "name": {
+                                        "full": "Phil Kessel",
+                                        "first": "Phil",
+                                        "last": "Kessel",
+                                        "ascii_first": "Phil",
+                                        "ascii_last": "Kessel"
+                                    }
+                                },
+                                {
+                                    "editorial_player_key": "nhl.p.3983"
+                                },
+                                {
+                                    "editorial_team_key": "nhl.t.24"
+                                },
+                                {
+                                    "editorial_team_full_name": "Arizona Coyotes"
+                                },
+                                {
+                                    "editorial_team_abbr": "Ari"
+                                },
+                                {
+                                    "uniform_number": "81"
+                                },
+                                {
+                                    "display_position": "RW"
+                                },
+                                {
+                                    "headshot": {
+                                        "url": "https://s.yimg.com/iu/api/res/1.2/N_Q3NooAVevp3Vf2dlbmsQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/nhl_cutout/players_l/10022019/3983.png",
+                                        "size": "small"
+                                    },
+                                    "image_url": "https://s.yimg.com/iu/api/res/1.2/N_Q3NooAVevp3Vf2dlbmsQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/nhl_cutout/players_l/10022019/3983.png"
+                                },
+                                {
+                                    "is_undroppable": "0"
+                                },
+                                {
+                                    "position_type": "P"
+                                },
+                                {
+                                    "primary_position": "RW"
+                                },
+                                {
+                                    "eligible_positions": [
+                                        {
+                                            "position": "RW"
+                                        }
+                                    ]
+                                },
+                                [],
+                                [],
+                                []
+                            ],
+                            {
+                                "player_stats": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "stats": [
+                                        {
+                                            "stat": {
+                                                "stat_id": "1",
+                                                "value": "11"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "2",
+                                                "value": "20"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "4",
+                                                "value": "-20"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "8",
+                                                "value": "15"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "14",
+                                                "value": "115"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "32",
+                                                "value": "16"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "player_advanced_stats": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "stats": [
+                                        {
+                                            "stat": {
+                                                "stat_id": "1001",
+                                                "value": "10149"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1002",
+                                                "value": "199"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1003",
+                                                "value": "107"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1004",
+                                                "value": "2"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1005",
+                                                "value": "-3"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1006",
+                                                "value": "-28"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1007",
+                                                "value": "459"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1008",
+                                                "value": "149"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1009",
+                                                "value": "75.49"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1010",
+                                                "value": "2"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1011",
+                                                "value": "1149"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "player_points": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "total": 255.5
+                                }
+                            }
+                        ]
+                    },
+                    "1": {
+                        "player": [
+                            [
+                                {
+                                    "player_key": "396.p.5085"
+                                },
+                                {
+                                    "player_id": "5085"
+                                },
+                                {
+                                    "name": {
+                                        "full": "Philipp Grubauer",
+                                        "first": "Philipp",
+                                        "last": "Grubauer",
+                                        "ascii_first": "Philipp",
+                                        "ascii_last": "Grubauer"
+                                    }
+                                },
+                                {
+                                    "editorial_player_key": "nhl.p.5085"
+                                },
+                                {
+                                    "editorial_team_key": "nhl.t.17"
+                                },
+                                {
+                                    "editorial_team_full_name": "Colorado Avalanche"
+                                },
+                                {
+                                    "editorial_team_abbr": "Col"
+                                },
+                                {
+                                    "uniform_number": "31"
+                                },
+                                {
+                                    "display_position": "G"
+                                },
+                                {
+                                    "headshot": {
+                                        "url": "https://s.yimg.com/iu/api/res/1.2/AZE5Cli.AHJ3jA4axjyNUQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/nhl_cutout/players_l/10242019/5085.png",
+                                        "size": "small"
+                                    },
+                                    "image_url": "https://s.yimg.com/iu/api/res/1.2/AZE5Cli.AHJ3jA4axjyNUQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/nhl_cutout/players_l/10242019/5085.png"
+                                },
+                                {
+                                    "is_undroppable": "0"
+                                },
+                                {
+                                    "position_type": "G"
+                                },
+                                {
+                                    "primary_position": "G"
+                                },
+                                {
+                                    "eligible_positions": [
+                                        {
+                                            "position": "G"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "has_player_notes": 1
+                                },
+                                [],
+                                {
+                                    "player_notes_last_timestamp": 1579389660
+                                }
+                            ],
+                            {
+                                "player_stats": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "stats": [
+                                        {
+                                            "stat": {
+                                                "stat_id": "19",
+                                                "value": "14"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "22",
+                                                "value": "78"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "25",
+                                                "value": "793"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "27",
+                                                "value": "1"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "player_points": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "total": 316.8
+                                }
+                            }
+                        ]
+                    },
+                    "2": {
+                        "player": [
+                            [
+                                {
+                                    "player_key": "396.p.5387"
+                                },
+                                {
+                                    "player_id": "5387"
+                                },
+                                {
+                                    "name": {
+                                        "full": "Phillip Danault",
+                                        "first": "Phillip",
+                                        "last": "Danault",
+                                        "ascii_first": "Phillip",
+                                        "ascii_last": "Danault"
+                                    }
+                                },
+                                {
+                                    "editorial_player_key": "nhl.p.5387"
+                                },
+                                {
+                                    "editorial_team_key": "nhl.t.10"
+                                },
+                                {
+                                    "editorial_team_full_name": "Montreal Canadiens"
+                                },
+                                {
+                                    "editorial_team_abbr": "Mon"
+                                },
+                                {
+                                    "uniform_number": "24"
+                                },
+                                {
+                                    "display_position": "C"
+                                },
+                                {
+                                    "headshot": {
+                                        "url": "https://s.yimg.com/iu/api/res/1.2/38_wVH8LpOGnGjvmnuDTsQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/nhl_cutout/players_l/11122019/5387.png",
+                                        "size": "small"
+                                    },
+                                    "image_url": "https://s.yimg.com/iu/api/res/1.2/38_wVH8LpOGnGjvmnuDTsQ--~C/YXBwaWQ9eXNwb3J0cztjaD0yMzM2O2NyPTE7Y3c9MTc5MDtkeD04NTc7ZHk9MDtmaT11bGNyb3A7aD02MDtxPTEwMDt3PTQ2/https://s.yimg.com/xe/i/us/sp/v/nhl_cutout/players_l/11122019/5387.png"
+                                },
+                                {
+                                    "is_undroppable": "0"
+                                },
+                                {
+                                    "position_type": "P"
+                                },
+                                {
+                                    "primary_position": "C"
+                                },
+                                {
+                                    "eligible_positions": [
+                                        {
+                                            "position": "C"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "has_player_notes": 1
+                                },
+                                [],
+                                {
+                                    "player_notes_last_timestamp": 1579877640
+                                }
+                            ],
+                            {
+                                "player_stats": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "stats": [
+                                        {
+                                            "stat": {
+                                                "stat_id": "1",
+                                                "value": "12"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "2",
+                                                "value": "24"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "4",
+                                                "value": "13"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "8",
+                                                "value": "4"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "14",
+                                                "value": "100"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "32",
+                                                "value": "26"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "player_advanced_stats": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "stats": [
+                                        {
+                                            "stat": {
+                                                "stat_id": "1001",
+                                                "value": "4745"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1002",
+                                                "value": "93"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1003",
+                                                "value": "7644"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1004",
+                                                "value": "150"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1005",
+                                                "value": "273"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1006",
+                                                "value": "204"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1007",
+                                                "value": "330"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1008",
+                                                "value": "437"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1009",
+                                                "value": "43.02"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1010",
+                                                "value": "2"
+                                            }
+                                        },
+                                        {
+                                            "stat": {
+                                                "stat_id": "1011",
+                                                "value": "1322"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "player_points": {
+                                    "0": {
+                                        "coverage_type": "season",
+                                        "season": "2019"
+                                    },
+                                    "total": 318
+                                }
+                            }
+                        ]
+                    },
+                    "count": 3
+                }
+            }
+        ],
+        "time": "19.60301399231ms",
+        "copyright": "Data provided by Yahoo! and STATS, LLC",
+        "refresh_rate": "60"
+    }
+}

@@ -4,6 +4,7 @@ import yahoo_fantasy_api as yfa
 from yahoo_fantasy_api import yhandler
 import objectpath
 import datetime
+import re
 
 
 class League:
@@ -30,6 +31,7 @@ class League:
         self.edit_date_cache = None
         self.positions_cache = None
         self.stats_id_map = None
+        self.player_details_cache = {}
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -414,52 +416,59 @@ class League:
                 datetime.datetime.strptime(j['week_end'], "%Y-%m-%d").date())
         return self.week_date_range_cache[week]
 
-    def player_details(self, player_name):
-        """Retrieve details about a specific player
-
-        :parm player_name: Name of the player to get details for
-        :type player_name: str
-        :return: Player details
-        :rtype: dict
-
-        >>> lg.player_details("Antonio Brown")
-        {
-            'bye_weeks': {'week': '6'},
-            'display_position': 'WR',
-            'editorial_player_key': 'nfl.p.24171',
-            'editorial_team_abbr': 'Oak',
-            'editorial_team_full_name': 'Oakland Raiders',
-            'editorial_team_key': 'nfl.t.13',
-            'eligible_positions': [{...}, {...}],
-            'has_player_notes': 1,
-            'has_recent_player_notes': 1,
-            'headshot': {
-                'size': 'small',
-                'url': 'https://s.yimg.com/...24171.png'},
-            'image_url': 'https://s.yimg.com/...24171.png',
-            'is_undroppable': '1',
-            'name': {
-                'ascii_first': 'Antonio',
-                'ascii_last': 'Brown',
-                'first': 'Antonio',
-                'full': 'Antonio Brown',
-                'last': 'Brown'},
-            'player_id': '24171', ...}
+    def player_details(self, player):
         """
-        json_query = '$..players'
-        t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
-                                                         player_name))
-        json = t.execute(json_query)
-        player_data = {}
-        for player in json:
-            for category in player['0']['player']:
-                for sub_category in category:
-                    if isinstance(sub_category, str):
-                        player_data[sub_category] = category[sub_category]
-                    if isinstance(sub_category, dict):
-                        for key, value in sub_category.items():
-                            player_data[key] = value
-            return player_data
+        Retrieve details about a number of players
+
+        :parm player: If a str, this is a search string that will return all
+            matches of the name.  It it is a int or list(int), then these are
+            player IDs to lookout.
+        :return: Details of all of the players found.
+        :rtype: list(dict)
+
+        >>> lg.player_details('Phil Kessel')
+        [{'player_key': '396.p.3983',
+          'player_id': '3983',
+          'name': {'full': 'Phil Kessel',
+                   'first': 'Phil',
+                   'last': 'Kessel',
+                   'ascii_first': 'Phil',
+                   'ascii_last': 'Kessel'},
+          'editorial_player_key': 'nhl.p.3983',
+          'editorial_team_key': 'nhl.t.24',
+          'editorial_team_full_name': 'Arizona Coyotes',
+          'editorial_team_abbr': 'Ari',
+          'uniform_number': '81',
+          'display_position': 'RW',
+          'headshot': {...},
+          'image_url': '...',
+          'is_undroppable': '0',
+          'position_type': 'P',
+          'primary_position': 'RW',
+          'eligible_positions': [{'position': 'RW'}],
+          ...
+        }]
+        >>> plyrs = lg.player_details([3983, 5085, 5387])
+        >>> len(plyrs)
+        3
+        >>> [p['name']['full'] for p in plyrs]
+        ['Phil Kessel', 'Philipp Grubauer', 'Phillip Danault']
+        >>> plyrs = lg.player_details('Phil')
+        >>> len(plyrs)
+        14
+        """
+        if isinstance(player, int):
+            player = [player]
+        self._cache_player_details(player)
+        players = []
+        if isinstance(player, list):
+            for p in player:
+                players.append(self.player_details_cache[p])
+        else:
+            assert(player in self.player_details_cache)
+            assert(isinstance(self.player_details_cache[player], list))
+            players = self.player_details_cache[player]
+        return players
 
     def percent_owned(self, player_ids):
         """Retrieve ownership percentage of a list of players
@@ -602,6 +611,47 @@ class League:
                                             req_type, date, season)
         return stats
 
+    def draft_results(self):
+        '''
+        Get the results of the league's draft
+
+        This will return details about each pick made in the draft.  For
+        auction style drafts it includes the auction price paid for the
+        player.
+
+        The players are returned as player IDs.  Use the player_details() API
+        to find more specifics on the player.
+
+        If this is called for a league that has not yet done a draft then it
+        will return an empty list.
+
+        :return: Details about all of the players drafted.
+        :rtype: list
+
+        >>> draft_res = lg.draft_results()
+        >>> len(draft_res)
+        210
+        >>> draft_res[0]
+        {'pick': 1,
+         'round': 1,
+         'cost': '4',
+         'team_key': '388.l.27081.t.4',
+         'player_id': 9490}
+        '''
+        j = self.yhandler.get_draftresults_raw(self.league_id)
+        t = objectpath.Tree(j)
+        dres = []
+        pat = re.compile(r'.*\.p\.([0-9]+)$')
+        for p in t.execute('$..draft_results..draft_result'):
+            pk = p['player_key']
+            m = pat.search(pk)
+            if m:
+                pid = int(m.group(1))
+                p['player_id'] = pid
+                del p['player_key']
+            dres.append(p)
+        return(dres)
+
     def _fetch_plyr_stats(self, game_code, player_ids, req_type, date, season):
         '''
         Fetch player stats for at most 25 player IDs.
@@ -713,3 +763,65 @@ class League:
                 1001: 'PPT', 1002: 'Avg-PPT', 1003: 'SHT', 1004: 'Avg-SHT',
                 1005: 'COR', 1006: 'FEN', 1007: 'Off-ZS', 1008: 'Def-ZS',
                 1009: 'ZS-Pct', 1010: 'GStr', 1011: 'Shifts'}
+
+    def _parse_player_detail(self, plyr):
+        '''
+        Helper to produce a meaningful dict for player details API
+        '''
+        player_data = {}
+        for category in plyr:
+            for sub_category in category:
+                if isinstance(sub_category, str):
+                    player_data[sub_category] = category[sub_category]
+                elif isinstance(sub_category, dict):
+                    for key, value in sub_category.items():
+                        player_data[key] = value
+        return player_data
+
+    def _cache_player_details(self, player):
+        '''
+        Helper to ensure request for player is in the cache.
+        '''
+        player = self._calc_lookup_for_player_detail(player)
+        if player is None or (isinstance(player, list) and len(player) == 0):
+            return  # Entire request is already in the cache
+
+        if isinstance(player, list):
+            t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
+                                                             ids=player))
+        else:
+            t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
+                                                             search=player))
+        for json in t.execute('$..players'):
+            for i in range(int(json['count'])):
+                details = self._parse_player_detail(json[str(i)]['player'])
+                if isinstance(player, list):   # Cache by player ID
+                    key = int(details['player_id'])
+                    self.player_details_cache[key] = details
+                else:  # Cache by search string
+                    if player not in self.player_details_cache:
+                        self.player_details_cache[player] = []
+                    self.player_details_cache[player].append(details)
+
+    def _calc_lookup_for_player_detail(self, player):
+        '''
+        Helper to figure the players that cannot be fulfilled from cache
+
+        :param player:  The search or id request for player_detail.  This can
+            be a string to match on the name or a list of player IDs.
+        :return: If player is a str, then this will return None if the str is
+            already in the cache.  If player is a list, this is the list of
+            player IDs we need to get from Yahoo.  This list can be empty if
+            all player IDs are in the cache.
+        '''
+        if isinstance(player, list):
+            # Figure out the players in the list that have already been fetched
+            fetch_list = []
+            for p in player:
+                if p not in self.player_details_cache:
+                    fetch_list.append(p)
+            return fetch_list
+        elif player in self.player_details_cache:
+            return None
+        else:
+            return player

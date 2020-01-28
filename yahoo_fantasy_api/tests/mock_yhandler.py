@@ -122,3 +122,25 @@ class YHandler:
         fn = "{}/sample.player_stats.{}.json".format(self.dir_path, id)
         with open(fn, "r") as f:
             return json.load(f)
+
+    def get_draftresults_raw(self, league_id):
+        """
+        GET draft results for the league
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :return: Response from the GET call
+        """
+        fn = "{}/sample.draftresults.{}.json".format(self.dir_path, league_id)
+        with open(fn, "r") as f:
+            return json.load(f)
+
+    def get_player_raw(self, league_id, search=None, ids=None):
+        if search == "Phil":
+            fn = "{}/sample.player_details.Phil.json".format(self.dir_path)
+        elif ids is not None:
+            fn = "{}/sample.player_details.ids.json".format(self.dir_path)
+        else:
+            assert(False), "Unsupported lookup"
+        with open(fn, "r") as f:
+            return json.load(f)

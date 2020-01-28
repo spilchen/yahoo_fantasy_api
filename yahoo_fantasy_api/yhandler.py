@@ -161,19 +161,32 @@ class YHandler:
             "league/{}/players;start={};count=25;status={}{}/percent_owned".
             format(league_id, start, status, pos_parm))
 
-    def get_player_raw(self, league_id, player_name):
+    def get_player_raw(self, league_id, search=None, ids=None):
         """Return the raw JSON when requesting player details
 
         :param league_id: League ID to get the player for
         :type league_id: str
-        :param player_name: Name of player to get the details for
-        :type player_name: str
+        :param search: Search string to apply.  This can be a full or partial
+            name of a player.  Cannot be used with ids.
+        :type search: str
+        :param ids: Set of player IDs to lookup.  Cannot be used with search.
+        :type ids: list
         :return: JSON document of the request.
         """
-        player_stat_uri = ""
-        if player_name is not None:
-            player_stat_uri = "players;search={}/stats".format(player_name)
-        return self.get("league/{}/{}".format(league_id, player_stat_uri))
+        if search is not None:
+            assert(ids is None)
+            players_uri = "search={}".format(search)
+        elif ids is not None and len(ids) > 0:
+            assert(search is None)
+            # Construct a player key by prefixing the start of the league ID
+            lg_pref = league_id[0:league_id.find('.')]
+            players_uri = "player_keys=" + ",".join(
+                "{}.p.{}".format(lg_pref, i) for i in ids)
+        else:
+            raise RuntimeError(
+                "Must use search or ids options to filter players.")
+        return self.get("league/{}/players;{}/stats".format(league_id,
+                                                            players_uri))
 
     def get_percent_owned_raw(self, league_id, player_ids):
         """Return the raw JSON when requesting the percentage owned of players
@@ -263,6 +276,16 @@ class YHandler:
         uri = self._build_player_stats_uri(game_code, player_ids, req_type,
                                            date, season)
         return self.get(uri)
+
+    def get_draftresults_raw(self, league_id):
+        """
+        GET draft results for the league
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :return: Response from the GET call
+        """
+        return self.get("league/{}/draftresults".format(league_id))
 
     def _build_player_stats_uri(self, game_code, player_ids, req_type, date,
                                 season):
