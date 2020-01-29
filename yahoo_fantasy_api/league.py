@@ -113,7 +113,7 @@ class League:
             json = self.yhandler.get_settings_raw(self.league_id)
             t = objectpath.Tree(json)
             settings_to_return = """
-            name, scoring_type,
+            name, scoring_type, draft_status, num_teams, league_type,
             start_week, current_week, end_week,start_date, end_date,
             game_code, season
             """
@@ -421,8 +421,8 @@ class League:
         Retrieve details about a number of players
 
         :parm player: If a str, this is a search string that will return all
-            matches of the name.  It it is a int or list(int), then these are
-            player IDs to lookout.
+            matches of the name (to a maximum of 25 players).  It it is a int
+            or list(int), then these are player IDs to lookup.
         :return: Details of all of the players found.
         :rtype: list(dict)
 
@@ -782,26 +782,29 @@ class League:
         '''
         Helper to ensure request for player is in the cache.
         '''
-        player = self._calc_lookup_for_player_detail(player)
-        if player is None or (isinstance(player, list) and len(player) == 0):
-            return  # Entire request is already in the cache
+        lookup = self._calc_lookup_for_player_detail(player)
+        while lookup is not None and (not isinstance(lookup, list) or
+                                      len(lookup) > 0):
+            if isinstance(player, list):
+                ids = lookup.pop()
+                t = objectpath.Tree(self.yhandler.get_player_raw(
+                    self.league_id, ids=ids))
+            else:
+                t = objectpath.Tree(self.yhandler.get_player_raw(
+                    self.league_id, search=lookup))
+                key = lookup
+                lookup = None
 
-        if isinstance(player, list):
-            t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
-                                                             ids=player))
-        else:
-            t = objectpath.Tree(self.yhandler.get_player_raw(self.league_id,
-                                                             search=player))
-        for json in t.execute('$..players'):
-            for i in range(int(json['count'])):
-                details = self._parse_player_detail(json[str(i)]['player'])
-                if isinstance(player, list):   # Cache by player ID
-                    key = int(details['player_id'])
-                    self.player_details_cache[key] = details
-                else:  # Cache by search string
-                    if player not in self.player_details_cache:
-                        self.player_details_cache[player] = []
-                    self.player_details_cache[player].append(details)
+            for json in t.execute('$..players'):
+                for i in range(int(json['count'])):
+                    details = self._parse_player_detail(json[str(i)]['player'])
+                    if isinstance(lookup, list):   # Cache by player ID
+                        key = int(details['player_id'])
+                        self.player_details_cache[key] = details
+                    else:  # Cache by search string
+                        if key not in self.player_details_cache:
+                            self.player_details_cache[key] = []
+                        self.player_details_cache[key].append(details)
 
     def _calc_lookup_for_player_detail(self, player):
         '''
@@ -810,9 +813,9 @@ class League:
         :param player:  The search or id request for player_detail.  This can
             be a string to match on the name or a list of player IDs.
         :return: If player is a str, then this will return None if the str is
-            already in the cache.  If player is a list, this is the list of
-            player IDs we need to get from Yahoo.  This list can be empty if
-            all player IDs are in the cache.
+            already in the cache.  If player is a list, this is a list of
+            lists.  The lists are player IDs we need to get from Yahoo.  This
+            list can be empty if all player IDs are in the cache.
         '''
         if isinstance(player, list):
             # Figure out the players in the list that have already been fetched
@@ -820,7 +823,16 @@ class League:
             for p in player:
                 if p not in self.player_details_cache:
                     fetch_list.append(p)
-            return fetch_list
+            # Yahoo only returns 25 players at a time
+            split_list = []
+            while len(fetch_list) > 0:
+                if len(fetch_list) > 25:
+                    split_list.append(fetch_list[-25:])
+                    del fetch_list[-25:]
+                else:
+                    split_list.append(fetch_list)
+                    fetch_list = []
+            return split_list
         elif player in self.player_details_cache:
             return None
         else:
