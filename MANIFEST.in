@@ -1,1 +1,2 @@
 include README.rst
+include yahoo_fantasy_api/yahoo_fantasy_api/scripts/*
