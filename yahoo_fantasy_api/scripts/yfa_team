@@ -3,7 +3,7 @@
 """Show the matchup and roster of your team in a given week
 
 Usage:
-  team.py <json> <league_id> <week>
+  yfa_team <json> <league_id> <week>
 
   <json>       The name of the JSON that has bearer token.  This can be
                generated from init_oauth_env.

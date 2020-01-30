@@ -28,8 +28,8 @@ setup(name='yahoo_fantasy_api',
       install_requires=['objectpath', 'pytz'],
       python_requires='>=3',
       zip_safe=False,
-      scripts=['yahoo_fantasy_api/scripts/draft_results',
-               'yahoo_fantasy_api/scripts/init_oauth_env',
-               'yahoo_fantasy_api/scripts/league',
-               'yahoo_fantasy_api/scripts/team']
+      scripts=['yahoo_fantasy_api/scripts/yfa_draft_results',
+               'yahoo_fantasy_api/scripts/yfa_init_oauth_env',
+               'yahoo_fantasy_api/scripts/yfa_league',
+               'yahoo_fantasy_api/scripts/yfa_team']
       )

@@ -4,7 +4,7 @@
 Print out the results of a draft
 
 Usage:
-  draft_results.py <json> <league_id>
+  yfa_draft_results <json> <league_id>
 
   <json>       The name of the JSON that has bearer token.  This can be
                generated from init_oauth_env.py.
@@ -23,16 +23,6 @@ if __name__ == '__main__':
     oauth2_logger.cleanup()
     sc = OAuth2(None, None, from_file=args['<json>'])
     lg = yfa.League(sc, args['<league_id>'])
-
-    lg_settings = lg.yhandler.get_settings_raw(lg.league_id)
-    print("Raw League Settings")
-    print(json.dumps(lg_settings, indent=4))
-    print("")
-
-    raw_draft_results = lg.yhandler.get_draftresults_raw(lg.league_id)
-    print("Raw Draft Results")
-    print(json.dumps(raw_draft_results, indent=4))
-    print("")
 
     teams = lg.teams()
     team_map = {e['team_key']: e['name'] for e in teams}

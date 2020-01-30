@@ -3,7 +3,7 @@
 """Show the leagues you are a part of
 
 Usage:
-  league <json> <game_code> [<year>]
+  yfa_league <json> <game_code> [<year>]
 
   <json>       The name of the JSON that has bearer token.  This can be
                generated from init_oauth_env.
