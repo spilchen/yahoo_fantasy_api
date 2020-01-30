@@ -625,6 +625,10 @@ class League:
         If this is called for a league that has not yet done a draft then it
         will return an empty list.
 
+        If this is called during the draft this includes the players that have
+        been drafted thus far.  For auction style drafts, it does not include
+        the player currently being nominated.
+
         :return: Details about all of the players drafted.
         :rtype: list
 
