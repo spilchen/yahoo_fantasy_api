@@ -104,21 +104,37 @@ class League:
         :rtype: Dict
 
         >>> lg.setings()
-        {'name': "Buck you're next!", 'scoring_type': 'head',
-        'start_week': '1', 'current_week': 1, 'end_week': '24',
-        'start_date': '2019-03-20', 'end_date': '2019-09-22',
-        'game_code': 'mlb', 'season': '2019'}
-        """
+        {'league_key': '398.l.10372', 'league_id': '10372', 'name': "Buck you're next!",
+         'url': 'https://baseball.fantasysports.yahoo.com/b1/10372', 'logo_url': False,
+         'draft_status': 'predraft', 'num_teams': 9, 'edit_key': '2020-02-03',
+         'weekly_deadline': '1', 'league_update_timestamp': None, 'scoring_type': 'head',
+         'league_type': 'private', 'renew': '388_27081', 'renewed': '',
+         'iris_group_chat_id': 'ZP2QUJTUB5CPXMXWAVSYZRJI3Y', 'allow_add_to_dl_extra_pos': 0,
+         'is_pro_league': '0', 'is_cash_league': '0', 'current_week': '1', 'start_week': '1',
+         'start_date': '2020-03-26', 'end_week': '24', 'end_date': '2020-09-20',
+         'game_code': 'mlb', 'season': '2020', 'draft_type': 'self', 'is_auction_draft': '0',
+         'uses_playoff': '1', 'has_playoff_consolation_games': True, 'playoff_start_week': '22',
+         'uses_playoff_reseeding': 1, 'uses_lock_eliminated_teams': 0, 'num_playoff_teams': '6',
+         'num_playoff_consolation_teams': 6, 'has_multiweek_championship': 0,
+         'uses_roster_import': '1', 'roster_import_deadline': '2020-03-25', 'waiver_type': 'R',
+         'waiver_rule': 'all', 'uses_faab': '0', 'draft_pick_time': '60',
+         'post_draft_players': 'FA', 'max_teams': '14', 'waiver_time': '2',
+         'trade_end_date': '2020-08-09', 'trade_ratify_type': 'vote', 'trade_reject_time': '2',
+         'player_pool': 'ALL', 'cant_cut_list': 'none', 'can_trade_draft_picks': '1'}
+        """  # noqa
         if self.settings_cache is None:
             json = self.yhandler.get_settings_raw(self.league_id)
-            t = objectpath.Tree(json)
-            settings_to_return = """
-            name, scoring_type, draft_status, num_teams, league_type,
-            start_week, current_week, end_week,start_date, end_date,
-            game_code, season
-            """
-            self.settings_cache = t.execute(
-                '$.fantasy_content.league.({})[0]'.format(settings_to_return))
+            data = {}
+            if "fantasy_content" in json:
+                content = json["fantasy_content"]
+                if "league" in content:
+                    self._merge_dicts(data, content["league"][0], [])
+                    # Filtering out 'roster_positions' and 'stat_categories'
+                    # because they can be found in other APIs.
+                    self._merge_dicts(data,
+                                      content["league"][1]["settings"][0],
+                                      ["roster_positions", "stat_categories"])
+            self.settings_cache = data
         return self.settings_cache
 
     def stat_categories(self):
@@ -767,6 +783,16 @@ class League:
                 1001: 'PPT', 1002: 'Avg-PPT', 1003: 'SHT', 1004: 'Avg-SHT',
                 1005: 'COR', 1006: 'FEN', 1007: 'Off-ZS', 1008: 'Def-ZS',
                 1009: 'ZS-Pct', 1010: 'GStr', 1011: 'Shifts'}
+
+    def _merge_dicts(self, target, source, filter):
+        '''
+        Helper to merge two dicts together
+        '''
+        assert(isinstance(source, dict))
+        assert(isinstance(target, dict))
+        for key, value in source.items():
+            if key not in filter:
+                target[key] = value
 
     def _parse_player_detail(self, plyr):
         '''
