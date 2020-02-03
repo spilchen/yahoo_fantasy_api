@@ -51,20 +51,38 @@ class League:
     def standings(self):
         """Return the standings of the league id
 
+        For each team in the standings it returns info about their place in the
+        standings (e.g. w/l record, number of games back).
+
         :return: An ordered list of the teams in the standings.  First entry is
             the first place team.
         :rtype: List
 
-        >>> lg.standings()
-        ['Liz & Peter's Twins', 'Lumber Kings', 'Proj. Matt Carpenter']
+        >>> lg.standings()[0]
+        {'team_key': '388.l.27081.t.5',
+         'name': 'Lumber Kings',
+         'rank': 1,
+         'playoff_seed': '5',
+         'outcome_totals': {'wins': '121',
+          'losses': '116',
+          'ties': '15',
+          'percentage': '.510'},
+         'games_back': '19'}
         """
         json = self.yhandler.get_standings_raw(self.league_id)
-        team_json = \
-            json['fantasy_content']["league"][1]["standings"][0]["teams"]
+        t = objectpath.Tree(json)
+        num_teams = int(t.execute('$..count[0]'))
         standings = []
-        for i in range(team_json["count"]):
-            team = team_json[str(i)]["team"][0]
-            standings.append(team[2]['name'])
+        for i in range(num_teams):
+            team = {}
+            for e in t.execute('$..teams.."{}".team[0]'.format(i)):
+                if isinstance(e, list):
+                    for td in e:
+                        if "team_key" in td or 'name' in td:
+                            self._merge_dicts(team, td, [])
+                elif "team_standings" in e:
+                    self._merge_dicts(team, e['team_standings'], [])
+            standings.append(team)
         return standings
 
     def teams(self):

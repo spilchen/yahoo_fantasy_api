@@ -8,7 +8,8 @@ import pytest
 def test_standings(mock_mlb_league):
     s = mock_mlb_league.standings()
     assert(len(s) == 10)
-    assert(s[0] == "Lumber Kings")
+    assert(s[0]['name'] == "Lumber Kings")
+    assert(s[0]['outcome_totals']['wins'] == '144')
 
 
 def test_settings(mock_mlb_league):
