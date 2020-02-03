@@ -68,24 +68,39 @@ class League:
         return standings
 
     def teams(self):
-        """Return a name and key of each team in the league
+        """Return details of all of the teams in the league.
 
-        :return: A list of teams, each team will have its name and key
-        :rtype: List
+        :return: A dictionary of teams, each entry is for a team.  The team key
+            is the key to the dict, where the values are all of the particulars
+            for that team.
+        :rtype: dict
 
-        >>> lg.teams()
-        [{'name': 'Lumber Kings', 'team_key': '370.l.56877.t.5'},
-         {'name': 'Roster Sabotage', 'team_key': '370.l.56877.t.6'},
-         {'name': 'Springfield Isotopes', 'team_key': '370.l.56877.t.7'}]
+        >>> tms = lg.teams()
+        >>> tms.keys()
+        dict_keys(['388.l.27081.t.5', '388.l.27081.t.1', '388.l.27081.t.3',
+                   '388.l.27081.t.7', '388.l.27081.t.8', '388.l.27081.t.4',
+                   '388.l.27081.t.2', '388.l.27081.t.9', '388.l.27081.t.6',
+                   '388.l.27081.t.10'])
+        >>> tms['388.l.27081.t.5'].keys()
+        dict_keys(['team_key', 'team_id', 'name', 'is_owned_by_current_login',
+                   'url', 'team_logos', 'waiver_priority', 'number_of_moves',
+                   'number_of_trades', 'roster_adds', 'clinched_playoffs',
+                   'league_scoring_type', 'has_draft_grade',
+                   'auction_budget_total', 'auction_budget_spent', 'managers'])
         """
         json = self.yhandler.get_standings_raw(self.league_id)
         t = objectpath.Tree(json)
-        elems = t.execute('$..teams..(name)')
-        teams = []
-        for ele in elems:
-            teams.append(ele)
-        for team, ele in zip(teams, t.execute('$..teams..(team_key)')):
-            team['team_key'] = ele['team_key']
+        num_teams = int(t.execute('$..count[0]'))
+        teams = {}
+        for i in range(num_teams):
+            team = {}
+            key = None
+            for e in t.execute('$..teams.."{}".team[0][0]'.format(i)):
+                if "team_key" in e:
+                    key = e['team_key']
+                if isinstance(e, dict):
+                    self._merge_dicts(team, e, [])
+            teams[key] = team
         return teams
 
     def matchups(self):

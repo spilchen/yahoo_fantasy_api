@@ -23,9 +23,8 @@ if __name__ == '__main__':
     sc = OAuth2(None, None, from_file=args['<json>'])
     lg = yfa.League(sc, args['<league_id>'])
     teams = lg.teams()
-    team_map = {e['team_key']: e['name'] for e in teams}
     tm = lg.to_team(lg.team_key())
-    print("Opponent: {}".format(team_map[tm.matchup(args['<week>'])]))
+    print("Opponent: {}".format(teams[tm.matchup(args['<week>'])]['name']))
     print("")
     print("Roster")
     for plyr in tm.roster(args['<week>']):

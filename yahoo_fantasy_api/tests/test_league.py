@@ -81,10 +81,11 @@ def test_week_date_range_of_last(mock_mlb_league):
 
 def test_team_list(mock_mlb_league):
     tms = mock_mlb_league.teams()
-    print(tms)
     assert(len(tms) == 10)
-    assert(tms[8]['name'] == 'Bobble Addicts')
-    assert(tms[8]['team_key'] == '370.l.56877.t.9')
+    assert('370.l.56877.t.9' in tms)
+    print(tms['370.l.56877.t.9'])
+    assert(tms['370.l.56877.t.9']['name'] == 'Bobble Addicts')
+    assert(tms['370.l.56877.t.9']['number_of_moves'] == '30')
 
 
 def test_free_agents(mock_mlb_league):
