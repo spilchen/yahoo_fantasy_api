@@ -472,7 +472,10 @@ class League:
         :parm player: If a str, this is a search string that will return all
             matches of the name (to a maximum of 25 players).  It it is a int
             or list(int), then these are player IDs to lookup.
-        :return: Details of all of the players found.
+        :return: Details of all of the players found.  If given a player ID
+            that does not exist, then a RuntimeError exception is thrown.  If
+            searching for players by name and none are found an empty list is
+            returned.
         :rtype: list(dict)
 
         >>> lg.player_details('Phil Kessel')
@@ -513,8 +516,7 @@ class League:
         if isinstance(player, list):
             for p in player:
                 players.append(self.player_details_cache[p])
-        else:
-            assert(player in self.player_details_cache)
+        elif player in self.player_details_cache:
             assert(isinstance(self.player_details_cache[player], list))
             players = self.player_details_cache[player]
         return players
@@ -859,6 +861,8 @@ class League:
                 lookup = None
 
             for json in t.execute('$..players'):
+                if json == []:
+                    continue
                 for i in range(int(json['count'])):
                     details = self._parse_player_detail(json[str(i)]['player'])
                     if isinstance(lookup, list):   # Cache by player ID

@@ -136,8 +136,9 @@ class YHandler:
             return json.load(f)
 
     def get_player_raw(self, league_id, search=None, ids=None):
-        if search == "Phil":
-            fn = "{}/sample.player_details.Phil.json".format(self.dir_path)
+        if search is not None:
+            fn = "{}/sample.player_details.{}.json".format(self.dir_path,
+                                                           search)
         elif ids is not None:
             fn = "{}/sample.player_details.ids.json".format(self.dir_path)
         else:

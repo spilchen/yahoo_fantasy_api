@@ -186,6 +186,12 @@ def test_phil_player_details(mock_nhl_league):
     assert(r[8]['name']['full'] == 'Matthew Phillips')
 
 
+def test_blah_player_details(mock_nhl_league):
+    r = mock_nhl_league.player_details("blah")
+    print(r)
+    assert(len(r) == 0)
+
+
 def test_ids_player_details(mock_nhl_league):
     r = mock_nhl_league.player_details([3983, 5085, 5387])
     print(r)
