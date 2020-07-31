@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+"""
+Print out the results of a draft
+
+Usage:
+  yfa_draft_results <json> <league_id>
+
+  <json>       The name of the JSON that has bearer token.  This can be
+               generated from init_oauth_env.py.
+  <league_id>  The ID of the league to get draft results for.  You can use
+               league.py to get this value.
+"""
+from docopt import docopt
+from yahoo_oauth import OAuth2
+import yahoo_fantasy_api as yfa
+from yahoo_fantasy_api import oauth2_logger
+import json
+
+
+if __name__ == '__main__':
+    args = docopt(__doc__, version='1.0')
+    oauth2_logger.cleanup()
+    sc = OAuth2(None, None, from_file=args['<json>'])
+    lg = yfa.League(sc, args['<league_id>'])
+
+    teams = lg.teams()
+    team_map = {e['team_key']: e['name'] for e in teams}
+
+    dr = lg.draft_results()
+    print("{} draft picks selected".format(len(dr)))
+    ids = [e['player_id'] for e in dr]
+    lg.player_details(ids)   # Prime the player detail cache
+    for dp in dr:
+        plyr = lg.player_details(dp['player_id'])
+        if "cost" in dp:
+            pick_and_cost = "Pick: {:4} Cost: ${:<2} ".format(
+                dp['pick'], dp['cost'])
+        else:
+            pick_and_cost = "Pick: {:4} ".format(dp['pick'])
+        player_and_team = "Player: {:30} Team: {:30}".format(
+            plyr[0]['name']['full'], team_map[dp['team_key']])
+        print(pick_and_cost + player_and_team)

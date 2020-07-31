@@ -1,6 +1,6 @@
 #!/bin/python
 
-import json
+import datetime
 
 YAHOO_ENDPOINT = 'https://fantasysports.yahooapis.com/fantasy/v2'
 
@@ -21,9 +21,9 @@ class YHandler:
         """
         response = self.sc.session.get("{}/{}".format(YAHOO_ENDPOINT, uri),
                                        params={'format': 'json'})
+        if response.status_code != 200:
+            raise RuntimeError(response.content)
         jresp = response.json()
-        if "error" in jresp:
-            raise RuntimeError(json.dumps(jresp))
         return jresp
 
     def put(self, uri, data):
@@ -161,19 +161,32 @@ class YHandler:
             "league/{}/players;start={};count=25;status={}{}/percent_owned".
             format(league_id, start, status, pos_parm))
 
-    def get_player_raw(self, league_id, player_name):
+    def get_player_raw(self, league_id, search=None, ids=None):
         """Return the raw JSON when requesting player details
 
         :param league_id: League ID to get the player for
         :type league_id: str
-        :param player_name: Name of player to get the details for
-        :type player_name: str
+        :param search: Search string to apply.  This can be a full or partial
+            name of a player.  Cannot be used with ids.
+        :type search: str
+        :param ids: Set of player IDs to lookup.  Cannot be used with search.
+        :type ids: list
         :return: JSON document of the request.
         """
-        player_stat_uri = ""
-        if player_name is not None:
-            player_stat_uri = "players;search={}/stats".format(player_name)
-        return self.get("league/{}/{}".format(league_id, player_stat_uri))
+        if search is not None:
+            assert(ids is None)
+            players_uri = "search={}".format(search)
+        elif ids is not None and len(ids) > 0:
+            assert(search is None)
+            # Construct a player key by prefixing the start of the league ID
+            lg_pref = league_id[0:league_id.find('.')]
+            players_uri = "player_keys=" + ",".join(
+                "{}.p.{}".format(lg_pref, i) for i in ids)
+        else:
+            raise RuntimeError(
+                "Must use search or ids options to filter players.")
+        return self.get("league/{}/players;{}/stats".format(league_id,
+                                                            players_uri))
 
     def get_percent_owned_raw(self, league_id, player_ids):
         """Return the raw JSON when requesting the percentage owned of players
@@ -240,3 +253,65 @@ class YHandler:
         :return: Response from the PUT
         """
         return self.put("transaction/" + str(transaction_key), xml)
+
+    def get_player_stats_raw(self, game_code, player_ids, req_type, date,
+                             season):
+        """
+        GET stats for a list of player IDs
+
+        :param game_code: The game code the players belong too.  mlb, nhl, etc.
+        :type game_code: str
+        :param player_ids: Yahoo! player IDs we are requesting stats for
+        :type player_ids: list(int)
+        :param req_type: The request type.  This defines the range of dates to
+            return the stats for.
+        :param date: When req_type == 'date', this is the date we want the
+            stats for.  If None, we'll get the stats for the current date.
+        :type date: datetime.date
+        :param season: When req_type == 'season', this is the season we want
+            the stats for.  If None, we'll get the stats for the current season
+        :type season: int
+        :return: Response from the GET call
+        """
+        uri = self._build_player_stats_uri(game_code, player_ids, req_type,
+                                           date, season)
+        return self.get(uri)
+
+    def get_draftresults_raw(self, league_id):
+        """
+        GET draft results for the league
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :return: Response from the GET call
+        """
+        return self.get("league/{}/draftresults".format(league_id))
+
+    def _build_player_stats_uri(self, game_code, player_ids, req_type, date,
+                                season):
+        uri = 'players;player_keys='
+        if type(player_ids) is list:
+            for i, p in enumerate(player_ids):
+                if i != 0:
+                    uri += ","
+                uri += "{}.p.{}".format(game_code, p)
+        uri += "/stats;{}".format(self._get_stats_type(req_type, date, season))
+        return uri
+
+    def _get_stats_type(self, req_type, date, season):
+        if req_type == 'season':
+            if season is None:
+                return "type=season"
+            else:
+                return "type=season;season={}".format(season)
+        elif req_type == 'date':
+            if date is None:
+                date = datetime.date.today()
+            if type(date) is datetime.date or type(date) is datetime.datetime:
+                return "type=date;date={}".format(date.strftime("%Y-%m-%d"))
+            else:
+                return "type=date;date={}".format(date)
+        elif req_type in ['lastweek', 'lastmonth']:
+            return "type={}".format(req_type)
+        else:
+            assert(False), "Unknown req_type type: {}".format(req_type)

@@ -38,7 +38,12 @@ class YHandler:
         :type league_id: str
         :return: JSON document of the request.
         """
-        with open(self.dir_path + "/sample.league_settings.json", "r") as f:
+        if league_id == '396.l.21484':
+            id = '396.l.21484'
+        else:
+            id = "388.l.27081"
+        fn = "{}/sample.league_settings.{}.json".format(self.dir_path, id)
+        with open(fn, "r") as f:
             return json.load(f)
 
     def get_matchup_raw(self, team_key, week):
@@ -105,5 +110,38 @@ class YHandler:
 
     def get_team_transactions(self, league_id, team_key, tran_type):
         fn = self.dir_path + "/sample.pending_trade_transaction.json"
+        with open(fn, "r") as f:
+            return json.load(f)
+
+    def get_player_stats_raw(self, game_code, player_ids, req_type, day,
+                             season):
+        if game_code == 'nhl':
+            id = "396.l.21484"
+        else:
+            id = "388.l.27081"
+        fn = "{}/sample.player_stats.{}.json".format(self.dir_path, id)
+        with open(fn, "r") as f:
+            return json.load(f)
+
+    def get_draftresults_raw(self, league_id):
+        """
+        GET draft results for the league
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :return: Response from the GET call
+        """
+        fn = "{}/sample.draftresults.{}.json".format(self.dir_path, league_id)
+        with open(fn, "r") as f:
+            return json.load(f)
+
+    def get_player_raw(self, league_id, search=None, ids=None):
+        if search is not None:
+            fn = "{}/sample.player_details.{}.json".format(self.dir_path,
+                                                           search)
+        elif ids is not None:
+            fn = "{}/sample.player_details.ids.json".format(self.dir_path)
+        else:
+            assert(False), "Unsupported lookup"
         with open(fn, "r") as f:
             return json.load(f)
