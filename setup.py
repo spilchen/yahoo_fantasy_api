@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from setuptools import setup
 
 
@@ -7,7 +9,7 @@ def readme():
 
 
 setup(name='yahoo_fantasy_api',
-      version='1.5.0',
+      version='2.0.1',
       description='Python bindings to access the Yahoo! Fantasy APIs',
       long_description=readme(),
       url='http://github.com/spilchen/yahoo_fantasy_api',
@@ -23,6 +25,12 @@ setup(name='yahoo_fantasy_api',
           'License :: OSI Approved :: MIT License',
           'Programming Language :: Python :: 3.7',
       ],
-      install_requires=['objectpath', 'pytz'],
+      install_requires=['objectpath', 'pytz', 'yahoo_oauth',
+                        'docopt'],
       python_requires='>=3',
-      zip_safe=False)
+      zip_safe=False,
+      scripts=['yahoo_fantasy_api/scripts/yfa_draft_results',
+               'yahoo_fantasy_api/scripts/yfa_init_oauth_env',
+               'yahoo_fantasy_api/scripts/yfa_league',
+               'yahoo_fantasy_api/scripts/yfa_team']
+      )

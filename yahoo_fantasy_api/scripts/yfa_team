@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+"""Show the matchup and roster of your team in a given week
+
+Usage:
+  yfa_team <json> <league_id> <week>
+
+  <json>       The name of the JSON that has bearer token.  This can be
+               generated from init_oauth_env.
+  <league_id>  The ID of the league.  You can use the league script to find the
+               league ID.
+  <week>       The week we want to show the roster and matchup for.
+"""
+from docopt import docopt
+from yahoo_oauth import OAuth2
+import yahoo_fantasy_api as yfa
+from yahoo_fantasy_api import oauth2_logger
+
+
+if __name__ == '__main__':
+    args = docopt(__doc__, version='1.0')
+    oauth2_logger.cleanup()
+    sc = OAuth2(None, None, from_file=args['<json>'])
+    lg = yfa.League(sc, args['<league_id>'])
+    teams = lg.teams()
+    tm = lg.to_team(lg.team_key())
+    print("Opponent: {}".format(teams[tm.matchup(args['<week>'])]['name']))
+    print("")
+    print("Roster")
+    for plyr in tm.roster(args['<week>']):
+        print(plyr)

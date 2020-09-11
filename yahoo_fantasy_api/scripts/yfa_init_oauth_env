@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python
 
 """Initialize OAuth environment for Yahoo! API access.
 
@@ -9,7 +9,7 @@ The consumer key/id can be omitted if the JSON file already exists.  In that
 mode, this program will verify access with the JSON credentials.
 
 Usage:
-  init_oauth_env.py [-k <consumer_key>] [-s <consumer_secret>] <json>
+  yfa_init_oauth_env [-k <consumer_key>] [-s <consumer_secret>] <json>
 
   <json>  File to read/write the bearer token
 
