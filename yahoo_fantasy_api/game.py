@@ -20,6 +20,18 @@ class Game:
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
 
+    def game_id(self):
+        """Return the Yahoo! Game ID 
+        :return: Game ID
+        :rtype: str
+        """
+        t = objectpath.Tree(self.yhandler.get_game_raw(self.code))
+        jfilter = t.execute('$..(game_id)')
+        id = ''
+        for row in jfilter:
+            id = row['game_id']
+        return id
+
     def to_league(self, league_id):
         """Construct a League object from a Game
 

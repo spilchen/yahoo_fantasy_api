@@ -315,3 +315,12 @@ class YHandler:
             return "type={}".format(req_type)
         else:
             assert(False), "Unknown req_type type: {}".format(req_type)
+
+    def get_game_raw(self, game_code):
+        """Return the raw JSON when requesting details of a game.
+
+        :param game_code: Game code to get the standings for. (nfl,mlb,nba, nhl)
+        :type game_code: str
+        :return: JSON document of the request.
+        """
+        return self.get("game/{}".format(game_code))
