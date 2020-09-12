@@ -21,3 +21,10 @@ def test_roster_raw():
         team_key))
     yh.get_roster_raw(team_key)
     yh.get.assert_called_with("team/{}/roster".format(team_key))
+
+def test_game_raw():
+    yh = yhandler.YHandler('dummy-sc')
+    yh.get = MagicMock(return_value=None)
+    game_code = "nfl"
+    yh.get_game_raw(game_code)
+    yh.get.assert_called_with("game/{}".format(game_code))

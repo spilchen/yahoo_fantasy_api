@@ -145,3 +145,13 @@ class YHandler:
             assert(False), "Unsupported lookup"
         with open(fn, "r") as f:
             return json.load(f)
+
+    def get_game_raw(self, game_code):
+        """Return the raw JSON when requesting details of a game.
+
+        :param game_code: Game code to get the standings for. (nfl,mlb,nba, nhl)
+        :type game_code: str
+        :return: JSON document of the request.
+        """
+        with open(self.dir_path + "/sample.game_details.json", "r") as f:
+            return json.load(f)
