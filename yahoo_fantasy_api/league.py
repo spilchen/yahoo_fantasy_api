@@ -121,13 +121,13 @@ class League:
             teams[key] = team
         return teams
 
-    def matchups(self):
-        """Retrieve matchups data for current week
+    def matchups(self, week=None):
+        """Retrieve matchups data for a given week. Defaults to current week.
 
         :return: Matchup details as key/value pairs
         :rtype: dict
         """
-        json = self.yhandler.get_scoreboard_raw(self.league_id)
+        json = self.yhandler.get_scoreboard_raw(self.league_id, week=week)
         return json
 
     def settings(self):
