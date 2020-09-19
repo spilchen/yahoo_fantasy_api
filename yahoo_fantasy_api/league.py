@@ -124,6 +124,8 @@ class League:
     def matchups(self, week=None):
         """Retrieve matchups data for a given week. Defaults to current week.
 
+        :param week: Week to request, defaults to None
+        :type week: int, optional
         :return: Matchup details as key/value pairs
         :rtype: dict
         """
