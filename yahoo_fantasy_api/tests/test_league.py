@@ -1,5 +1,6 @@
 #!/bin/python
 
+from yahoo_fantasy_api.tests.conftest import mock_mlb_league
 import yahoo_fantasy_api as yfa
 import datetime
 import pytest
@@ -128,6 +129,14 @@ def test_percent_owned(mock_mlb_league):
     assert(po[1]['player_id'] == 6381)
     assert(po[1]['name'] == 'Dylan Larkin')
     assert(po[1]['percent_owned'] == 89)
+
+
+def test_player_owner(mock_mlb_league):
+    owner = mock_mlb_league.player_owner(9265)
+    assert(owner == "Ladies and Edelman")
+    owner = mock_mlb_league.player_owner(27564)
+    assert(owner == "Free Agent")
+    
 
 
 def test_edit_date(mock_mlb_league):
