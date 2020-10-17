@@ -202,6 +202,21 @@ class YHandler:
         return self.get(
             "league/{}/players;player_keys={}/percent_owned".
             format(league_id, joined_ids))
+    
+    def get_player_ownership_raw(self, league_id, player_ids):
+        """Return the raw JSON when requesting the ownership of players
+
+        :param league_id: League ID we are requesting data from
+        :type league_id: str
+        :param player_ids: Yahoo! Player IDs to retrieve % owned for
+        :type player_ids: list(str)
+        :return: JSON document of the request
+        """
+        lg_pref = league_id[0:league_id.find(".")]
+        joined_ids = ",".join([lg_pref + ".p." + str(i) for i in player_ids])
+        return self.get(
+            "league/{}/players;player_keys={}/ownership".
+            format(league_id, joined_ids))
 
     def put_roster(self, team_key, xml):
         """Calls PUT against the roster API passing it an xml document

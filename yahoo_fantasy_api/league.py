@@ -121,13 +121,15 @@ class League:
             teams[key] = team
         return teams
 
-    def matchups(self):
-        """Retrieve matchups data for current week
+    def matchups(self, week=None):
+        """Retrieve matchups data for a given week. Defaults to current week.
 
+        :param week: Week to request, defaults to None
+        :type week: int, optional
         :return: Matchup details as key/value pairs
         :rtype: dict
         """
-        json = self.yhandler.get_scoreboard_raw(self.league_id)
+        json = self.yhandler.get_scoreboard_raw(self.league_id, week=week)
         return json
 
     def settings(self):
@@ -549,6 +551,29 @@ class League:
         except StopIteration:
             pass
         return po
+
+
+    def player_owner(self, player_id):
+        """Retrieve the owner of a player
+
+        :param player_id: Yahoo! Player ID to retrieve owned for
+        :type player_id: int
+        :return: Name of player owner
+        :rtype: string
+
+        >>> lg.player_owner(1, 3737)
+        "owner_name"
+        """
+        t = objectpath.Tree(self.yhandler.get_player_ownership_raw(self.league_id, player_id))
+        owner_details = t.execute("$..(ownership_type,owner_team_name)")
+        for value in owner_details:
+            ownership_type = value['ownership_type']
+            if ownership_type == "freeagents":
+                return "Free Agent"
+            elif ownership_type == "team":    
+                owner_team_name = value['owner_team_name']
+                return owner_team_name
+
 
     def edit_date(self):
         """Return the next day that you can edit the lineups.
