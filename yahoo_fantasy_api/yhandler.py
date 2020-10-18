@@ -209,7 +209,7 @@ class YHandler:
         :param league_id: League ID we are requesting data from
         :type league_id: str
         :param player_ids: Yahoo! Player IDs to retrieve % owned for
-        :type player_ids: list(str)
+        :type player_ids: list(int)
         :return: JSON document of the request
         """
         lg_pref = league_id[0:league_id.find(".")]
