@@ -131,11 +131,10 @@ def test_percent_owned(mock_mlb_league):
     assert(po[1]['percent_owned'] == 89)
 
 
-def test_player_owner(mock_mlb_league):
-    owner = mock_mlb_league.player_owner(9265)
-    assert(owner == "Ladies and Edelman")
-    owner = mock_mlb_league.player_owner(27564)
-    assert(owner == "Free Agent")
+def test_ownership(mock_mlb_league):
+    details = mock_mlb_league.ownership([9265,27564])
+    assert(details['9265']['owner_team_name'] == "Ladies and Edelman")
+    assert(details['27564']['ownership_type'] == "freeagents")
     
 
 
