@@ -561,7 +561,7 @@ class League:
         :return: Ownership status of player
         :rtype: dict
 
-        >>> lg.player_owner(1, [3737])
+        >>> lg.ownership(1, [3737])
         {"3737" : {"ownership_tpye" : "team", "owner_team_name": "team name"}}
         """
         t = objectpath.Tree(self.yhandler.get_player_ownership_raw(self.league_id, player_ids))
