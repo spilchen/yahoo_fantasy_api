@@ -552,6 +552,30 @@ class League:
             pass
         return po
 
+
+    def ownership(self, player_ids):
+        """Retrieve the owner of a player
+
+        :param player_ids: Yahoo! Player IDs to retrieve owned for
+        :type player_ids: list(int)
+        :return: Ownership status of player
+        :rtype: dict
+
+        >>> lg.ownership([3737])
+        {"3737" : {"ownership_tpye" : "team", "owner_team_name": "team name"}}
+        """
+        t = objectpath.Tree(self.yhandler.get_player_ownership_raw(self.league_id, player_ids))
+        owner_details = t.execute("$..(player_id,ownership_type,owner_team_name)")
+        ownership = {}
+        try:
+            while True:
+                player_id = next(owner_details)['player_id']
+                ownership_details = next(owner_details)
+                ownership[player_id] = ownership_details
+        except StopIteration:
+            pass
+        return ownership
+
     def edit_date(self):
         """Return the next day that you can edit the lineups.
 

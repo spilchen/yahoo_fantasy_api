@@ -108,6 +108,16 @@ class YHandler:
         with open(fn, "r") as f:
             return json.load(f)
 
+    def get_player_ownership_raw(self, league_id, player_ids):
+        if player_ids == 27564 :
+            fn = self.dir_path + "/sample.player_ownership_freeagent.json"
+            with open(fn, "r") as f:
+                return json.load(f)
+        else:
+            fn = self.dir_path + "/sample.player_ownership.json"
+            with open(fn, "r") as f:
+                return json.load(f)
+
     def get_team_transactions(self, league_id, team_key, tran_type):
         fn = self.dir_path + "/sample.pending_trade_transaction.json"
         with open(fn, "r") as f:
