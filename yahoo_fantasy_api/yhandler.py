@@ -256,6 +256,24 @@ class YHandler:
             "league/{}/transactions;team_key={};type={}".format(
                 league_id, team_key, tran_type))
 
+    def get_transactions_raw(self, league_id, tran_types, count):
+        """
+        Calls GET to retrieve transactions of a given type.
+
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :param tran_types: The comman seperated types of transactions retrieve.  Valid values
+        are: add,drop,commish,trade
+        :type tran_types str
+        :param count: The number of transactions to retrieve. Leave blank to return all
+        transactions
+        :type count str
+        :return: Response from the GET
+        """
+        return self.get(
+            "league/{}/transactions;types={};count={}".format(
+                league_id, tran_types, count))
+
     def put_transaction(self, transaction_key, xml):
         """
         PUT to the transaction API
