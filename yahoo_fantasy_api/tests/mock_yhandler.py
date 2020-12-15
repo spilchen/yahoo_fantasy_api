@@ -165,3 +165,18 @@ class YHandler:
         """
         with open(self.dir_path + "/sample.game_details.json", "r") as f:
             return json.load(f)
+
+    def get_transactions_raw(self, league_id, tran_types, count):
+        """Return the raw JSON when requesting transactions of a league.
+        :param league_id: The league ID that the API request applies to
+        :type league_id: str
+        :param tran_types: The comman seperated types of transactions retrieve.  Valid values
+        are: add,drop,commish,trade
+        :type tran_types str
+        :param count: The number of transactions to retrieve. Leave blank to return all
+        transactions
+        :type count str
+        :return: JSON document of the request.
+        """
+        with open(self.dir_path + "/sample.transactions.json", "r") as f:
+            return json.load(f)

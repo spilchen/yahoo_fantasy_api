@@ -215,3 +215,11 @@ def test_player_details_cache(mock_nhl_league):
     mock_nhl_league.player_details(5387)
     exp_keys = ['Phil', 3983, 5085, 5387]
     assert(list(mock_nhl_league.player_details_cache.keys()) == exp_keys)
+
+
+def test_transactions(mock_mlb_league):
+    transactions = mock_mlb_league.transactions("trade", "1")
+    for transaction in transactions:
+        assert(transaction)
+        assert(transaction['type'] == 'trade')
+        assert(transactions['players'])

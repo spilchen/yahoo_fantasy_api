@@ -1,0 +1,339 @@
+{
+    "fantasy_content": {
+        "xml:lang": "en-US",
+        "yahoo:uri": "\/fantasy\/v2\/league\/399.l.710921\/transactions;types=trade",
+        "league": [{
+                "league_key": "399.l.710921",
+                "league_id": "710921",
+                "name": "Harambe Memorial League",
+                "url": "https:\/\/football.fantasysports.yahoo.com\/f1\/710921",
+                "logo_url": false,
+                "draft_status": "postdraft",
+                "num_teams": 12,
+                "edit_key": 14,
+                "weekly_deadline": "",
+                "league_update_timestamp": "1607942024",
+                "scoring_type": "head",
+                "league_type": "private",
+                "renew": "390_212794",
+                "renewed": "",
+                "iris_group_chat_id": "",
+                "allow_add_to_dl_extra_pos": 0,
+                "is_pro_league": "0",
+                "is_cash_league": "0",
+                "current_week": 14,
+                "start_week": "1",
+                "start_date": "2020-09-10",
+                "end_week": "16",
+                "end_date": "2020-12-28",
+                "game_code": "nfl",
+                "season": "2020"
+            },
+            {
+                "transactions": {
+                    "0": {
+                        "transaction": [{
+                                "transaction_key": "399.l.710921.tr.319",
+                                "transaction_id": "319",
+                                "type": "trade",
+                                "status": "successful",
+                                "timestamp": "1605168906",
+                                "trader_team_key": "399.l.710921.t.9",
+                                "trader_team_name": "Too Many Cooks",
+                                "tradee_team_key": "399.l.710921.t.3",
+                                "tradee_team_name": "Red Skins Matter"
+                            },
+                            {
+                                "players": {
+                                    "0": {
+                                        "player": [
+                                            [{
+                                                    "player_key": "399.p.26804"
+                                                },
+                                                {
+                                                    "player_id": "26804"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Latavius Murray",
+                                                        "first": "Latavius",
+                                                        "last": "Murray",
+                                                        "ascii_first": "Latavius",
+                                                        "ascii_last": "Murray"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "NO"
+                                                },
+                                                {
+                                                    "display_position": "RB"
+                                                },
+                                                {
+                                                    "position_type": "O"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [{
+                                                    "type": "trade",
+                                                    "source_type": "team",
+                                                    "source_team_key": "399.l.710921.t.9",
+                                                    "source_team_name": "Too Many Cooks",
+                                                    "destination_type": "team",
+                                                    "destination_team_key": "399.l.710921.t.3",
+                                                    "destination_team_name": "Red Skins Matter"
+                                                }]
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "player": [
+                                            [{
+                                                    "player_key": "399.p.29236"
+                                                },
+                                                {
+                                                    "player_id": "29236"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Carson Wentz",
+                                                        "first": "Carson",
+                                                        "last": "Wentz",
+                                                        "ascii_first": "Carson",
+                                                        "ascii_last": "Wentz"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Phi"
+                                                },
+                                                {
+                                                    "display_position": "QB"
+                                                },
+                                                {
+                                                    "position_type": "O"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [{
+                                                    "type": "trade",
+                                                    "source_type": "team",
+                                                    "source_team_key": "399.l.710921.t.3",
+                                                    "source_team_name": "Red Skins Matter",
+                                                    "destination_type": "team",
+                                                    "destination_team_key": "399.l.710921.t.9",
+                                                    "destination_team_name": "Too Many Cooks"
+                                                }]
+                                            }
+                                        ]
+                                    },
+                                    "count": 2
+                                }
+                            }
+                        ]
+                    },
+                    "1": {
+                        "transaction": [{
+                                "transaction_key": "399.l.710921.tr.295",
+                                "transaction_id": "295",
+                                "type": "trade",
+                                "status": "successful",
+                                "timestamp": "1604650727",
+                                "trader_team_key": "399.l.710921.t.2",
+                                "trader_team_name": "JuJus Golden Johnson",
+                                "tradee_team_key": "399.l.710921.t.5",
+                                "tradee_team_name": "Nuklear JuJu Charks"
+                            },
+                            {
+                                "players": {
+                                    "0": {
+                                        "player": [
+                                            [{
+                                                    "player_key": "399.p.31019"
+                                                },
+                                                {
+                                                    "player_id": "31019"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Dallas Goedert",
+                                                        "first": "Dallas",
+                                                        "last": "Goedert",
+                                                        "ascii_first": "Dallas",
+                                                        "ascii_last": "Goedert"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Phi"
+                                                },
+                                                {
+                                                    "display_position": "TE"
+                                                },
+                                                {
+                                                    "position_type": "O"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [{
+                                                    "type": "trade",
+                                                    "source_type": "team",
+                                                    "source_team_key": "399.l.710921.t.2",
+                                                    "source_team_name": "JuJus Golden Johnson",
+                                                    "destination_type": "team",
+                                                    "destination_team_key": "399.l.710921.t.5",
+                                                    "destination_team_name": "Nuklear JuJu Charks"
+                                                }]
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "player": [
+                                            [{
+                                                    "player_key": "399.p.26660"
+                                                },
+                                                {
+                                                    "player_id": "26660"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Giovani Bernard",
+                                                        "first": "Giovani",
+                                                        "last": "Bernard",
+                                                        "ascii_first": "Giovani",
+                                                        "ascii_last": "Bernard"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Cin"
+                                                },
+                                                {
+                                                    "display_position": "RB"
+                                                },
+                                                {
+                                                    "position_type": "O"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [{
+                                                    "type": "trade",
+                                                    "source_type": "team",
+                                                    "source_team_key": "399.l.710921.t.5",
+                                                    "source_team_name": "Nuklear JuJu Charks",
+                                                    "destination_type": "team",
+                                                    "destination_team_key": "399.l.710921.t.2",
+                                                    "destination_team_name": "JuJus Golden Johnson"
+                                                }]
+                                            }
+                                        ]
+                                    },
+                                    "count": 2
+                                }
+                            }
+                        ]
+                    },
+                    "2": {
+                        "transaction": [{
+                                "transaction_key": "399.l.710921.tr.133",
+                                "transaction_id": "133",
+                                "type": "trade",
+                                "status": "successful",
+                                "timestamp": "1601773444",
+                                "trader_team_key": "399.l.710921.t.9",
+                                "trader_team_name": "Too Many Cooks",
+                                "tradee_team_key": "399.l.710921.t.4",
+                                "tradee_team_name": "DJ chark juju juju"
+                            },
+                            {
+                                "players": {
+                                    "0": {
+                                        "player": [
+                                            [{
+                                                    "player_key": "399.p.29235"
+                                                },
+                                                {
+                                                    "player_id": "29235"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Jared Goff",
+                                                        "first": "Jared",
+                                                        "last": "Goff",
+                                                        "ascii_first": "Jared",
+                                                        "ascii_last": "Goff"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "LAR"
+                                                },
+                                                {
+                                                    "display_position": "QB"
+                                                },
+                                                {
+                                                    "position_type": "O"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [{
+                                                    "type": "trade",
+                                                    "source_type": "team",
+                                                    "source_team_key": "399.l.710921.t.9",
+                                                    "source_team_name": "Too Many Cooks",
+                                                    "destination_type": "team",
+                                                    "destination_team_key": "399.l.710921.t.4",
+                                                    "destination_team_name": "DJ chark juju juju"
+                                                }]
+                                            }
+                                        ]
+                                    },
+                                    "1": {
+                                        "player": [
+                                            [{
+                                                    "player_key": "399.p.31934"
+                                                },
+                                                {
+                                                    "player_id": "31934"
+                                                },
+                                                {
+                                                    "name": {
+                                                        "full": "Alexander Mattison",
+                                                        "first": "Alexander",
+                                                        "last": "Mattison",
+                                                        "ascii_first": "Alexander",
+                                                        "ascii_last": "Mattison"
+                                                    }
+                                                },
+                                                {
+                                                    "editorial_team_abbr": "Min"
+                                                },
+                                                {
+                                                    "display_position": "RB"
+                                                },
+                                                {
+                                                    "position_type": "O"
+                                                }
+                                            ],
+                                            {
+                                                "transaction_data": [{
+                                                    "type": "trade",
+                                                    "source_type": "team",
+                                                    "source_team_key": "399.l.710921.t.4",
+                                                    "source_team_name": "DJ chark juju juju",
+                                                    "destination_type": "team",
+                                                    "destination_team_key": "399.l.710921.t.9",
+                                                    "destination_team_name": "Too Many Cooks"
+                                                }]
+                                            }
+                                        ]
+                                    },
+                                    "count": 2
+                                }
+                            }
+                        ]
+                    },
+                    "count": 3
+                }
+            }
+        ],
+        "time": "20.380020141602ms",
+        "copyright": "Data provided by Yahoo! and STATS, LLC",
+        "refresh_rate": "60"
+    }
+}
