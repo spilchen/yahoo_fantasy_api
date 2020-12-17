@@ -331,10 +331,10 @@ class League:
         :return: Players taken by teams.
         :rtype: List(dict)
 
-        >> tp = lg.taken_players()
-        >> len(tp)
+        >>> tp = lg.taken_players()
+        >>> len(tp)
         88
-        >> tp[0]
+        >>> tp[0]
         {'player_id': 3341,
          'name': 'Marc-Andre Fleury',
          'position_type': 'G',
@@ -739,10 +739,10 @@ class League:
 
         :param tran_types: The comman seperated types of transactions retrieve.  Valid values
             are: add,drop,commish,trade
-        :type tran_types str
+        :type tran_types: str
         :param count: The number of transactions to retrieve. Leave blank to return all
             transactions
-        :type count str
+        :type count: str
 
         :return: Details about all the transactions from the league of a given type
         :rtype: list
