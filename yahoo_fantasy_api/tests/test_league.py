@@ -222,4 +222,4 @@ def test_transactions(mock_mlb_league):
     for transaction in transactions:
         assert(transaction)
         assert(transaction['type'] == 'trade')
-        assert(transactions['players'])
+        assert(transaction['players'])
