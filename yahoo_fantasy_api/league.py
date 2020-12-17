@@ -738,10 +738,10 @@ class League:
         Fetch transactions of a given type for the league.
 
         :param tran_types: The comman seperated types of transactions retrieve.  Valid values
-        are: add,drop,commish,trade
+            are: add,drop,commish,trade
         :type tran_types str
         :param count: The number of transactions to retrieve. Leave blank to return all
-        transactions
+            transactions
         :type count str
 
         :return: Details about all the transactions from the league of a given type
