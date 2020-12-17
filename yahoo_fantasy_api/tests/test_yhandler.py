@@ -37,3 +37,16 @@ def test_player_ownership_raw():
     joined_ids = ",".join(["399.p." + str(i) for i in player_ids])
     yh.get_player_ownership_raw(league_id, player_ids)
     yh.get.assert_called_with("league/{}/players;player_keys={}/ownership".format(league_id, joined_ids))
+
+def test_get_transactions_raw():
+    yh = yhandler.YHandler('dummy-sc')
+    yh.get = MagicMock(return_value=None)
+    league_id = "399.l.710921"
+    tran_types = "trade"
+    count = ""
+    expected = "league/{}/transactions;types={};count={}".format(league_id, tran_types, str(count))
+    yh.get_transactions_raw(league_id, tran_types, count)
+    yh.get.assert_called_with(expected)
+    yh.get_transactions_raw(league_id, tran_types, "")
+    expected = "league/{}/transactions;types={};count={}".format(league_id, tran_types, "")
+    yh.get.assert_called_with(expected)

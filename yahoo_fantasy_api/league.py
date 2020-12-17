@@ -733,6 +733,35 @@ class League:
             dres.append(p)
         return(dres)
 
+    def transactions(self, tran_types, count):
+        '''
+        Fetch transactions of a given type for the league.
+
+        :param tran_types: The comman seperated types of transactions retrieve.  Valid values
+            are: add,drop,commish,trade
+        :type tran_types str
+        :param count: The number of transactions to retrieve. Leave blank to return all
+            transactions
+        :type count str
+
+        :return: Details about all the transactions from the league of a given type
+        :rtype: list
+
+        >>> transactions('trade', '1')
+        [
+            {'players': {...}, 'status': 'successful', 'timestamp': '1605168906', 'tradee_team_key': '399.l.710921.t.3', 'tradee_team_name': 'Red Skins Matter', 'trader_team_key': '399.l.710921.t.9', 'trader_team_name': 'Too Many Cooks', 'transaction_id': '319', 'transaction_key': '399.l.710921.tr.319', ...}, 
+            {'players': {...}, 'status': 'successful', 'timestamp': '1604650727', 'tradee_team_key': '399.l.710921.t.5', 'tradee_team_name': 'Nuklear JuJu Charks', 'trader_team_key': '399.l.710921.t.2', 'trader_team_name': 'JuJus Golden Johnson', 'transaction_id': '295', 'transaction_key': '399.l.710921.tr.295', ...}, 
+            {'players': {...}, 'status': 'successful', 'timestamp': '1601773444', 'tradee_team_key': '399.l.710921.t.4', 'tradee_team_name': 'DJ chark juju juju', 'trader_team_key': '399.l.710921.t.9', 'trader_team_name': 'Too Many Cooks', 'transaction_id': '133', 'transaction_key': '399.l.710921.tr.133', ...}
+        ]
+        '''
+        j = self.yhandler.get_transactions_raw(self.league_id, tran_types, count)
+        t = objectpath.Tree(j).execute('$..transactions..transaction')
+        transactions = []
+        for transaction_details in t:
+            players = next(t)
+            transactions.append({**transaction_details, **players})
+        return transactions
+
     def _fetch_plyr_stats(self, game_code, player_ids, req_type, date, season):
         '''
         Fetch player stats for at most 25 player IDs.
