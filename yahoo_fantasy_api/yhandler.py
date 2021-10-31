@@ -339,7 +339,7 @@ class YHandler:
                 return "type=season;season={}".format(season)
         elif req_type == 'average_season':
             if season is None:
-                return "type=season"
+                return "type=average_season"
             else:
                 return "type=average_season;season={}".format(season)
         elif req_type == 'date':
