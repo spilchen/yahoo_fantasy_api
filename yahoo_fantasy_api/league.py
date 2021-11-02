@@ -627,9 +627,10 @@ class League:
         :param player_ids: Yahoo! player IDs of the players to get stats for
         :type player_ids: list(int)
         :param req_type: Defines the date range for the stats.  Valid values
-            are: 'season', 'lastweek', 'lastmonth', 'date'.  'season' returns
-            stats for a given season, specified by the season paramter.  'date'
-            returns stats for a single date, specified by the date parameter.
+            are: 'season', 'average_season', 'lastweek', 'lastmonth', 'date'.
+            'season' returns stats for a given season, specified by the season
+            paramter.  'date' returns stats for a single date, specified by
+            the date parameter.
             The 'last*' types return stats for a given time frame relative to
             the current.
         :type req_type: str
