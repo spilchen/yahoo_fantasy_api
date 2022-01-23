@@ -202,7 +202,7 @@ class YHandler:
         return self.get(
             "league/{}/players;player_keys={}/percent_owned".
             format(league_id, joined_ids))
-    
+
     def get_player_ownership_raw(self, league_id, player_ids):
         """Return the raw JSON when requesting the ownership of players
 
@@ -337,6 +337,11 @@ class YHandler:
                 return "type=season"
             else:
                 return "type=season;season={}".format(season)
+        elif req_type == 'average_season':
+            if season is None:
+                return "type=average_season"
+            else:
+                return "type=average_season;season={}".format(season)
         elif req_type == 'date':
             if date is None:
                 date = datetime.date.today()
