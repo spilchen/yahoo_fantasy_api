@@ -10,3 +10,5 @@ docs/_build
 .pytest_cache/
 .venv/
 .vscode/
+.envrc
+build/

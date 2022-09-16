@@ -66,8 +66,8 @@ class Team:
          {'player_id': 9961, 'name': 'Ed Reliever', 'position_type': 'P',
          'eligible_positions': ['RP'], 'status': ''}]
         """
-        t = objectpath.Tree(self.yhandler.get_roster_raw(self.team_key,
-                                                         week=week, day=day))
+        raw = self.yhandler.get_roster_raw(self.team_key, week=week, day=day)
+        t = objectpath.Tree(raw)
         it = t.execute('''
                         $..(player_id,full,position_type,eligible_positions,
                             selected_position,status)''')
@@ -87,12 +87,21 @@ class Team:
                 plyr = {"player_id": int(next(it)["player_id"]),
                         "name": next(it)["full"]}
                 next_item = next(it)
-                plyr["status"] = next_item["status"] \
-                    if "status" in next_item else ""
-                if plyr["status"] is "":
-                    plyr["position_type"] = next_item["position_type"]
+                plyr["status"] = next_item["status"]
+                # The query we use to pick out only certain fields will find
+                # one or two fields named status.  One 'status' field that will
+                # always exist is for keeper info -- we don't care about that
+                # one.  We only care about the 'status' field that tells if
+                # they are on the IL, DTD, etc.  But this isn't there if the
+                # player has a clean bill of health.  We tell if its the status
+                # we don't care about by looking at the type; bool means it is
+                # for keeper info.
+                if type(plyr["status"]) is bool:
+                    plyr["status"] = ""
                 else:
-                    plyr["position_type"] = next(it)["position_type"]
+                    # Burn the next field as its the keeper info we don't care about
+                    next(it)
+                plyr["position_type"] = next(it)["position_type"]
                 plyr["eligible_positions"] = _compact_eligible_pos(next(it))
                 plyr["selected_position"] = _compact_selected_pos(next(it))
 
