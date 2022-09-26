@@ -288,7 +288,7 @@ class YHandler:
         return self.put("transaction/" + str(transaction_key), xml)
 
     def get_player_stats_raw(self, game_code, player_ids, req_type, date,
-                             season):
+                             week, season):
         """
         GET stats for a list of player IDs
 
@@ -301,13 +301,16 @@ class YHandler:
         :param date: When req_type == 'date', this is the date we want the
             stats for.  If None, we'll get the stats for the current date.
         :type date: datetime.date
+        :param week: NFL ONLY: When req_type == 'week', this is the week we want
+            the stats for.  If None, we'll get the stats for the current week
+        :type season: int
         :param season: When req_type == 'season', this is the season we want
             the stats for.  If None, we'll get the stats for the current season
         :type season: int
         :return: Response from the GET call
         """
         uri = self._build_player_stats_uri(game_code, player_ids, req_type,
-                                           date, season)
+                                           date, week, season)
         return self.get(uri)
 
     def get_draftresults_raw(self, league_id):
@@ -321,22 +324,27 @@ class YHandler:
         return self.get("league/{}/draftresults".format(league_id))
 
     def _build_player_stats_uri(self, game_code, player_ids, req_type, date,
-                                season):
+                                week, season):
         uri = 'players;player_keys='
         if type(player_ids) is list:
             for i, p in enumerate(player_ids):
                 if i != 0:
                     uri += ","
                 uri += "{}.p.{}".format(game_code, p)
-        uri += "/stats;{}".format(self._get_stats_type(req_type, date, season))
+        uri += "/stats;{}".format(self._get_stats_type(req_type, date, week, season))
         return uri
 
-    def _get_stats_type(self, req_type, date, season):
+    def _get_stats_type(self, req_type, date, week, season):
         if req_type == 'season':
             if season is None:
                 return "type=season"
             else:
                 return "type=season;season={}".format(season)
+        elif req_type == 'week':
+            if week is None:
+                return "type=week"
+            else:
+                return "sort_type=week;sort_week={}".format(week)
         elif req_type == 'average_season':
             if season is None:
                 return "type=average_season"
