@@ -341,10 +341,11 @@ class YHandler:
             else:
                 return "type=season;season={}".format(season)
         elif req_type == 'week':
+            print(req_type)
             if week is None:
                 return "type=week"
             else:
-                return "sort_type=week;sort_week={}".format(week)
+                return "type=week;week={}".format(week)
         elif req_type == 'average_season':
             if season is None:
                 return "type=average_season"
