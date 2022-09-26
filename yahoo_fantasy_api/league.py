@@ -621,7 +621,7 @@ class League:
             self.positions_cache = pmap
         return self.positions_cache
 
-    def player_stats(self, player_ids, req_type, date=None, season=None):
+    def player_stats(self, player_ids, req_type, date=None, week=None, season=None):
         """Return stats for a list of players
 
         :param player_ids: Yahoo! player IDs of the players to get stats for
@@ -638,6 +638,10 @@ class League:
             what date to request the stats for.  If left as None, and range
             is for a date this returns stats for the current date.
         :type date: datetime.date
+        :param week: NFL ONLY: When requesting stats for a week, this identifies the
+            week.  If None and requesting stats for a season, this will
+            return stats for the current season.
+        :type week: int
         :param season: When requesting stats for a season, this identifies the
             season.  If None and requesting stats for a season, this will
             return stats for the current season.
@@ -686,7 +690,7 @@ class League:
             next_player_ids = player_ids[0:25]
             player_ids = player_ids[25:]
             stats += self._fetch_plyr_stats(game_code, next_player_ids,
-                                            req_type, date, season)
+                                            req_type, date, week, season)
         return stats
 
     def draft_results(self):
@@ -763,7 +767,7 @@ class League:
             transactions.append({**transaction_details, **players})
         return transactions
 
-    def _fetch_plyr_stats(self, game_code, player_ids, req_type, date, season):
+    def _fetch_plyr_stats(self, game_code, player_ids, req_type, date, week, season):
         '''
         Fetch player stats for at most 25 player IDs.
 
@@ -771,13 +775,14 @@ class League:
         :param player_ids: List of up to 25 player IDs
         :param req_type: Request type
         :param date: Date if request type is 'date'
+        :param week: NFL ONLY: Week number if request type is 'week'
         :param season: Season if request type is 'season'
         :return: The stats requested
         :rtype: list(dict)
         '''
         assert(len(player_ids) > 0 and len(player_ids) <= 25)
         json = self.yhandler.get_player_stats_raw(game_code, player_ids,
-                                                  req_type, date, season)
+                                                  req_type, date, week, season)
         t = objectpath.Tree(json)
         stats = []
         row = None
