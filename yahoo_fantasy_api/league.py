@@ -53,13 +53,19 @@ class League:
 
         :param team_name: Team name of the Team object to construct
         :type team_name: str
-        :return: Fully constructed object
-        :rtype: Team
+        :return: A dictionary with the team name as the key and team object as the value
+        :rtype: dict
         """
         json = self.yhandler.get_league_teams_raw(self.league_id)
         t = objectpath.Tree(json)
-        team_key = t.execute("$..teams..team[@[2].name is '{}']..team_key[0]".format(team_name))
-        return self.to_team(team_key)
+        team = {}
+        try:
+            team_key = t.execute("$..teams..team[@[2].name is '{}']..team_key[0]".format(team_name))
+            team[team_name] = self.to_team(team_key)
+        except StopIteration:
+            pass
+        return team
+        
 
     def standings(self):
         """Return the standings of the league id
