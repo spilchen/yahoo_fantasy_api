@@ -18,6 +18,14 @@ class YHandler:
 
         :return: JSON document of the request.
         """
+        with open(self.dir_path + "/sample.users_teams.json", "r") as f:
+            return json.load(f)
+
+    def get_league_teams_raw(self, league_id):
+        """Return the raw JSON when requesting the teams for the current league.
+
+        :return: JSON document of the request.
+        """
         with open(self.dir_path + "/sample.league_teams.json", "r") as f:
             return json.load(f)
 

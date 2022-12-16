@@ -48,6 +48,19 @@ class League:
         tm.inject_yhandler(self.yhandler)
         return tm
 
+    def get_team(self, team_name):
+        """Construct a Team object from a League
+
+        :param team_name: Team name of the Team object to construct
+        :type team_name: str
+        :return: Fully constructed object
+        :rtype: Team
+        """
+        json = self.yhandler.get_league_teams_raw(self.league_id)
+        t = objectpath.Tree(json)
+        team_key = t.execute("$..teams..team[@[2].name is '{}']..team_key[0]".format(team_name))
+        return self.to_team(team_key)
+
     def standings(self):
         """Return the standings of the league id
 

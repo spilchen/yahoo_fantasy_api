@@ -223,3 +223,8 @@ def test_transactions(mock_mlb_league):
         assert(transaction)
         assert(transaction['type'] == 'trade')
         assert(transaction['players'])
+
+def test_get_team(mock_nhl_league):
+    team = mock_nhl_league.get_team("LOS DIOSES")
+    assert(team)
+    assert(team.team_key == '418.l.15944.t.1')
