@@ -370,3 +370,12 @@ class YHandler:
         :return: JSON document of the request.
         """
         return self.get("game/{}".format(game_code))
+
+    def get_league_teams_raw(self, league_id):
+            """Return the raw JSON when requesting the teams in a league
+
+            :param league_id: League ID to get the teams for
+            :type league_id: str
+            :return: JSON document of the request.
+            """
+            return self.get("league/{}/teams".format(league_id))
