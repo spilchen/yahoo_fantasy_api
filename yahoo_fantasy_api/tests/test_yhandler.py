@@ -50,3 +50,10 @@ def test_get_transactions_raw():
     yh.get_transactions_raw(league_id, tran_types, "")
     expected = "league/{}/transactions;types={};count={}".format(league_id, tran_types, "")
     yh.get.assert_called_with(expected)
+
+def test_league_teams_raw():
+    yh = yhandler.YHandler('dummy-sc')
+    yh.get = MagicMock(return_value=None)
+    league_id = "399.l.710921"
+    yh.get_league_teams_raw(league_id)
+    yh.get.assert_called_with("league/{}/teams".format(league_id))

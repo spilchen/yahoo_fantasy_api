@@ -1,0 +1,2219 @@
+{
+    "fantasy_content": {
+        "xml:lang": "en-US",
+        "yahoo:uri": "/fantasy/v2/users;use_login=1/games/teams",
+        "users": {
+            "0": {
+                "user": [
+                    {
+                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU"
+                    },
+                    {
+                        "games": {
+                            "0": {
+                                "game": [
+                                    {
+                                        "game_key": "113",
+                                        "game_id": "113",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2005",
+                                        "season": "2005",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": {
+                                                    "team_key": "113.l.auto.t.390739",
+                                                    "team_id": "390739",
+                                                    "name": "Gryphons",
+                                                    "type": "auto"
+                                                }
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "1": {
+                                "game": [
+                                    {
+                                        "game_key": "130",
+                                        "game_id": "130",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2005",
+                                        "season": "2005",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "130.l.60373.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Knights"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2005/60373/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/nhl/nhl_6.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 2
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "2"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "3"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "roto"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 5
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "mattspilchen@rogers.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "1": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "130.l.94805.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Beer Run Anyone"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2005/94805/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/nhl/nhl_2.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 1
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": 0
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "point"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 4
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "mattspilchen@rogers.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 2
+                                        }
+                                    }
+                                ]
+                            },
+                            "2": {
+                                "game": [
+                                    {
+                                        "game_key": "147",
+                                        "game_id": "147",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2006",
+                                        "season": "2006",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": {
+                                                    "team_key": "147.l.auto.t.533577",
+                                                    "team_id": "533577",
+                                                    "name": "Lumberkings",
+                                                    "type": "auto"
+                                                }
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "3": {
+                                "game": [
+                                    {
+                                        "game_key": "186",
+                                        "game_id": "186",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2007",
+                                        "season": "2007",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "186.l.36347.t.3"
+                                                        },
+                                                        {
+                                                            "team_id": "3"
+                                                        },
+                                                        {
+                                                            "name": "Rampage"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2007/36347/3"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/nhl/nhl_5.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 2
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "89"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "6"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "26",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "point"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 5
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "3",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "mattspilchen@rogers.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "4": {
+                                "game": [
+                                    {
+                                        "game_key": "195",
+                                        "game_id": "195",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2008",
+                                        "season": "2008",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "195.l.2675.t.6"
+                                                        },
+                                                        {
+                                                            "team_id": "6"
+                                                        },
+                                                        {
+                                                            "name": "Smokies"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2008/2675/6"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 3
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "13"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "2"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "roto"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 6
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "6",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "1": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "195.l.175340.t.4"
+                                                        },
+                                                        {
+                                                            "team_id": "4"
+                                                        },
+                                                        {
+                                                            "name": "Mud Hens"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2008/175340/4"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_6.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 9
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "20"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "roto"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 11
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "4",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 2
+                                        }
+                                    }
+                                ]
+                            },
+                            "5": {
+                                "game": [
+                                    {
+                                        "game_key": "210",
+                                        "game_id": "210",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2008",
+                                        "season": "2008",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "210.l.80309.t.2"
+                                                        },
+                                                        {
+                                                            "team_id": "2"
+                                                        },
+                                                        {
+                                                            "name": "Rampage"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2008/80309/2"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/nhl/nhl_10.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 11
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "36"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "3"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "26",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "point"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 6
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "2",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "6": {
+                                "game": [
+                                    {
+                                        "game_key": "215",
+                                        "game_id": "215",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2009",
+                                        "season": "2009",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "215.l.139821.t.12"
+                                                        },
+                                                        {
+                                                            "team_id": "12"
+                                                        },
+                                                        {
+                                                            "name": "Blue Jays"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2009/139821/12"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_6.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 13
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "23"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "1"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "roto"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "12",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "7": {
+                                "game": [
+                                    {
+                                        "game_key": "233",
+                                        "game_id": "233",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2009",
+                                        "season": "2009",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "233.l.188932.t.7"
+                                                        },
+                                                        {
+                                                            "team_id": "7"
+                                                        },
+                                                        {
+                                                            "name": "Kazakhstan United"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2009/188932/7"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/nhl/nhl_9.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "number_of_moves": 0
+                                                        },
+                                                        {
+                                                            "number_of_trades": "1"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "point"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "8": {
+                                "game": [
+                                    {
+                                        "game_key": "248",
+                                        "game_id": "248",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2010",
+                                        "season": "2010",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "248.l.3376.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Three Amigos!"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2010/3376/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 4
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "8"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "point"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "200"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 190
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "9": {
+                                "game": [
+                                    {
+                                        "game_key": "263",
+                                        "game_id": "263",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2011",
+                                        "season": "2011",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "263.l.20908.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Mighty Pucks"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2011/20908/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 6
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "15"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "2"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "headpoint"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "200"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 200
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "10": {
+                                "game": [
+                                    {
+                                        "game_key": "268",
+                                        "game_id": "268",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2012",
+                                        "season": "2012",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "268.l.46645.t.9"
+                                                        },
+                                                        {
+                                                            "team_id": "9"
+                                                        },
+                                                        {
+                                                            "name": "Blernsball All-Stars"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2012/46645/9"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 9
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "21"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "2"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "260"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 260
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "9",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "11": {
+                                "game": [
+                                    {
+                                        "game_key": "303",
+                                        "game_id": "303",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2012",
+                                        "season": "2012",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "303.l.15765.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Mighty Pucks"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2012/15765/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 7
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "13"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "200"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 200
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "12": {
+                                "game": [
+                                    {
+                                        "game_key": "321",
+                                        "game_id": "321",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2013",
+                                        "season": "2013",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "321.l.16154.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Mighty Pucks"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2013/16154/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 5
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "13"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "200"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 191
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "13": {
+                                "game": [
+                                    {
+                                        "game_key": "341",
+                                        "game_id": "341",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2014",
+                                        "season": "2014",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "341.l.14928.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Mighty Pucks"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2014/14928/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 5
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "14"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "1"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "200"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 196
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "14": {
+                                "game": [
+                                    {
+                                        "game_key": "346",
+                                        "game_id": "346",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2015",
+                                        "season": "2015",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "346.l.23743.t.10"
+                                                        },
+                                                        {
+                                                            "team_id": "10"
+                                                        },
+                                                        {
+                                                            "name": "Cursing Whispers"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2015/23743/10"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_12.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 9
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "61"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "260"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 260
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "10",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "15": {
+                                "game": [
+                                    {
+                                        "game_key": "352",
+                                        "game_id": "352",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2015",
+                                        "season": "2015",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "352.l.36165.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Mighty Pucks"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2015/36165/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 7
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "39"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "200"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 200
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "16": {
+                                "game": [
+                                    {
+                                        "game_key": "357",
+                                        "game_id": "357",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2016",
+                                        "season": "2016",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "357.l.7076.t.5"
+                                                        },
+                                                        {
+                                                            "team_id": "5"
+                                                        },
+                                                        {
+                                                            "name": "Lumber Kings"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2016/7076/5"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_9.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 8
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "54"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "260"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 260
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "5",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "17": {
+                                "game": [
+                                    {
+                                        "game_key": "363",
+                                        "game_id": "363",
+                                        "name": "Hockey",
+                                        "code": "nhl",
+                                        "type": "full",
+                                        "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2016",
+                                        "season": "2016",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "363.l.1201.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "Mighty Pucks"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://hockey.fantasysports.yahoo.com/archive/nhl/2016/1201/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/dh/ap/fantasy/img/profile_96.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 6
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "2"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "24",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "roto"
+                                                        },
+                                                        [],
+                                                        {
+                                                            "draft_position": 3
+                                                        },
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "18": {
+                                "game": [
+                                    {
+                                        "game_key": "370",
+                                        "game_id": "370",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2017",
+                                        "season": "2017",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "370.l.56877.t.5"
+                                                        },
+                                                        {
+                                                            "team_id": "5"
+                                                        },
+                                                        {
+                                                            "name": "Lumber Kings"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2017/56877/5"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_8.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 10
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "70"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "1"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "260"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 259
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "5",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "19": {
+                                "game": [
+                                    {
+                                        "game_key": "378",
+                                        "game_id": "378",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2018",
+                                        "season": "2018",
+                                        "is_registration_over": 1,
+                                        "is_game_over": 1,
+                                        "is_offseason": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "378.l.2210.t.7"
+                                                        },
+                                                        {
+                                                            "team_id": "7"
+                                                        },
+                                                        {
+                                                            "name": "Lumber Kings"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2018/2210/7"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_8.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 8
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "60"
+                                                        },
+                                                        {
+                                                            "number_of_trades": "1"
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        {
+                                                            "clinched_playoffs": 1
+                                                        },
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "260"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 260
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "7",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "1": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "378.l.38909.t.1"
+                                                        },
+                                                        {
+                                                            "team_id": "1"
+                                                        },
+                                                        {
+                                                            "name": "My Team"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/archive/mlb/2018/38909/1"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_5.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": ""
+                                                        },
+                                                        {
+                                                            "faab_balance": "100"
+                                                        },
+                                                        {
+                                                            "number_of_moves": 0
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": "25",
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "headpoint"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "1",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_commissioner": "1",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 2
+                                        }
+                                    }
+                                ]
+                            },
+                            "20": {
+                                "game": [
+                                    {
+                                        "game_key": "388",
+                                        "game_id": "388",
+                                        "name": "Baseball",
+                                        "code": "mlb",
+                                        "type": "full",
+                                        "url": "https://baseball.fantasysports.yahoo.com/b1",
+                                        "season": "2019",
+                                        "is_registration_over": 0,
+                                        "is_game_over": 0,
+                                        "is_offseason": 0,
+                                        "is_live_draft_lobby_active": 1
+                                    },
+                                    {
+                                        "teams": {
+                                            "0": {
+                                                "team": [
+                                                    [
+                                                        {
+                                                            "team_key": "388.l.27081.t.5"
+                                                        },
+                                                        {
+                                                            "team_id": "5"
+                                                        },
+                                                        {
+                                                            "name": "Lumber Kings"
+                                                        },
+                                                        {
+                                                            "is_owned_by_current_login": 1
+                                                        },
+                                                        {
+                                                            "url": "https://baseball.fantasysports.yahoo.com/b1/27081/5"
+                                                        },
+                                                        {
+                                                            "team_logos": [
+                                                                {
+                                                                    "team_logo": {
+                                                                        "size": "large",
+                                                                        "url": "https://s.yimg.com/cv/apiv2/default/mlb/mlb_8.png"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        [],
+                                                        {
+                                                            "waiver_priority": 2
+                                                        },
+                                                        [],
+                                                        {
+                                                            "number_of_moves": "3"
+                                                        },
+                                                        {
+                                                            "number_of_trades": 0
+                                                        },
+                                                        {
+                                                            "roster_adds": {
+                                                                "coverage_type": "week",
+                                                                "coverage_value": 1,
+                                                                "value": "0"
+                                                            }
+                                                        },
+                                                        [],
+                                                        {
+                                                            "league_scoring_type": "head"
+                                                        },
+                                                        [],
+                                                        [],
+                                                        {
+                                                            "has_draft_grade": 0
+                                                        },
+                                                        {
+                                                            "auction_budget_total": "260"
+                                                        },
+                                                        {
+                                                            "auction_budget_spent": 260
+                                                        },
+                                                        {
+                                                            "managers": [
+                                                                {
+                                                                    "manager": {
+                                                                        "manager_id": "5",
+                                                                        "nickname": "Matt",
+                                                                        "guid": "T5NU3VMPPKXE3JDDIHRKB6GVSU",
+                                                                        "is_current_login": "1",
+                                                                        "email": "spilchen@gmail.com",
+                                                                        "image_url": "https://ct.yimg.com/cy/1768/39361574426_98028a_64sq.jpg"
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    null
+                                                ]
+                                            },
+                                            "count": 1
+                                        }
+                                    }
+                                ]
+                            },
+                            "count": 21
+                        }
+                    }
+                ]
+            },
+            "count": 1
+        },
+        "time": "918.90215873718ms",
+        "copyright": "Data provided by Yahoo! and STATS, LLC",
+        "refresh_rate": "60"
+    }
+}
