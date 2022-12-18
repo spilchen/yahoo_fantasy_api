@@ -1,0 +1,17 @@
+name: Unit tests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+
+  ut:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run unit tests
+      run: |
+        pip install -r requirements.txt
+        python setup.py test
