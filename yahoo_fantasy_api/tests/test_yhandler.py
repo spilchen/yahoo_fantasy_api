@@ -22,12 +22,14 @@ def test_roster_raw():
     yh.get_roster_raw(team_key)
     yh.get.assert_called_with("team/{}/roster".format(team_key))
 
+
 def test_game_raw():
     yh = yhandler.YHandler('dummy-sc')
     yh.get = MagicMock(return_value=None)
     game_code = "nfl"
     yh.get_game_raw(game_code)
     yh.get.assert_called_with("game/{}".format(game_code))
+
 
 def test_player_ownership_raw():
     yh = yhandler.YHandler('dummy-sc')
@@ -37,6 +39,7 @@ def test_player_ownership_raw():
     joined_ids = ",".join(["399.p." + str(i) for i in player_ids])
     yh.get_player_ownership_raw(league_id, player_ids)
     yh.get.assert_called_with("league/{}/players;player_keys={}/ownership".format(league_id, joined_ids))
+
 
 def test_get_transactions_raw():
     yh = yhandler.YHandler('dummy-sc')
@@ -50,6 +53,7 @@ def test_get_transactions_raw():
     yh.get_transactions_raw(league_id, tran_types, "")
     expected = "league/{}/transactions;types={};count={}".format(league_id, tran_types, "")
     yh.get.assert_called_with(expected)
+
 
 def test_league_teams_raw():
     yh = yhandler.YHandler('dummy-sc')

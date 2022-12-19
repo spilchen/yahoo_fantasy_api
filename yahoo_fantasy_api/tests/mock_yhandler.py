@@ -10,6 +10,7 @@ class YHandler:
     This is used for testing purposes as we can avoid calling out to the Yahoo!
     service.
     """
+
     def __init__(self):
         self.dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -117,7 +118,7 @@ class YHandler:
             return json.load(f)
 
     def get_player_ownership_raw(self, league_id, player_ids):
-        if player_ids == 27564 :
+        if player_ids == 27564:
             fn = self.dir_path + "/sample.player_ownership_freeagent.json"
             with open(fn, "r") as f:
                 return json.load(f)
