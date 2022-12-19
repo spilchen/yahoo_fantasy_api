@@ -16,6 +16,7 @@ class League:
         will be for this league.
     :type league_id: str
     """
+
     def __init__(self, sc, league_id):
         self.sc = sc
         self.league_id = league_id
@@ -65,7 +66,6 @@ class League:
         except StopIteration:
             pass
         return team
-        
 
     def standings(self):
         """Return the standings of the league id
@@ -415,7 +415,7 @@ class League:
             '$..percent_owned.(coverage_type,value)'))))
         # When iterating over the players we step by 2 to account for the
         # percent_owned data that is stored adjacent to each player.
-        for i, pct_own in zip(range(0, t.execute('$..players.count[0]')*2, 2),
+        for i, pct_own in zip(range(0, t.execute('$..players.count[0]') * 2, 2),
                               pct_owns):
             path = '$..players..player[{}].'.format(i) + \
                 "(name,player_id,position_type,status,eligible_positions)"
@@ -437,7 +437,7 @@ class League:
             # Ignore players that are not active
             if plyr["status"] != "NA":
                 fa.append(plyr)
-        return (i/2 + 1, fa)
+        return (i / 2 + 1, fa)
 
     def _pct_owned_from_page(self, po_it):
         """Extract the ownership % of players taken from a player JSON dump
@@ -462,7 +462,7 @@ class League:
                     po.append(0)
                     i += 1
                 if "value" in ele:
-                    po[i-1] = ele['value']
+                    po[i - 1] = ele['value']
         except StopIteration:
             pass
         return po
@@ -570,7 +570,6 @@ class League:
         except StopIteration:
             pass
         return po
-
 
     def ownership(self, player_ids):
         """Retrieve the owner of a player
@@ -699,7 +698,7 @@ class League:
            'GStr': 7.0,
            'Shifts': 684.0}]
         """
-        if type(player_ids) is not list:
+        if not isinstance(player_ids, list):
             player_ids = [player_ids]
 
         lg_settings = self.settings()
@@ -774,8 +773,8 @@ class League:
 
         >>> transactions('trade', '1')
         [
-            {'players': {...}, 'status': 'successful', 'timestamp': '1605168906', 'tradee_team_key': '399.l.710921.t.3', 'tradee_team_name': 'Red Skins Matter', 'trader_team_key': '399.l.710921.t.9', 'trader_team_name': 'Too Many Cooks', 'transaction_id': '319', 'transaction_key': '399.l.710921.tr.319', ...}, 
-            {'players': {...}, 'status': 'successful', 'timestamp': '1604650727', 'tradee_team_key': '399.l.710921.t.5', 'tradee_team_name': 'Nuklear JuJu Charks', 'trader_team_key': '399.l.710921.t.2', 'trader_team_name': 'JuJus Golden Johnson', 'transaction_id': '295', 'transaction_key': '399.l.710921.tr.295', ...}, 
+            {'players': {...}, 'status': 'successful', 'timestamp': '1605168906', 'tradee_team_key': '399.l.710921.t.3', 'tradee_team_name': 'Red Skins Matter', 'trader_team_key': '399.l.710921.t.9', 'trader_team_name': 'Too Many Cooks', 'transaction_id': '319', 'transaction_key': '399.l.710921.tr.319', ...},
+            {'players': {...}, 'status': 'successful', 'timestamp': '1604650727', 'tradee_team_key': '399.l.710921.t.5', 'tradee_team_name': 'Nuklear JuJu Charks', 'trader_team_key': '399.l.710921.t.2', 'trader_team_name': 'JuJus Golden Johnson', 'transaction_id': '295', 'transaction_key': '399.l.710921.tr.295', ...},
             {'players': {...}, 'status': 'successful', 'timestamp': '1601773444', 'tradee_team_key': '399.l.710921.t.4', 'tradee_team_name': 'DJ chark juju juju', 'trader_team_key': '399.l.710921.t.9', 'trader_team_name': 'Too Many Cooks', 'transaction_id': '133', 'transaction_key': '399.l.710921.tr.133', ...}
         ]
         '''

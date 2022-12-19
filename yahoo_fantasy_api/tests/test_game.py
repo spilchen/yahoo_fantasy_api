@@ -28,7 +28,8 @@ def test_to_league(sc):
     gm = yfa.Game(sc, 'mlb')
     gm.inject_yhandler(mock_yhandler.YHandler())
     lg = gm.to_league('370.l.56877')
-    assert(type(lg) is yfa.League)
+    assert(isinstance(lg, yfa.League))
+
 
 def test_game_id(sc):
     gm = yfa.Game(sc, 'nhl')

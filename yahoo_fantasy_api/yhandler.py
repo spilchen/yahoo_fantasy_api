@@ -326,7 +326,7 @@ class YHandler:
     def _build_player_stats_uri(self, game_code, player_ids, req_type, date,
                                 week, season):
         uri = 'players;player_keys='
-        if type(player_ids) is list:
+        if isinstance(player_ids, list):
             for i, p in enumerate(player_ids):
                 if i != 0:
                     uri += ","
@@ -353,7 +353,7 @@ class YHandler:
         elif req_type == 'date':
             if date is None:
                 date = datetime.date.today()
-            if type(date) is datetime.date or type(date) is datetime.datetime:
+            if isinstance(date, datetime.date) or isinstance(date, datetime.datetime):
                 return "type=date;date={}".format(date.strftime("%Y-%m-%d"))
             else:
                 return "type=date;date={}".format(date)

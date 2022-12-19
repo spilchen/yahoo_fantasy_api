@@ -14,6 +14,7 @@ class Team:
         object for.
     :type team_key: str
     """
+
     def __init__(self, sc, team_key):
         self.sc = sc
         self.team_key = team_key
@@ -96,7 +97,7 @@ class Team:
                 # player has a clean bill of health.  We tell if its the status
                 # we don't care about by looking at the type; bool means it is
                 # for keeper info.
-                if type(plyr["status"]) is bool:
+                if isinstance(plyr["status"], bool):
                     plyr["status"] = ""
                 else:
                     # Burn the next field as its the keeper info we don't care about

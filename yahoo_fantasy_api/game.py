@@ -12,6 +12,7 @@ class Game:
     :param code: Sport code (mlb, nhl, etc)
     :type code: str
     """
+
     def __init__(self, sc, code):
         self.sc = sc
         self.code = code
@@ -21,7 +22,7 @@ class Game:
         self.yhandler = yhandler
 
     def game_id(self):
-        """Return the Yahoo! Game ID 
+        """Return the Yahoo! Game ID
         :return: Game ID
         :rtype: str
         """
