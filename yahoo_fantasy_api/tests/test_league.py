@@ -38,7 +38,7 @@ def test_stat_categories(mock_mlb_league):
 
 def test_to_team(mock_mlb_league):
     tm = mock_mlb_league.to_team('370.l.56877.t.5')
-    assert(type(tm) is yfa.Team)
+    assert(isinstance(tm, yfa.Team))
 
 
 def test_team_key(mock_mlb_league):
@@ -132,15 +132,14 @@ def test_percent_owned(mock_mlb_league):
 
 
 def test_ownership(mock_mlb_league):
-    details = mock_mlb_league.ownership([9265,27564])
+    details = mock_mlb_league.ownership([9265, 27564])
     assert(details['9265']['owner_team_name'] == "Ladies and Edelman")
     assert(details['27564']['ownership_type'] == "freeagents")
-    
 
 
 def test_edit_date(mock_mlb_league):
     dt = mock_mlb_league.edit_date()
-    assert(type(dt) == datetime.date)
+    assert(isinstance(dt, datetime.date))
     assert(dt == datetime.date(2019, 4, 1))
 
 
@@ -159,7 +158,7 @@ def test_mlb_player_stats(mock_mlb_league):
     stats = mock_mlb_league.player_stats([7345], 'season')
     assert(len(stats) == 24)
     assert(stats[0]['name'] == 'Yadier Molina')
-    assert(type(stats[0]['player_id']) is int)
+    assert(isinstance(stats[0]['player_id'], int))
     assert(stats[0]['player_id'] == 7345)
     assert(stats[0]['HR'] == 10)
 
@@ -223,6 +222,7 @@ def test_transactions(mock_mlb_league):
         assert(transaction)
         assert(transaction['type'] == 'trade')
         assert(transaction['players'])
+
 
 def test_get_team(mock_nhl_league):
     team = mock_nhl_league.get_team("LOS DIOSES")
