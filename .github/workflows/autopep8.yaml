@@ -28,6 +28,7 @@ jobs:
           body: This is an auto-generated PR with fixes by autopep8.
           labels: autopep8, automated pr
           branch: ${{ steps.vars.outputs.branch-name }}
+          assignees: ${{ github.actor }}
       - name: Fail if autopep8 made changes
         if: steps.autopep8.outputs.exit-code == 2
         run: exit 1
