@@ -748,13 +748,16 @@ class League:
         dres = []
         pat = re.compile(r'.*\.p\.([0-9]+)$')
         for p in t.execute('$..draft_results..draft_result'):
-            pk = p['player_key']
-            m = pat.search(pk)
-            if m:
-                pid = int(m.group(1))
-                p['player_id'] = pid
-                del p['player_key']
-            dres.append(p)
+            try:
+                pk = p['player_key']
+                m = pat.search(pk)
+                if m:
+                    pid = int(m.group(1))
+                    p['player_id'] = pid
+                    del p['player_key']
+                dres.append(p)
+            except KeyError:
+                pass
         return(dres)
 
     def transactions(self, tran_types, count):
