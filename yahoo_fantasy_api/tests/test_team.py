@@ -51,3 +51,27 @@ def test_proposed_trades(mock_team):
     assert(len(trs[1]['tradee_players']) == 2)
     assert(trs[1]['tradee_players'][0]['name'] == 'Aleksander Barkov')
     assert(trs[1]['tradee_players'][1]['name'] == 'Brayden Schenn')
+
+
+def test__construct_trade_xml(mock_team):
+    with open('accept_trade.xml', 'r') as file:
+        expected_xml = file.read().replace('  ', '\t')
+
+    transaction_key = '396.l.49770.pt.1'
+    xml = mock_team._construct_trade_xml(transaction_key, action='accept',
+                                         trade_note='Dude, that is a totally fair trade.')
+    assert xml == expected_xml
+
+
+def test__construct_trade_proposal_xml(mock_team):
+    with open('trade_proposal.xml', 'r') as file:
+        expected_xml = file.read().replace('  ', '\t')
+
+    tradee_team_key = '248.l.55438.t.4'
+    trade_note = 'Check out this trade proposal.'
+    your_player_keys = ['248.p.4130']
+    their_player_keys = ['248.p.2415']
+
+    actual_xml = mock_team._construct_trade_proposal_xml(tradee_team_key, your_player_keys, their_player_keys, trade_note)
+
+    assert actual_xml == expected_xml
