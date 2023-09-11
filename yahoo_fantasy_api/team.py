@@ -4,6 +4,8 @@ from yahoo_fantasy_api import yhandler
 import objectpath
 from xml.dom.minidom import Document
 
+from yahoo_fantasy_api.utils import create_element
+
 
 class Team:
     """An abstraction for all of the team-level APIs in Yahoo! fantasy
@@ -272,19 +274,107 @@ class Team:
         xml = self._construct_trade_xml(transaction_key, "accept", trade_note)
         self.yhandler.put_transaction(transaction_key, xml)
 
-    def _construct_trade_xml(self, transaction_key, action, trade_note):
-        doc = Document()
-        tran = doc.appendChild(doc.createElement('fantasy_content')) \
-            .appendChild(doc.createElement('transaction'))
+    def propose_trade(self, tradee_team_key: str, players: list[dict[str, str]],
+                      trade_note: str = "") -> None:
+        """
+        Propose a trade
 
-        tran.appendChild(doc.createElement('transaction_key')) \
-            .appendChild(doc.createTextNode(transaction_key))
-        tran.appendChild(doc.createElement('type')) \
-            .appendChild(doc.createTextNode('pending_trade'))
-        tran.appendChild(doc.createElement('action')) \
-            .appendChild(doc.createTextNode(action))
-        tran.appendChild(doc.createElement('trade_note')) \
-            .appendChild(doc.createTextNode(trade_note))
+        :param tradee_team_key: Team key of the team receiving the trade
+        :type tradee_team_key: str
+        :param players: List of players to trade.  Each entry should have a
+            dict with the following keys: player_key - player key of the
+            player to trade; source_team_key - team key of the team that
+            currently owns the player; destination_team_key - team key of the
+            team that will receive the player.
+        :type players: list(dict)
+        :param trade_note: Optional note to include with the trade
+        :type trade_note: str
+        """
+        xml = self._construct_trade_proposal_xml(tradee_team_key, players, trade_note)
+        self.yhandler.post_transactions(self.league_id, xml)
+
+    def _construct_trade_xml(self, transaction_key: str, action: str, trade_note: str) -> str:
+        """Construct trade XML
+        :param transaction_key: Key of the transaction
+
+        :type transaction_key: str
+
+        :param action: Action to be performed
+
+        :type action: str
+
+        :param trade_note: Note to include with the trade
+
+        :type trade_note: str
+
+        :return: XML representation of the trade
+        :rtype: str
+        """
+        doc = Document()
+        tran = doc.createElement('transaction')
+        doc.appendChild(doc.createElement('fantasy_content')).appendChild(tran)
+
+        create_element(doc, tran, 'transaction_key', transaction_key)
+        create_element(doc, tran, 'type', 'pending_trade')
+        create_element(doc, tran, 'action', action)
+        create_element(doc, tran, 'trade_note', trade_note)
+
+        return doc.toprettyxml()
+
+    def _construct_trade_proposal_xml(self, tradee_team_key: str, your_player_keys: list[str],
+                                      their_players_keys: list[str], trade_note: str = "") -> str:
+        """
+        Constructs a trade proposal XML.
+
+        :param tradee_team_key: Key of the team to trade with.
+        :type tradee_team_key: str
+
+        :param your_player_keys: List of keys of your players involved in the trade.
+        :type your_player_keys: list[str]
+
+        :param their_players_keys: List of keys of the other team's players involved in the trade.
+        :type their_players_keys: list[str]
+
+        :param trade_note: Note to include with the trade. Default is an empty string.
+        :type trade_note: str
+
+        :return: XML representation of the trade proposal.
+        :rtype: str
+        """
+        doc = Document()
+        transaction = doc.createElement('transaction')
+        doc.appendChild(doc.createElement('fantasy_content')).appendChild(transaction)
+
+        create_element(doc, transaction, 'type', 'pending_trade')
+        create_element(doc, transaction, 'trader_team_key', self.team_key)
+        create_element(doc, transaction, 'tradee_team_key', tradee_team_key)
+        create_element(doc, transaction, 'trade_note', trade_note)
+
+        players_element = doc.createElement('players')
+        transaction.appendChild(players_element)
+
+        your_players = [
+            {"player_key": player_key, "source_team_key": self.team_key, "destination_team_key": tradee_team_key}
+            for player_key in your_player_keys]
+        their_players = [
+            {"player_key": player_key, "source_team_key": tradee_team_key, "destination_team_key": self.team_key}
+            for player_key in their_players_keys]
+
+        players = your_players + their_players
+
+        for player in players:
+            player_element = doc.createElement('player')
+            players_element.appendChild(player_element)
+
+            create_element(doc, player_element, 'player_key', player['player_key'])
+
+            transaction_data = doc.createElement('transaction_data')
+            player_element.appendChild(transaction_data)
+
+            create_element(doc, transaction_data, 'type', 'pending_trade')
+            create_element(doc, transaction_data, 'source_team_key', player['source_team_key'])
+            create_element(doc, transaction_data, 'destination_team_key', player['destination_team_key'])
+
         return doc.toprettyxml()
 
     def _construct_change_roster_xml(self, day, modified_lineup):
@@ -303,7 +393,7 @@ class Team:
             p = plyrs.appendChild(doc.createElement('player'))
             p.appendChild(doc.createElement('player_key')) \
                 .appendChild(doc.createTextNode('{}.p.{}'.format(
-                    self.league_prefix, int(plyr['player_id']))))
+                self.league_prefix, int(plyr['player_id']))))
             p.appendChild(doc.createElement('position')) \
                 .appendChild(doc.createTextNode(plyr['selected_position']))
 
@@ -333,12 +423,12 @@ class Team:
         elif action == 'drop':
             team_elem = 'source_team_key'
         else:
-            assert(False), 'Unknown action: ' + action
+            assert (False), 'Unknown action: ' + action
 
         player = root.appendChild(doc.createElement('player'))
         player.appendChild(doc.createElement('player_key')) \
             .appendChild(doc.createTextNode('{}.p.{}'.format(
-                self.league_prefix, int(player_id))))
+            self.league_prefix, int(player_id))))
         tdata = player.appendChild(doc.createElement('transaction_data'))
         tdata.appendChild(doc.createElement('type')) \
             .appendChild(doc.createTextNode(action))
