@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<fantasy_content>
+  <transaction>
+    <type>pending_trade</type>
+    <trader_team_key>268.l.46645</trader_team_key>
+    <tradee_team_key>248.l.55438.t.4</tradee_team_key>
+    <trade_note>Check out this trade proposal.</trade_note>
+    <players>
+      <player>
+        <player_key>248.p.4130</player_key>
+        <transaction_data>
+          <type>pending_trade</type>
+          <source_team_key>268.l.46645</source_team_key>
+          <destination_team_key>248.l.55438.t.4</destination_team_key>
+        </transaction_data>
+      </player>
+      <player>
+        <player_key>248.p.2415</player_key>
+        <transaction_data>
+          <type>pending_trade</type>
+          <source_team_key>248.l.55438.t.4</source_team_key>
+          <destination_team_key>268.l.46645</destination_team_key>
+        </transaction_data>
+      </player>
+    </players>
+  </transaction>
+</fantasy_content>
