@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<fantasy_content>
+  <transaction>
+    <transaction_key>396.l.49770.pt.1</transaction_key>
+    <type>pending_trade</type>
+    <action>accept</action>
+    <trade_note>Dude, that is a totally fair trade.</trade_note>
+  </transaction>
+</fantasy_content>
