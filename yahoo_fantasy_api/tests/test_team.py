@@ -1,5 +1,7 @@
 #!/bin/python
 
+import os
+
 
 def test_matchup(mock_team):
     opponent = mock_team.matchup(3)
@@ -54,7 +56,8 @@ def test_proposed_trades(mock_team):
 
 
 def test__construct_trade_xml(mock_team):
-    with open('accept_trade.xml', 'r') as file:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{dir_path}/accept_trade.xml', 'r') as file:
         expected_xml = file.read().replace('  ', '\t')
 
     transaction_key = '396.l.49770.pt.1'
@@ -64,7 +67,8 @@ def test__construct_trade_xml(mock_team):
 
 
 def test__construct_trade_proposal_xml(mock_team):
-    with open('trade_proposal.xml', 'r') as file:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(f'{dir_path}/trade_proposal.xml', 'r') as file:
         expected_xml = file.read().replace('  ', '\t')
 
     tradee_team_key = '248.l.55438.t.4'
