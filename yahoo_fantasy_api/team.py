@@ -113,28 +113,29 @@ class Team:
             pass
         return roster
 
-    def change_positions(self, day, modified_lineup):
+    def change_positions(self, modified_lineup, day=None, week=None):
         """Change the starting position of a subset of players in your lineup
 
         This raises a RuntimeError if any error occurs when communicating with
         Yahoo!
-
-        :param day: The day that the new positions take affect.  This should be
-            the starting day of the week.
-        :type day: :class:`datetime.date`
         :param modified_lineup: List of players to modify.  Each entry should
             have a dict with the following keys: player_id - player ID of the
             player to change; selected_position - new position of the player.
         :type modified_lineup: list(dict)
+        :param day: The day that the new positions take affect.  This should be
+            the starting day of the week.
+        :type day: :class:`datetime.date`
+        :param week: Week number that the new positions take affect
+        :type week: int
 
         >>>
         import datetime
         cd = datetime.date(2019, 10, 7)
         plyrs = [{'player_id': 5981, 'selected_position': 'BN'},
                  {'player_id': 4558, 'selected_position': 'BN'}]
-        tm.change_positions(cd, plyrs)
+        tm.change_positions(plyrs, cd)
         """
-        xml = self._construct_change_roster_xml(day, modified_lineup)
+        xml = self._construct_change_roster_xml(modified_lineup, day, week)
         self.yhandler.put_roster(self.team_key, xml)
 
     def add_player(self, player_id):
@@ -377,16 +378,22 @@ class Team:
 
         return doc.toprettyxml()
 
-    def _construct_change_roster_xml(self, day, modified_lineup):
+    def _construct_change_roster_xml(self, modified_lineup, day, week):
         """Construct XML to pass to Yahoo! that will modified the positions"""
         doc = Document()
         roster = doc.appendChild(doc.createElement('fantasy_content')) \
             .appendChild(doc.createElement('roster'))
-
-        roster.appendChild(doc.createElement('coverage_type')) \
-            .appendChild(doc.createTextNode('date'))
-        roster.appendChild(doc.createElement('date')) \
-            .appendChild(doc.createTextNode(day.strftime("%Y-%m-%d")))
+            
+        if week is not None:
+            roster.appendChild(doc.createElement('coverage_type')) \
+                .appendChild(doc.createTextNode('week'))
+            roster.appendChild(doc.createElement('week')) \
+                .appendChild(doc.createTextNode(str(week)))
+        else:
+            roster.appendChild(doc.createElement('coverage_type')) \
+                .appendChild(doc.createTextNode('date'))
+            roster.appendChild(doc.createElement('date')) \
+                .appendChild(doc.createTextNode(day.strftime("%Y-%m-%d")))
 
         plyrs = roster.appendChild(doc.createElement('players'))
         for plyr in modified_lineup:
