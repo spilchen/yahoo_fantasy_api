@@ -119,6 +119,7 @@ class Team:
 
         This raises a RuntimeError if any error occurs when communicating with
         Yahoo!
+        
         :param time_frame: The time frame that the new positions take affect.  This should be
             the starting day of the week (MLB, NBA, or NHL) or the week number (NFL).
         :type time_frame: :class:`datetime.date` | int
