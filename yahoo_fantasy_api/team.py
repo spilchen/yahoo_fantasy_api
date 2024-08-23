@@ -119,7 +119,7 @@ class Team:
 
         This raises a RuntimeError if any error occurs when communicating with
         Yahoo!
-        
+
         :param time_frame: The time frame that the new positions take affect.  This should be
             the starting day of the week (MLB, NBA, or NHL) or the week number (NFL).
         :type time_frame: :class:`datetime.date` | int
@@ -383,19 +383,19 @@ class Team:
         doc = Document()
         roster = doc.appendChild(doc.createElement('fantasy_content')) \
             .appendChild(doc.createElement('roster'))
-            
+
         if isinstance(time_frame, datetime.date):
             roster.appendChild(doc.createElement('coverage_type')) \
                 .appendChild(doc.createTextNode('date'))
             roster.appendChild(doc.createElement('date')) \
                 .appendChild(doc.createTextNode(time_frame.strftime("%Y-%m-%d")))
-        elif isinstance(time_frame, int):   
+        elif isinstance(time_frame, int):
             roster.appendChild(doc.createElement('coverage_type')) \
                 .appendChild(doc.createTextNode('week'))
             roster.appendChild(doc.createElement('week')) \
                 .appendChild(doc.createTextNode(str(time_frame)))
         else:
-            raise RuntimeError("Invalid time_frame format")
+            raise RuntimeError("Invalid time_frame format. Must be datetime.date or int.")
 
         plyrs = roster.appendChild(doc.createElement('players'))
         for plyr in modified_lineup:
