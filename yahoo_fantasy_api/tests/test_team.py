@@ -1,6 +1,8 @@
 #!/bin/python
 
 import os
+import datetime
+import pytest
 
 
 def test_matchup(mock_team):
@@ -79,3 +81,19 @@ def test__construct_trade_proposal_xml(mock_team):
     actual_xml = mock_team._construct_trade_proposal_xml(tradee_team_key, your_player_keys, their_player_keys, trade_note)
 
     assert actual_xml == expected_xml
+
+
+def test_change_roster(mock_team):
+    plyrs = [{'player_id': 5981, 'selected_position': 'BN'},
+             {'player_id': 4558, 'selected_position': 'BN'}]
+    cd = datetime.date(2019, 10, 7)
+    mock_team.change_positions(cd, plyrs)
+    assert mock_team.yhandler.roster_xml is not None
+    assert "<date>2019-10-07</date>" in mock_team.yhandler.roster_xml
+
+    mock_team.change_positions(2, plyrs)
+    assert "<date>2019-10-07</date>" not in mock_team.yhandler.roster_xml
+    assert "<week>2</week>" in mock_team.yhandler.roster_xml
+
+    with pytest.raises(Exception):
+        mock_team.change_positions("3", plyrs)

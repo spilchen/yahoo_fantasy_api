@@ -189,3 +189,9 @@ class YHandler:
         """
         with open(self.dir_path + "/sample.transactions.json", "r") as f:
             return json.load(f)
+
+    def put_roster(self, team_key, xml):
+        # This produces no output. Just save the xml for inspection by the
+        # test.
+        self.roster_xml = xml
+
