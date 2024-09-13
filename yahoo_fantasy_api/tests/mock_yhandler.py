@@ -138,6 +138,9 @@ class YHandler:
             id = "396.l.21484"
         else:
             id = "388.l.27081"
+
+        if 7200 in player_ids:
+            id = "449.l.75178"
         fn = "{}/sample.player_stats.{}.json".format(self.dir_path, id)
         with open(fn, "r") as f:
             return json.load(f)
