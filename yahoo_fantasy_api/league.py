@@ -828,10 +828,7 @@ class League:
                     row[self.stats_id_map[stat_id]] = val
             elif 'total' in e:
                 row['total_points'] = e['total']
-            else:
-                print(e)
 
-                    
         if row is not None:
             stats.append(row)
         return stats
