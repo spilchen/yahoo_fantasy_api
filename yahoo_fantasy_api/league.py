@@ -808,7 +808,7 @@ class League:
         t = objectpath.Tree(json)
         stats = []
         row = None
-        for e in t.execute('$..(full,player_id,position_type,stat)'):
+        for e in t.execute('$..(full,player_id,position_type,stat,total)'):
             if 'player_id' in e:
                 if row is not None:
                     stats.append(row)
@@ -826,6 +826,12 @@ class League:
                     val = e['stat']['value']
                 if stat_id in self.stats_id_map:
                     row[self.stats_id_map[stat_id]] = val
+            elif 'total' in e:
+                row['total_points'] = e['total']
+            else:
+                print(e)
+
+                    
         if row is not None:
             stats.append(row)
         return stats
