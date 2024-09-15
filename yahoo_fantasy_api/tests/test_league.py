@@ -165,6 +165,7 @@ def test_mlb_player_stats(mock_mlb_league):
 
 def test_nhl_player_stats(mock_nhl_league):
     stats = mock_nhl_league.player_stats([4002], 'season')
+    print(stats)
     assert(len(stats) == 1)
     assert(stats[0]['name'] == 'Claude Giroux')
     assert(stats[0]['SOG'] == 147)
