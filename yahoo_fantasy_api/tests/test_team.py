@@ -78,7 +78,8 @@ def test__construct_trade_proposal_xml(mock_team):
     your_player_keys = ['248.p.4130']
     their_player_keys = ['248.p.2415']
 
-    actual_xml = mock_team._construct_trade_proposal_xml(tradee_team_key, your_player_keys, their_player_keys, trade_note)
+    actual_xml = mock_team._construct_trade_proposal_xml(
+        tradee_team_key, your_player_keys, their_player_keys, trade_note)
 
     assert actual_xml == expected_xml
 
