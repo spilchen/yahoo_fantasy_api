@@ -190,4 +190,3 @@ class YHandler:
         # This produces no output. Just save the xml for inspection by the
         # test.
         self.roster_xml = xml
-
