@@ -132,16 +132,9 @@ class YHandler:
         with open(fn, "r") as f:
             return json.load(f)
 
-    def get_player_stats_raw(self, game_code, player_ids, req_type, day,
+    def get_player_stats_raw(self, league_id, player_ids, req_type, day,
                              week, season):
-        if game_code == 'nhl':
-            id = "396.l.21484"
-        else:
-            id = "388.l.27081"
-
-        if 7200 in player_ids:
-            id = "449.l.75178"
-        fn = "{}/sample.player_stats.{}.json".format(self.dir_path, id)
+        fn = "{}/sample.player_stats.{}.json".format(self.dir_path, league_id)
         with open(fn, "r") as f:
             return json.load(f)
 

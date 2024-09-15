@@ -803,7 +803,7 @@ class League:
         :rtype: list(dict)
         '''
         assert(len(player_ids) > 0 and len(player_ids) <= 25)
-        json = self.yhandler.get_player_stats_raw(game_code, player_ids,
+        json = self.yhandler.get_player_stats_raw(self.league_id, player_ids,
                                                   req_type, date, week, season)
         t = objectpath.Tree(json)
         stats = []
