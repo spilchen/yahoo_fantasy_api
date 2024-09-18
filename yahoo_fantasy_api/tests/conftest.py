@@ -27,6 +27,13 @@ def mock_nhl_league(sc):
 
 
 @pytest.fixture()
+def mock_nfl_league(sc):
+    lg = yfa.League(sc, '449.l.75178')
+    lg.inject_yhandler(mock_yhandler.YHandler())
+    yield lg
+
+
+@pytest.fixture()
 def mock_team(sc):
     tm = yfa.Team(sc, '268.l.46645')
     tm.inject_yhandler(mock_yhandler.YHandler())

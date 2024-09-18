@@ -287,12 +287,12 @@ class YHandler:
         """
         return self.put("transaction/" + str(transaction_key), xml)
 
-    def get_player_stats_raw(self, game_code, player_ids, req_type, date,
+    def get_player_stats_raw(self, league_id, player_ids, req_type, date,
                              week, season):
         """
         GET stats for a list of player IDs
 
-        :param game_code: The game code the players belong too.  mlb, nhl, etc.
+        :param league_id: The league id the players belong too.
         :type game_code: str
         :param player_ids: Yahoo! player IDs we are requesting stats for
         :type player_ids: list(int)
@@ -309,7 +309,7 @@ class YHandler:
         :type season: int
         :return: Response from the GET call
         """
-        uri = self._build_player_stats_uri(game_code, player_ids, req_type,
+        uri = self._build_player_stats_uri(league_id, player_ids, req_type,
                                            date, week, season)
         return self.get(uri)
 
@@ -323,9 +323,10 @@ class YHandler:
         """
         return self.get("league/{}/draftresults".format(league_id))
 
-    def _build_player_stats_uri(self, game_code, player_ids, req_type, date,
+    def _build_player_stats_uri(self, league_id, player_ids, req_type, date,
                                 week, season):
-        uri = 'players;player_keys='
+        uri = "league/{}/players;player_keys=".format(league_id)
+        game_code = league_id[:3]
         if isinstance(player_ids, list):
             for i, p in enumerate(player_ids):
                 if i != 0:
