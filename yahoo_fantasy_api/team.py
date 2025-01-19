@@ -150,7 +150,7 @@ class Team:
         self.yhandler.post_transactions(self.league_id, xml)
 
     def claim_player(self, player_id, faab=None):
-        """Claim a single player from waivers by their player ID
+        """Submit a waiver claim for a single player by their player ID
 
         :param player_id: Yahoo! player ID of the player to add
         :type player_id: int
@@ -188,7 +188,7 @@ class Team:
         self.yhandler.post_transactions(self.league_id, xml)
 
     def claim_and_drop_players(self, add_player_id, drop_player_id, faab=None):
-        """Claim one player from waivers and drop another in the same transaction
+        """Submit a waiver claim for one player and drop another in the same transaction
 
         :param add_player_id: Yahoo! player ID of the player to add
         :type add_player_id: int
