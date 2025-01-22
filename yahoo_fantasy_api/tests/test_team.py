@@ -5,6 +5,8 @@ import datetime
 import pytest
 
 
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+
 def test_matchup(mock_team):
     opponent = mock_team.matchup(3)
     assert(opponent == '388.l.27081.t.5')
@@ -58,8 +60,7 @@ def test_proposed_trades(mock_team):
 
 
 def test__construct_trade_xml(mock_team):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(f'{dir_path}/accept_trade.xml', 'r') as file:
+    with open(f'{DIR_PATH}/accept_trade.xml', 'r') as file:
         expected_xml = file.read().replace('  ', '\t')
 
     transaction_key = '396.l.49770.pt.1'
@@ -69,8 +70,7 @@ def test__construct_trade_xml(mock_team):
 
 
 def test__construct_trade_proposal_xml(mock_team):
-    dir_path = os.path.dirname(os.path.realpath(__file__))
-    with open(f'{dir_path}/trade_proposal.xml', 'r') as file:
+    with open(f'{DIR_PATH}/trade_proposal.xml', 'r') as file:
         expected_xml = file.read().replace('  ', '\t')
 
     tradee_team_key = '248.l.55438.t.4'
@@ -80,6 +80,37 @@ def test__construct_trade_proposal_xml(mock_team):
 
     actual_xml = mock_team._construct_trade_proposal_xml(
         tradee_team_key, your_player_keys, their_player_keys, trade_note)
+
+    assert actual_xml == expected_xml
+
+
+def test__construct_transaction_xml(mock_team):
+    with open(f'{DIR_PATH}/add_drop_with_faab.xml', 'r') as file:
+        expected_xml = file.read().replace('  ', '\t')
+
+    action = "add/drop"
+    add_player_id=123
+    drop_player_id=456
+    faab = 99
+
+    actual_xml = mock_team._construct_transaction_xml(
+        action, add_player_id, drop_player_id, faab=faab
+    )
+
+    assert actual_xml == expected_xml
+
+
+def test__construct_transaction_xml_with_faab(mock_team):
+    with open(f'{DIR_PATH}/add_drop_no_faab.xml', 'r') as file:
+        expected_xml = file.read().replace('  ', '\t')
+
+    action = "add/drop"
+    add_player_id=123
+    drop_player_id=456
+
+    actual_xml = mock_team._construct_transaction_xml(
+        action, add_player_id, drop_player_id
+    )
 
     assert actual_xml == expected_xml
 
