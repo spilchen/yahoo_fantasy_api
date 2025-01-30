@@ -12,3 +12,5 @@ docs/_build
 .vscode/
 .envrc
 build/
+.python-version
+oauth.json
