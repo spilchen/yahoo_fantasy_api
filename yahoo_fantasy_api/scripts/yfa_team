@@ -24,6 +24,7 @@ if __name__ == '__main__':
     lg = yfa.League(sc, args['<league_id>'])
     teams = lg.teams()
     tm = lg.to_team(lg.team_key())
+    print(tm.details())
     print("Opponent: {}".format(teams[tm.matchup(args['<week>'])]['name']))
     print("")
     print("Roster")
