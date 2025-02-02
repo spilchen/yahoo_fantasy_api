@@ -17,10 +17,13 @@ class League:
     :type league_id: str
     """
 
-    def __init__(self, sc, league_id):
+    def __init__(self, sc, league_id, handler=None):
         self.sc = sc
         self.league_id = league_id
-        self.yhandler = yhandler.YHandler(sc)
+        if handler:
+            self.yhandler = handler
+        else:
+            self.yhandler = yhandler.YHandler(sc)
         self.current_week_cache = None
         self.end_week_cache = None
         self.week_date_range_cache = {}
@@ -33,6 +36,9 @@ class League:
         self.positions_cache = None
         self.stats_id_map = None
         self.player_details_cache = {}
+        lg_settings = self.settings()
+        game_code = lg_settings['game_code']
+        self._cache_stats_id_map(game_code)
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
