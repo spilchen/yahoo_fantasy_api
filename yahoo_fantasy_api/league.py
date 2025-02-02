@@ -39,7 +39,6 @@ class League:
         lg_settings = self.settings()
         game_code = lg_settings['game_code']
         self._cache_stats_id_map(game_code)
-        self.positions()
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
