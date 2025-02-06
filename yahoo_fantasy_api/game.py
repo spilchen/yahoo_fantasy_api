@@ -41,8 +41,7 @@ class Game:
         :return: Fully constructed object
         :rtype: League
         """
-        lg = league.League(self.sc, league_id)
-        lg.inject_yhandler(self.yhandler)
+        lg = league.League(self.sc, league_id, handler=self.yhandler)
         return lg
 
     def league_ids(self, year=None):

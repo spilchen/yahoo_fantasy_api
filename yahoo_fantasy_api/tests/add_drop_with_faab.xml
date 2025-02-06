@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<fantasy_content>
+  <transaction>
+    <type>add/drop</type>
+    <faab_bid>99</faab_bid>
+    <players>
+      <player>
+        <player_key>268.p.123</player_key>
+        <transaction_data>
+          <type>add</type>
+          <destination_team_key>268.l.46645</destination_team_key>
+        </transaction_data>
+      </player>
+      <player>
+        <player_key>268.p.456</player_key>
+        <transaction_data>
+          <type>drop</type>
+          <source_team_key>268.l.46645</source_team_key>
+        </transaction_data>
+      </player>
+    </players>
+  </transaction>
+</fantasy_content>

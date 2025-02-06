@@ -17,10 +17,13 @@ class League:
     :type league_id: str
     """
 
-    def __init__(self, sc, league_id):
+    def __init__(self, sc, league_id, handler=None):
         self.sc = sc
         self.league_id = league_id
-        self.yhandler = yhandler.YHandler(sc)
+        if handler:
+            self.yhandler = handler
+        else:
+            self.yhandler = yhandler.YHandler(sc)
         self.current_week_cache = None
         self.end_week_cache = None
         self.week_date_range_cache = {}
@@ -33,6 +36,9 @@ class League:
         self.positions_cache = None
         self.stats_id_map = None
         self.player_details_cache = {}
+        lg_settings = self.settings()
+        game_code = lg_settings['game_code']
+        self._cache_stats_id_map(game_code)
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
@@ -708,7 +714,7 @@ class League:
         while len(player_ids) > 0:
             next_player_ids = player_ids[0:25]
             player_ids = player_ids[25:]
-            stats += self._fetch_plyr_stats(game_code, next_player_ids,
+            stats += self._fetch_plyr_stats(next_player_ids,
                                             req_type, date, week, season)
         return stats
 
@@ -789,7 +795,7 @@ class League:
             transactions.append({**transaction_details, **players})
         return transactions
 
-    def _fetch_plyr_stats(self, game_code, player_ids, req_type, date, week, season):
+    def _fetch_plyr_stats(self, player_ids, req_type, date, week, season):
         '''
         Fetch player stats for at most 25 player IDs.
 
@@ -803,12 +809,12 @@ class League:
         :rtype: list(dict)
         '''
         assert(len(player_ids) > 0 and len(player_ids) <= 25)
-        json = self.yhandler.get_player_stats_raw(game_code, player_ids,
+        json = self.yhandler.get_player_stats_raw(self.league_id, player_ids,
                                                   req_type, date, week, season)
         t = objectpath.Tree(json)
         stats = []
         row = None
-        for e in t.execute('$..(full,player_id,position_type,stat)'):
+        for e in t.execute('$..(full,player_id,position_type,stat,total)'):
             if 'player_id' in e:
                 if row is not None:
                     stats.append(row)
@@ -826,6 +832,9 @@ class League:
                     val = e['stat']['value']
                 if stat_id in self.stats_id_map:
                     row[self.stats_id_map[stat_id]] = val
+            elif 'total' in e:
+                row['total_points'] = e['total']
+
         if row is not None:
             stats.append(row)
         return stats

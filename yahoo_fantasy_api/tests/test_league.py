@@ -172,6 +172,12 @@ def test_nhl_player_stats(mock_nhl_league):
     assert(stats[0]['PTS'] == 35)
 
 
+def test_nfl_player_stats(mock_nfl_league):
+    stats = mock_nfl_league.player_stats([7200], 'season')
+    assert(stats[0]['name'] == 'Aaron Rodgers')
+    assert(stats[0]['total_points'] == '8.58')
+
+
 def test_draft_results(mock_nhl_league):
     dres = mock_nhl_league.draft_results()
     print(dres)

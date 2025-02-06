@@ -164,6 +164,19 @@ class Team:
         xml = self._construct_transaction_xml("add", player_id)
         self.yhandler.post_transactions(self.league_id, xml)
 
+    def claim_player(self, player_id, faab=None):
+        """Submit a waiver claim for a single player by their player ID
+
+        :param player_id: Yahoo! player ID of the player to add
+        :type player_id: int
+        :param faab: Number of faab dollars to bid on the claim
+        :type faab: int
+
+        >>> tm.add_player(6767, faab=7)
+        """
+        xml = self._construct_transaction_xml("add", player_id, faab=faab)
+        self.yhandler.post_transactions(self.league_id, xml)
+
     def drop_player(self, player_id):
         """Drop a single player by their player ID
 
@@ -187,6 +200,23 @@ class Team:
         """
         xml = self._construct_transaction_xml("add/drop", add_player_id,
                                               drop_player_id)
+        self.yhandler.post_transactions(self.league_id, xml)
+
+    def claim_and_drop_players(self, add_player_id, drop_player_id, faab=None):
+        """Submit a waiver claim for one player and drop another in the same transaction
+
+        :param add_player_id: Yahoo! player ID of the player to add
+        :type add_player_id: int
+        :param drop_player_id: Yahoo! player ID of the player to drop
+        :type drop_player_id: int
+        :param faab: Number of faab dollars to bid on the claim
+        :type faab: int
+
+        >>> tm.claim_and_drop_players(6770, 6767, faab=22)
+        """
+        xml = self._construct_transaction_xml(
+            "add/drop", add_player_id, drop_player_id, faab=faab
+        )
         self.yhandler.post_transactions(self.league_id, xml)
 
     def proposed_trades(self):
@@ -417,19 +447,24 @@ class Team:
             p = plyrs.appendChild(doc.createElement('player'))
             p.appendChild(doc.createElement('player_key')) \
                 .appendChild(doc.createTextNode('{}.p.{}'.format(
-                self.league_prefix, int(plyr['player_id']))))
+                    self.league_prefix, int(plyr['player_id']))))
             p.appendChild(doc.createElement('position')) \
                 .appendChild(doc.createTextNode(plyr['selected_position']))
 
         return doc.toprettyxml()
 
-    def _construct_transaction_xml(self, action, *player_ids):
+    def _construct_transaction_xml(self, action, *player_ids, faab=None):
         doc = Document()
         transaction = doc.appendChild(doc.createElement('fantasy_content')) \
             .appendChild(doc.createElement('transaction'))
 
         transaction.appendChild(doc.createElement('type')) \
             .appendChild(doc.createTextNode(action))
+
+        if faab is not None:
+            transaction.appendChild(doc.createElement("faab_bid")) \
+                .appendChild(doc.createTextNode(str(faab)))
+
         if action == 'add/drop':
             players = transaction.appendChild(doc.createElement('players'))
             self._construct_transaction_player_xml(doc, players, player_ids[0],
@@ -452,7 +487,7 @@ class Team:
         player = root.appendChild(doc.createElement('player'))
         player.appendChild(doc.createElement('player_key')) \
             .appendChild(doc.createTextNode('{}.p.{}'.format(
-            self.league_prefix, int(player_id))))
+                self.league_prefix, int(player_id))))
         tdata = player.appendChild(doc.createElement('transaction_data'))
         tdata.appendChild(doc.createElement('type')) \
             .appendChild(doc.createTextNode(action))
