@@ -27,7 +27,7 @@ class Team:
 
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
-    
+
     def details(self):
         """Return the details of the team
 
@@ -41,8 +41,8 @@ class Team:
         t = objectpath.Tree(self.yhandler.get_teams_by_keys_raw([self.team_key]))
         json = t.execute('$..teams..team[0]')
         details = {k: v for dic in [val for val in json if val != []] for k, v in dic.items()}
-        return details 
-        
+        return details
+
     def matchup(self, week):
         """Return the team of the matchup my team is playing in a given week
 
