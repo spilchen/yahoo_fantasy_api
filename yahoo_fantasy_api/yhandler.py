@@ -69,7 +69,7 @@ class YHandler:
 
     def get_teams_by_keys_raw(self, team_keys):
         """Return the raw JSON when requesting details of a team.
-        :param team_keys: Optional list of team keys to fetch the details For
+        :param team_keys: List of team keys to fetch the details For
         :type team_keys: list[str]
         :return: JSON document of the request.
         """

@@ -195,3 +195,11 @@ class YHandler:
         # test.
         self.roster_xml = xml
 
+    def get_teams_by_keys_raw(self, team_keys):
+        """Return the raw JSON when requesting details of a team.
+        :param team_keys: Optional list of team keys to fetch the details For
+        :type team_keys: list[str]
+        :return: JSON document of the request.
+        """
+        with open(self.dir_path + "/sample.team_details.json", "r") as f:
+            return json.load(f)

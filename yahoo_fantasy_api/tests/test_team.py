@@ -97,3 +97,10 @@ def test_change_roster(mock_team):
 
     with pytest.raises(Exception):
         mock_team.change_positions("3", plyrs)
+
+def test_details(mock_team):
+    details = mock_team.details()
+    assert details['team_key'] == '449.l.751781.t.9'
+    assert details['team_id'] == '9'
+    assert details['name'] == 'Gibb it to me baby'
+    assert details['is_owned_by_current_login'] == 1
