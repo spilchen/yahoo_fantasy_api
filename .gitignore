@@ -13,3 +13,4 @@ docs/_build
 .envrc
 build/
 .python-version
+oauth.json

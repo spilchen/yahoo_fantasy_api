@@ -67,6 +67,15 @@ class YHandler:
         """
         return self.get("users;use_login=1/games/teams")
 
+    def get_teams_by_keys_raw(self, team_keys):
+        """Return the raw JSON when requesting details of a team.
+
+        :param team_keys: List of team keys to fetch the details For
+        :type team_keys: list[str]
+        :return: JSON document of the request.
+        """
+        return self.get("teams;team_keys={}".format(",".join(team_keys)))
+
     def get_standings_raw(self, league_id):
         """Return the raw JSON when requesting standings for a league.
 

@@ -28,6 +28,21 @@ class Team:
     def inject_yhandler(self, yhandler):
         self.yhandler = yhandler
 
+    def details(self):
+        """Return the details of the team
+
+        :return: Dictionary of the team details
+
+        >>> tm.details()
+        {'team_key': '388.l.27081.t.9', 'team_id': '9', 'name': 'Team Name',
+         'url': 'http://baseball.fantasysports.yahoo.com/archive/mlb/2013/27081/9',
+         'team_logos': [{'team_logo': {'size': 'large', 'url': 'http://l.yimg
+        """
+        t = objectpath.Tree(self.yhandler.get_teams_by_keys_raw([self.team_key]))
+        json = t.execute('$..teams..team[0]')
+        details = {k: v for dic in [val for val in json if val != []] for k, v in dic.items()}
+        return details
+
     def matchup(self, week):
         """Return the team of the matchup my team is playing in a given week
 

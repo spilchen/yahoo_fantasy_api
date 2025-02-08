@@ -7,6 +7,7 @@ import pytest
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
+
 def test_matchup(mock_team):
     opponent = mock_team.matchup(3)
     assert(opponent == '388.l.27081.t.5')
@@ -89,8 +90,8 @@ def test__construct_transaction_xml(mock_team):
         expected_xml = file.read().replace('  ', '\t')
 
     action = "add/drop"
-    add_player_id=123
-    drop_player_id=456
+    add_player_id = 123
+    drop_player_id = 456
     faab = 99
 
     actual_xml = mock_team._construct_transaction_xml(
@@ -105,8 +106,8 @@ def test__construct_transaction_xml_with_faab(mock_team):
         expected_xml = file.read().replace('  ', '\t')
 
     action = "add/drop"
-    add_player_id=123
-    drop_player_id=456
+    add_player_id = 123
+    drop_player_id = 456
 
     actual_xml = mock_team._construct_transaction_xml(
         action, add_player_id, drop_player_id
@@ -129,3 +130,11 @@ def test_change_roster(mock_team):
 
     with pytest.raises(Exception):
         mock_team.change_positions("3", plyrs)
+
+
+def test_details(mock_team):
+    details = mock_team.details()
+    assert details['team_key'] == '449.l.751781.t.9'
+    assert details['team_id'] == '9'
+    assert details['name'] == 'Gibb it to me baby'
+    assert details['is_owned_by_current_login'] == 1
