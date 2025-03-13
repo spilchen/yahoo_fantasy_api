@@ -10,18 +10,17 @@ def test_ids(sc):
     ids = gm.league_ids()
     for i in ids:
         print(i)
-    assert(len(ids) == 12)
+    assert(len(ids) == 2)
     print(ids)
-    assert(ids[5] == '268.l.46645')
+    assert(ids[1] == '458.l.48797')
 
 
 def test_ids_for_year(sc):
     gm = yfa.Game(sc, 'mlb')
     gm.inject_yhandler(mock_yhandler.YHandler())
-    ids = gm.league_ids(year=2017)
-    assert(len(ids) == 1)
+    ids = gm.league_ids(seasons=[2017])
     print(ids)
-    assert(ids[0] == '370.l.56877')
+    assert(ids[0] == '449.l.751781')
 
 
 def test_to_league(sc):
