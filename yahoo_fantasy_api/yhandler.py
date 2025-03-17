@@ -80,6 +80,7 @@ class YHandler:
         :type seasons: list[str]
         :return: JSON document of the request.
         """
+        is_available = 1 if is_available else 0
         game_types = ",".join(game_types) if game_types is not None else ""
         game_codes = ",".join(game_codes) if game_codes is not None else ""
         seasons = ",".join(seasons) if seasons is not None else ""
