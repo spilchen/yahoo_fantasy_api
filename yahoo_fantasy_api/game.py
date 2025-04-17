@@ -44,7 +44,29 @@ class Game:
         lg = league.League(self.sc, league_id, handler=self.yhandler)
         return lg
 
-    def league_ids(self, year=None):
+    def league_ids(self, year=None, is_available=False, game_types=None, game_codes=None, seasons=None):
+        """Return the Yahoo! league IDs that the current user played in
+
+        :param year: Optional year, when provide _league_ids_deprecated() will be used to fetch the league ids 
+        :type is_available: int
+        :param is_available: Optional flag to filter out leagues that are not available
+        :type is_available: bool
+        :param game_types: Optional list of game types to filter league IDs returned. Valid values are full|pickem-team|pickem-group|pickem-team-list
+        :type game_types: list[str]
+        :param game_codes: Optional list of game codes(i.e. nfl, mlb, nhl, nba) to filter league IDs returned.
+        :type game_codes: list[str]
+        :param seasons: Optional list of seasons to filter league IDs returned.
+        :type seasons: list[str]
+        :returns: List of league ids
+        """
+        if year is not None:
+            return self._league_ids_deprecated(year=year)
+
+        t = objectpath.Tree(self.yhandler.get_leagues_raw(is_available=is_available, game_types=game_types, game_codes=game_codes,seasons=seasons))
+        ids = list(t.execute('$..league_key'))
+        return ids
+
+    def _league_ids_deprecated(self, year=None):
         """Return the Yahoo! league IDs that the current user played in
 
         :param year: Optional year, used to filter league IDs returned.
@@ -70,6 +92,7 @@ class Game:
         # Return leagues in deterministic order
         ids.sort()
         return ids
+
 
     def _extract_id_from_team_key(self, t):
         """Given a team key, extract just the league id from it

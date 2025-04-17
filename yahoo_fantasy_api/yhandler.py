@@ -66,6 +66,25 @@ class YHandler:
         :return: JSON document of the request.
         """
         return self.get("users;use_login=1/games/teams")
+    
+    def get_leagues_raw(self, is_available=False, game_types=None, game_codes=None, seasons=None):
+        """Return the raw JSON when requesting the logged in players leagues.
+        
+        :param is_available: Filter the leagues to only those that are Available
+        :type is_available: bool
+        :param game_types: Filter the leagues to only those that are of the given types
+        :type game_types: list[str]
+        :param game_codes: Filter the leagues to only those that are of the given game codes
+        :type game_codes: list[str]
+        :param season: Filter the leagues to only those that are of the given season
+        :type seasons: list[str]
+        :return: JSON document of the request.
+        """
+        is_available = 1 if is_available else 0
+        game_types = ",".join(game_types) if game_types is not None else ""
+        game_codes = ",".join(game_codes) if game_codes is not None else ""
+        seasons = ",".join(seasons) if seasons is not None else ""
+        return self.get("users/games/leagues?use_login=1&is_available={}&game_types={}&game_codes={}&seasons={}".format(is_available, game_types, game_codes, seasons))
 
     def get_teams_by_keys_raw(self, team_keys):
         """Return the raw JSON when requesting details of a team.

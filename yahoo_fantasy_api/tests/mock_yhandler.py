@@ -14,6 +14,22 @@ class YHandler:
     def __init__(self):
         self.dir_path = os.path.dirname(os.path.realpath(__file__))
 
+    def get_leagues_raw(self, is_available=False, game_types=None, game_codes=None, seasons=None):
+        """Return the raw JSON when requesting the logged in players leagues.
+
+        :param is_available: Filter the leagues to only those that are Available
+        :type is_available: bool
+        :param game_types: Filter the leagues to only those that are of the given types
+        :type game_types: list[str]
+        :param game_codes: Filter the leagues to only those that are of the given game codes
+        :type game_codes: list[str]
+        :param season: Filter the leagues to only those that are of the given season
+        :type seasons: list[str]
+        :return: JSON document of the request.
+        """
+        with open(self.dir_path + "/sample.users_leagues.json", "r") as f:
+            return json.load(f)
+
     def get_teams_raw(self):
         """Return the raw JSON when requesting the logged in players teams.
 
