@@ -1,8 +1,12 @@
 #!/bin/python
 
 import datetime
+import json
+import logging
 
 YAHOO_ENDPOINT = 'https://fantasysports.yahooapis.com/fantasy/v2'
+
+logger = logging.getLogger(__name__)
 
 
 class YHandler:
@@ -10,6 +14,67 @@ class YHandler:
 
     def __init__(self, sc):
         self.sc = sc
+
+    def _is_token_expired_error(self, response):
+        """Check if the response indicates an expired OAuth token.
+
+        :param response: HTTP response object
+        :return: True if the error is due to an expired token
+        """
+        if response.status_code != 401 and response.status_code != 403:
+            return False
+
+        try:
+            # Check for OAuth token_expired error in response.
+            content = response.content.decode('utf-8')
+            if 'token_expired' in content or 'oauth_problem' in content:
+                logger.info("Token expired, attempting refresh")
+                return True
+
+            # Also check JSON response format.
+            try:
+                jresp = response.json()
+                if 'error' in jresp:
+                    error_desc = str(jresp['error']).lower()
+                    if 'token_expired' in error_desc or 'oauth' in error_desc:
+                        logger.info("Token expired, attempting refresh")
+                        return True
+            except (json.JSONDecodeError, ValueError):
+                pass
+        except Exception as e:
+            logger.warning(f"Exception while checking token expiration: {e}")
+            pass
+
+        return False
+
+    def _refresh_token_and_retry(self, method_name, *args, **kwargs):
+        """Refresh the OAuth token and retry the request.
+
+        :param method_name: The HTTP method name ('get', 'put', or 'post')
+        :param args: Positional arguments to pass to the method
+        :param kwargs: Keyword arguments to pass to the method
+        :return: Response from the retried request
+        :raises: RuntimeError if refresh fails or retry fails
+        """
+        # Check if token refresh is available.
+        if not hasattr(self.sc, 'refresh_access_token'):
+            logger.error("Token expired but refresh not available")
+            raise RuntimeError(b"Token expired and refresh not available")
+
+        # Attempt to refresh the token.
+        try:
+            credentials = self.sc.refresh_access_token()
+            # Update the session with new token.
+            self.sc.access_token = credentials['access_token']
+            self.sc.session = self.sc.oauth.get_session(token=self.sc.access_token)
+            logger.info("OAuth token refreshed successfully")
+        except Exception as e:
+            logger.error(f"Failed to refresh OAuth token: {e}", exc_info=True)
+            raise RuntimeError(f"Failed to refresh OAuth token: {e}".encode())
+
+        # Retry the original request with the NEW session.
+        method = getattr(self.sc.session, method_name)
+        return method(*args, **kwargs)
 
     def get(self, uri):
         """Send an API request to the URI and return the response as JSON
@@ -19,8 +84,17 @@ class YHandler:
         :return: JSON document of the response
         :raises: RuntimeError if any response comes back with an error
         """
-        response = self.sc.session.get("{}/{}".format(YAHOO_ENDPOINT, uri),
-                                       params={'format': 'json'})
+        full_url = "{}/{}".format(YAHOO_ENDPOINT, uri)
+        response = self.sc.session.get(full_url, params={'format': 'json'})
+
+        # If token expired, refresh and retry once.
+        if self._is_token_expired_error(response):
+            response = self._refresh_token_and_retry(
+                'get',
+                full_url,
+                params={'format': 'json'}
+            )
+
         if response.status_code != 200:
             raise RuntimeError(response.content)
         jresp = response.json()
@@ -39,6 +113,16 @@ class YHandler:
         headers = {'Content-Type': 'application/xml'}
         response = self.sc.session.put("{}/{}".format(YAHOO_ENDPOINT, uri),
                                        data=data, headers=headers)
+
+        # If token expired, refresh and retry once.
+        if self._is_token_expired_error(response):
+            response = self._refresh_token_and_retry(
+                'put',
+                "{}/{}".format(YAHOO_ENDPOINT, uri),
+                data=data,
+                headers=headers
+            )
+
         if response.status_code != 200:
             raise RuntimeError(response.content)
         return response
@@ -56,6 +140,16 @@ class YHandler:
         headers = {'Content-Type': 'application/xml'}
         response = self.sc.session.post("{}/{}".format(YAHOO_ENDPOINT, uri),
                                         data=data, headers=headers)
+
+        # If token expired, refresh and retry once.
+        if self._is_token_expired_error(response):
+            response = self._refresh_token_and_retry(
+                'post',
+                "{}/{}".format(YAHOO_ENDPOINT, uri),
+                data=data,
+                headers=headers
+            )
+
         if response.status_code != 201:
             raise RuntimeError(response.content)
         return response
