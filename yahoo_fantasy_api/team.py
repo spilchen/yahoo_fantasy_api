@@ -87,46 +87,86 @@ class Team:
         """
         raw = self.yhandler.get_roster_raw(self.team_key, week=week, day=day)
         t = objectpath.Tree(raw)
-        it = t.execute('''
-                        $..(player_id,full,position_type,eligible_positions,
-                            selected_position,status)''')
 
-        def _compact_selected_pos(j):
-            return j["selected_position"][1]["position"]
+        # Navigate to the players in the roster.
+        roster_obj = t.execute('$.fantasy_content.team[1].roster')
+        if not roster_obj:
+            return []
 
-        def _compact_eligible_pos(j):
+        # Find the players dict (could be under different keys).
+        players_dict = None
+        for key, value in roster_obj.items():
+            if isinstance(value, dict) and 'players' in value:
+                players_dict = value['players']
+                break
+
+        if not players_dict:
+            return []
+
+        def _compact_eligible_pos(eligible_positions):
             compact_pos = []
-            for p in j["eligible_positions"]:
+            for p in eligible_positions:
                 compact_pos.append(p['position'])
             return compact_pos
 
-        roster = []
-        try:
-            while True:
-                plyr = {"player_id": int(next(it)["player_id"]),
-                        "name": next(it)["full"]}
-                next_item = next(it)
-                plyr["status"] = next_item["status"]
-                # The query we use to pick out only certain fields will find
-                # one or two fields named status.  One 'status' field that will
-                # always exist is for keeper info -- we don't care about that
-                # one.  We only care about the 'status' field that tells if
-                # they are on the IL, DTD, etc.  But this isn't there if the
-                # player has a clean bill of health.  We tell if its the status
-                # we don't care about by looking at the type; bool means it is
-                # for keeper info.
-                if isinstance(plyr["status"], bool):
-                    plyr["status"] = ""
-                else:
-                    # Burn the next field as its the keeper info we don't care about
-                    next(it)
-                plyr["position_type"] = next(it)["position_type"]
-                plyr["eligible_positions"] = _compact_eligible_pos(next(it))
-                plyr["selected_position"] = _compact_selected_pos(next(it))
+        def _get_player_status(player_data):
+            # Find the status field that indicates injury/IL status.
+            # The keeper status (boolean) should be ignored.
+            for item in player_data:
+                if isinstance(item, dict) and 'status' in item:
+                    status_value = item['status']
+                    if not isinstance(status_value, bool):
+                        return status_value
+            return ""
 
+        roster = []
+        # Iterate through players (keys are numeric strings: "0", "1", "2", etc.).
+        # Sort numerically to maintain consistent ordering.
+        player_keys = [k for k in players_dict.keys() if k != 'count']
+        player_keys.sort(key=lambda x: int(x) if x.isdigit() else float('inf'))
+        for key in player_keys:
+            player_entry = players_dict[key]
+            if not isinstance(player_entry, dict) or 'player' not in player_entry:
+                continue
+
+            player = player_entry['player']
+            # player is a list with [player_data_array, selected_position_dict].
+            if not isinstance(player, list) or len(player) < 2:
+                continue
+
+            player_data = player[0]
+            selected_position_data = player[1]
+
+            # Extract fields from player_data (list of dicts).
+            plyr = {}
+            for item in player_data:
+                if not isinstance(item, dict):
+                    continue
+                if 'player_id' in item:
+                    plyr['player_id'] = int(item['player_id'])
+                elif 'name' in item and 'full' in item['name']:
+                    plyr['name'] = item['name']['full']
+                elif 'position_type' in item:
+                    # Skip the linked_player position_type.
+                    if 'player_id' not in plyr:
+                        continue
+                    # Only set position_type if we haven't set it yet.
+                    if 'position_type' not in plyr:
+                        plyr['position_type'] = item['position_type']
+                elif 'eligible_positions' in item:
+                    plyr['eligible_positions'] = _compact_eligible_pos(item['eligible_positions'])
+
+            # Get status.
+            plyr['status'] = _get_player_status(player_data)
+
+            # Extract selected_position.
+            if 'selected_position' in selected_position_data:
+                plyr['selected_position'] = selected_position_data['selected_position'][1]['position']
+
+            # Only add if we got the required fields.
+            if 'player_id' in plyr and 'name' in plyr:
                 roster.append(plyr)
-        except StopIteration:
-            pass
+
         return roster
 
     def change_positions(self, time_frame, modified_lineup):
