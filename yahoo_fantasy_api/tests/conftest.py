@@ -35,3 +35,10 @@ def mock_team(sc):
     tm = yfa.Team(sc, '268.l.46645')
     tm.inject_yhandler(mock_yhandler.YHandler())
     yield tm
+
+
+@pytest.fixture()
+def mock_travis_hunter_team(sc):
+    tm = yfa.Team(sc, '461.l.6288.t.4')
+    tm.inject_yhandler(mock_yhandler.YHandler())
+    yield tm

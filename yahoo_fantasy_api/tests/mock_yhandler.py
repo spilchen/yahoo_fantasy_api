@@ -94,8 +94,13 @@ class YHandler:
         :type day: datetime.date
         :return: JSON of the request
         """
-        with open(self.dir_path + "/sample.team_roster.json", "r") as f:
-            return json.load(f)
+        # Use Travis Hunter roster data for testing dual-position players.
+        if team_key == '461.l.6288.t.4':
+            with open(self.dir_path + "/sample.team_roster.travis_hunter.json", "r") as f:
+                return json.load(f)
+        else:
+            with open(self.dir_path + "/sample.team_roster.json", "r") as f:
+                return json.load(f)
 
     def get_scoreboard_raw(self, league_id, week=None):
         """Return the raw JSON when requesting the scoreboard for a week

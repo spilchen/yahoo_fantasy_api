@@ -138,3 +138,29 @@ def test_details(mock_team):
     assert details['team_id'] == '9'
     assert details['name'] == 'Gibb it to me baby'
     assert details['is_owned_by_current_login'] == 1
+
+
+def test_roster_with_dual_position_player(mock_travis_hunter_team):
+    """Test roster parsing with dual-position player (Travis Hunter).
+
+    This test reproduces issue #65 where Travis Hunter's dual-position
+    status (WR and DB) causes the roster parser to fail due to the
+    unexpected 'linked_player' field in the JSON response.
+    """
+    r = mock_travis_hunter_team.roster(week=11)
+    print(r)
+    # The roster should have 29 players.
+    assert len(r) == 29
+    # Find Travis Hunter in the roster.
+    travis = None
+    for player in r:
+        if player['name'] == 'Travis Hunter':
+            travis = player
+            break
+    assert travis is not None, "Travis Hunter not found in roster"
+    assert travis['player_id'] == 99001
+    assert travis['position_type'] == 'O'
+    assert travis['selected_position'] == 'BN'
+    # Travis Hunter should be eligible for WR, W/R, W/R/T, and DB positions.
+    assert 'WR' in travis['eligible_positions']
+    assert 'DB' in travis['eligible_positions']
