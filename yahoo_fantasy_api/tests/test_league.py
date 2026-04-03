@@ -115,6 +115,14 @@ def test_free_agents_editorial_team_abbr(mock_mlb_league):
     assert fa[0]['editorial_team_abbr'] == 'SJ'
 
 
+def test_waivers_with_position(mock_mlb_league):
+    wa = mock_mlb_league.waivers('C')
+    assert len(wa) == 42
+    assert wa[0]['name'] == 'Joe Thornton'
+    assert wa[0]['position_type'] == 'P'
+    assert wa[0]['player_id'] == 1600
+
+
 def test_pct_own_in_free_agents(mock_mlb_league):
     fa = mock_mlb_league.free_agents('C')
     print(fa)

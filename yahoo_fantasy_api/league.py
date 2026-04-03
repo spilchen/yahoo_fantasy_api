@@ -28,7 +28,7 @@ class League:
         self.end_week_cache = None
         self.week_date_range_cache = {}
         self.free_agent_cache = {}
-        self.waivers_cache = None
+        self.waivers_cache = {}
         self.taken_players_cache = None
         self.stat_categories_cache = None
         self.settings_cache = None
@@ -321,9 +321,14 @@ class League:
                 'FA', position=position)
         return self.free_agent_cache[position]
 
-    def waivers(self):
+    def waivers(self, position=None):
         """Return the players currently on waivers.
 
+        :param position: If not None, only return players that are eligible
+             for the given position.  Use the short code of the position
+             (e.g. 2B, C, etc.).  You can also specify the position type
+             (e.g. 'B' for all batters and 'P' for all pitchers).
+        :type position: str
         :return: Players on waiver.
         :rtype: List(dict)
 
@@ -347,9 +352,10 @@ class League:
           'eligible_positions': ['D', 'IR'],
           'percent_owned': 87}]
         """
-        if not self.waivers_cache:
-            self.waivers_cache = self._fetch_players('W')
-        return self.waivers_cache
+        if position not in self.waivers_cache:
+            self.waivers_cache[position] = self._fetch_players(
+                'W', position=position)
+        return self.waivers_cache[position]
 
     def taken_players(self):
         """Return the players taken by teams.
