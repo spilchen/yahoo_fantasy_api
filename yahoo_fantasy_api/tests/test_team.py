@@ -31,6 +31,14 @@ def test_roster(mock_team):
     assert(r[5]['selected_position'] == 'LF')
 
 
+def test_roster_editorial_team_abbr(mock_team):
+    r = mock_team.roster(3)
+    assert r[0]['name'] == 'Danny Jansen'
+    assert r[0]['editorial_team_abbr'] == 'Tor'
+    assert r[5]['name'] == 'Yordan Alvarez'
+    assert r[5]['editorial_team_abbr'] == 'Hou'
+
+
 def test_roster_status(mock_team):
     r = mock_team.roster(3)
     print(r)

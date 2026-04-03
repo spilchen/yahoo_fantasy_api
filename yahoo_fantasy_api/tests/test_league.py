@@ -108,6 +108,13 @@ def test_free_agents(mock_mlb_league):
     assert(fa[21]['eligible_positions'] == ['C', 'LW'])
 
 
+def test_free_agents_editorial_team_abbr(mock_mlb_league):
+    fa = mock_mlb_league.free_agents('C')
+    assert 'editorial_team_abbr' in fa[0]
+    assert fa[0]['name'] == 'Joe Thornton'
+    assert fa[0]['editorial_team_abbr'] == 'SJ'
+
+
 def test_pct_own_in_free_agents(mock_mlb_league):
     fa = mock_mlb_league.free_agents('C')
     print(fa)

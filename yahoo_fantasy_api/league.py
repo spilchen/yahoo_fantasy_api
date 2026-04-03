@@ -313,7 +313,8 @@ class League:
         {'player_id': 8370,
          'name': 'Dexter Fowler',
          'position_type': 'B',
-         'eligible_positions': ['CF', 'RF', 'Util']}
+         'eligible_positions': ['CF', 'RF', 'Util'],
+         'editorial_team_abbr': 'StL'}
         """
         if position not in self.free_agent_cache:
             self.free_agent_cache[position] = self._fetch_players(
@@ -424,7 +425,8 @@ class League:
         for i, pct_own in zip(range(0, t.execute('$..players.count[0]') * 2, 2),
                               pct_owns):
             path = '$..players..player[{}].'.format(i) + \
-                "(name,player_id,position_type,status,eligible_positions)"
+                "(name,player_id,position_type,status," \
+                "eligible_positions,editorial_team_abbr)"
             obj = list(t.execute(path))
             plyr = {}
             # Convert obj from a list of dicts to a single one-dimensional dict
@@ -439,6 +441,8 @@ class League:
             plyr['percent_owned'] = pct_own
             if "status" not in plyr:
                 plyr["status"] = ""
+            if "editorial_team_abbr" not in plyr:
+                plyr["editorial_team_abbr"] = ""
 
             # Ignore players that are not active
             if plyr["status"] != "NA":
