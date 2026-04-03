@@ -119,8 +119,8 @@ class YHandler:
             return json.load(f)
 
     def get_players_raw(self, league_id, start, status, position=None):
-        assert(position == "C"), "Position must be 2B for mock"
-        assert(status == "FA"), "FreeAgents only for mock"
+        assert(position == "C"), "Position must be C for mock"
+        assert status in ("FA", "W"), "Status must be FA or W for mock"
         if start == 0:
             pg = "1"
         elif start == 25:
