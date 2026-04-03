@@ -73,7 +73,7 @@ class Team:
         :type day: :class: datetime.date
         :return: Array of players.  Each entry is a dict with the following
            fields: player_id, name, position_type, eligible_positions,
-           selected_position
+           selected_position, editorial_team_abbr
 
         >>> tm.roster(3)
         [{'player_id': 8578, 'name': 'John Doe', 'position_type': 'B',
@@ -146,6 +146,8 @@ class Team:
                     plyr['player_id'] = int(item['player_id'])
                 elif 'name' in item and 'full' in item['name']:
                     plyr['name'] = item['name']['full']
+                elif 'editorial_team_abbr' in item:
+                    plyr['editorial_team_abbr'] = item['editorial_team_abbr']
                 elif 'position_type' in item:
                     # Skip the linked_player position_type.
                     if 'player_id' not in plyr:
@@ -158,6 +160,8 @@ class Team:
 
             # Get status.
             plyr['status'] = _get_player_status(player_data)
+            if 'editorial_team_abbr' not in plyr:
+                plyr['editorial_team_abbr'] = ""
 
             # Extract selected_position.
             if 'selected_position' in selected_position_data:
