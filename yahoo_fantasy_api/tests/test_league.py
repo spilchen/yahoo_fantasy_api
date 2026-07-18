@@ -115,6 +115,17 @@ def test_free_agents_editorial_team_abbr(mock_mlb_league):
     assert fa[0]['editorial_team_abbr'] == 'SJ'
 
 
+def test_free_agents_sorted(mock_mlb_league):
+    # The sort parameters flow through to the request and cache separately
+    # from an unsorted fetch (the mock ignores sort, so contents match).
+    fa = mock_mlb_league.free_agents('C', sort='60', sort_type='season',
+                                     sort_season='2023')
+    assert len(fa) == 42
+    key = ('C', '60', 'season', '2023')
+    assert key in mock_mlb_league.free_agent_cache
+    assert ('C', None, None, None) not in mock_mlb_league.free_agent_cache
+
+
 def test_waivers_with_position(mock_mlb_league):
     wa = mock_mlb_league.waivers('C')
     assert len(wa) == 42

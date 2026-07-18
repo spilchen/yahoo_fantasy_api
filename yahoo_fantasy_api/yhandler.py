@@ -256,17 +256,19 @@ class YHandler:
             week_uri = ";week={}".format(week)
         return self.get("league/{}/scoreboard{}".format(league_id, week_uri))
 
-    def get_players_raw(self, league_id, start, status, position=None):
+    def get_players_raw(self, league_id, start, status, position=None,
+                        sort=None, sort_type=None, sort_season=None, count=25):
         """Return the raw JSON when requesting players in the league
 
-        The result is limited to 25 players.
+        The result is limited to ``count`` players (25 by default, which is
+        also Yahoo's per-page maximum).
 
         :param league_id: League ID to get the players for
         :type league_id: str
-        :param start: The output is paged at 25 players each time.  Use this
-        parameter for subsequent calls to get the players at the next page.
-        For example, you specify 0 for the first call, 25 for the second call,
-        etc.
+        :param start: The output is paged at ``count`` players each time.  Use
+        this parameter for subsequent calls to get the players at the next
+        page.  For example, you specify 0 for the first call, 25 for the second
+        call, etc.
         :type start: int
         :param status: A filter to limit the player status.  Available values
         are: 'A' - all available; 'FA' - free agents; 'W' - waivers, 'T' -
@@ -275,15 +277,33 @@ class YHandler:
         :param position: A filter to return players only for a specific
         position.  If None is passed, then no position filtering occurs.
         :type position: str
+        :param sort: How to order the returned players.  Accepts a Yahoo named
+        sort ('AR', 'OR', 'NAME', 'PTS', ...) or a numeric stat ID (e.g. '60').
+        If None, Yahoo's default ordering is used.
+        :type sort: str
+        :param sort_type: The window the ``sort`` applies over: 'season',
+        'lastweek', 'lastmonth', or 'biweekly'.  Only meaningful alongside a
+        stat-based ``sort``.  If None, it is omitted.
+        :type sort_type: str
+        :param sort_season: The season to sort by.  Required by Yahoo when
+        ``sort_type`` is 'season'.  If None, it is omitted.
+        :type sort_season: str
+        :param count: The number of players to return (Yahoo caps this at 25
+        per page).  Defaults to 25.
+        :type count: int
         :return: JSON document of the request.
         """
-        if position is None:
-            pos_parm = ""
-        else:
-            pos_parm = ";position={}".format(position)
+        filters = "start={};count={};status={}".format(start, count, status)
+        if position is not None:
+            filters += ";position={}".format(position)
+        if sort is not None:
+            filters += ";sort={}".format(sort)
+        if sort_type is not None:
+            filters += ";sort_type={}".format(sort_type)
+        if sort_season is not None:
+            filters += ";sort_season={}".format(sort_season)
         return self.get(
-            "league/{}/players;start={};count=25;status={}{}/percent_owned".
-            format(league_id, start, status, pos_parm))
+            "league/{}/players;{}/percent_owned".format(league_id, filters))
 
     def get_player_raw(self, league_id, search=None, ids=None):
         """Return the raw JSON when requesting player details
