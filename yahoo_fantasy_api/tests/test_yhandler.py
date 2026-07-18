@@ -24,6 +24,31 @@ def test_roster_raw():
     yh.get.assert_called_with("team/{}/roster".format(team_key))
 
 
+def test_get_players_raw():
+    yh = yhandler.YHandler('dummy-sc')
+    yh.get = MagicMock(return_value=None)
+    league_id = "399.l.710921"
+
+    # Defaults produce the original URL (backward compatible).
+    yh.get_players_raw(league_id, 0, "FA")
+    yh.get.assert_called_with(
+        "league/{}/players;start=0;count=25;status=FA/percent_owned".format(
+            league_id))
+
+    # Position filter.
+    yh.get_players_raw(league_id, 25, "W", position="2B")
+    yh.get.assert_called_with(
+        "league/{}/players;start=25;count=25;status=W;position=2B"
+        "/percent_owned".format(league_id))
+
+    # Stat-based sort with a window and a custom page size.
+    yh.get_players_raw(league_id, 0, "FA", sort="60", sort_type="season",
+                       sort_season="2023", count=10)
+    yh.get.assert_called_with(
+        "league/{}/players;start=0;count=10;status=FA;sort=60"
+        ";sort_type=season;sort_season=2023/percent_owned".format(league_id))
+
+
 def test_game_raw():
     yh = yhandler.YHandler('dummy-sc')
     yh.get = MagicMock(return_value=None)

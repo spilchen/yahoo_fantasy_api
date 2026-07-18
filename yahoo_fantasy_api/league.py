@@ -294,7 +294,8 @@ class League:
                                "{}, but current week is {}.".format(
                                    week, self.current_week()))
 
-    def free_agents(self, position):
+    def free_agents(self, position, sort=None, sort_type=None,
+                    sort_season=None):
         """Return the free agents for the given position
 
         :param position: All free agents must be able to play this position.
@@ -302,6 +303,17 @@ class League:
              also specify the position type (e.g. 'B' for all batters and 'P'
              for all pitchers).
         :type position: str
+        :param sort: How to order the returned players.  Accepts a Yahoo named
+             sort ('AR', 'OR', 'NAME', 'PTS', ...) or a numeric stat ID.  If
+             None, Yahoo's default ordering is used.
+        :type sort: str
+        :param sort_type: The window the ``sort`` applies over: 'season',
+             'lastweek', 'lastmonth', or 'biweekly'.  Only meaningful alongside
+             a stat-based ``sort``.
+        :type sort_type: str
+        :param sort_season: The season to sort by.  Required by Yahoo when
+             ``sort_type`` is 'season'.
+        :type sort_season: str
         :return: Free agents found. Particulars about each free agent will be
              returned.
         :rtype: List(Dict)
@@ -316,12 +328,15 @@ class League:
          'eligible_positions': ['CF', 'RF', 'Util'],
          'editorial_team_abbr': 'StL'}
         """
-        if position not in self.free_agent_cache:
-            self.free_agent_cache[position] = self._fetch_players(
-                'FA', position=position)
-        return self.free_agent_cache[position]
+        key = (position, sort, sort_type, sort_season)
+        if key not in self.free_agent_cache:
+            self.free_agent_cache[key] = self._fetch_players(
+                'FA', position=position, sort=sort, sort_type=sort_type,
+                sort_season=sort_season)
+        return self.free_agent_cache[key]
 
-    def waivers(self, position=None):
+    def waivers(self, position=None, sort=None, sort_type=None,
+                sort_season=None):
         """Return the players currently on waivers.
 
         :param position: If not None, only return players that are eligible
@@ -329,6 +344,17 @@ class League:
              (e.g. 2B, C, etc.).  You can also specify the position type
              (e.g. 'B' for all batters and 'P' for all pitchers).
         :type position: str
+        :param sort: How to order the returned players.  Accepts a Yahoo named
+             sort ('AR', 'OR', 'NAME', 'PTS', ...) or a numeric stat ID.  If
+             None, Yahoo's default ordering is used.
+        :type sort: str
+        :param sort_type: The window the ``sort`` applies over: 'season',
+             'lastweek', 'lastmonth', or 'biweekly'.  Only meaningful alongside
+             a stat-based ``sort``.
+        :type sort_type: str
+        :param sort_season: The season to sort by.  Required by Yahoo when
+             ``sort_type`` is 'season'.
+        :type sort_season: str
         :return: Players on waiver.
         :rtype: List(dict)
 
@@ -352,10 +378,12 @@ class League:
           'eligible_positions': ['D', 'IR'],
           'percent_owned': 87}]
         """
-        if position not in self.waivers_cache:
-            self.waivers_cache[position] = self._fetch_players(
-                'W', position=position)
-        return self.waivers_cache[position]
+        key = (position, sort, sort_type, sort_season)
+        if key not in self.waivers_cache:
+            self.waivers_cache[key] = self._fetch_players(
+                'W', position=position, sort=sort, sort_type=sort_type,
+                sort_season=sort_season)
+        return self.waivers_cache[key]
 
     def taken_players(self):
         """Return the players taken by teams.
@@ -378,7 +406,8 @@ class League:
             self.taken_players_cache = self._fetch_players('T')
         return self.taken_players_cache
 
-    def _fetch_players(self, status, position=None):
+    def _fetch_players(self, status, position=None, sort=None,
+                       sort_type=None, sort_season=None):
         """Fetch players from Yahoo!
 
         :param status: Indicates what type of players to get.  Available
@@ -388,6 +417,15 @@ class League:
         :param position: An optional parameter that allows you to filter on a
             position to type of player.  If None, this option is ignored.
         :type postition: str
+        :param sort: Optional ordering for the returned players.  Accepts a
+            Yahoo named sort or a numeric stat ID.  If None, it is ignored.
+        :type sort: str
+        :param sort_type: Optional window for ``sort`` ('season', 'lastweek',
+            'lastmonth', 'biweekly').  If None, it is ignored.
+        :type sort_type: str
+        :param sort_season: Optional season for ``sort_type='season'``.  If
+            None, it is ignored.
+        :type sort_season: str
         :return: Players found.
         :rtype: List(Dict)
         """
@@ -398,8 +436,9 @@ class League:
         plyrs = []
         plyrIndex = 0
         while plyrIndex % PLAYERS_PER_PAGE == 0:
-            j = self.yhandler.get_players_raw(self.league_id, plyrIndex,
-                                              status, position=position)
+            j = self.yhandler.get_players_raw(
+                self.league_id, plyrIndex, status, position=position,
+                sort=sort, sort_type=sort_type, sort_season=sort_season)
             (num_plyrs_on_pg, fa_on_pg) = self._players_from_page(j)
             if len(fa_on_pg) == 0:
                 break
